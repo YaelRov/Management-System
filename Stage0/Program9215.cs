@@ -13,6 +13,4 @@
         string name = Console.ReadLine();
         Console.WriteLine($"{name}, welcome to my first console application");
     }
-
-
 }
