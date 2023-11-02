@@ -1,11 +1,26 @@
 ﻿
-
 namespace DO;
+/// <summary>
+/// An entity which describes a Task
+/// </summary>
+/// <param name="id">primary key, auto id number </param>
+/// <param name="description">NN</param>
+/// <param name="alias">NN</param>
+/// <param name="milestone">engineer's experience NN</param>
+/// <param name="createdAt">payment per hour NN</param>
 
 public record Task
 {
+    #region Config
+    internal static class Config
+    {
+        internal const int startTaskId = 1000;
+        private static int nextTaskId = startTaskId;
+        internal static int NextTaskId { get => nextTaskId++; }
+    }
+    #endregion
     #region characters
-    int id;
+    int readonly id;
     string description;
     string alias;
     bool milestone;
@@ -21,7 +36,7 @@ public record Task
     EngineerExperience? complexityLevel;
     #endregion
     #region properties
-    public int ID { get { return id; }}
+    public int Id { get { return id; }}
     public string Description { get { return description; } set {description = value; } }
     public string Alias { get { return alias; } set { alias = value; } }
     public bool Milestone { get {  return milestone; } set {  milestone = value; } }
@@ -38,6 +53,14 @@ public record Task
 
     #endregion
     #region constructors
-
+    public Task(string description = "", string alias = "", bool milestone = false, DateTime createdAt=DateTime.Now)
+    {
+        this.id = Config.NextTaskId;
+        this.description = description;
+        this.alias = alias;
+        this.milestone = milestone; 
+        this.createdAt = createdAt; 
+    }
+    public Task(){ }
     #endregion
 }
