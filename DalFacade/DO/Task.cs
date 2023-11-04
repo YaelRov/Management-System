@@ -1,4 +1,6 @@
 ﻿
+using System.Data.Common;
+
 namespace DO;
 /// <summary>
 /// An entity which describes a Task
@@ -11,16 +13,8 @@ namespace DO;
 
 public record Task
 {
-    #region Config
-    internal static class Config
-    {
-        internal const int startTaskId = 1000;
-        private static int nextTaskId = startTaskId;
-        internal static int NextTaskId { get => nextTaskId++; }
-    }
-    #endregion
     #region characters
-    int readonly id;
+    readonly int id;
     string description;
     string alias;
     bool milestone;
@@ -53,9 +47,9 @@ public record Task
 
     #endregion
     #region constructors
-    public Task(string description = "", string alias = "", bool milestone = false, DateTime createdAt=DateTime.Now)
+    public Task(string description = "", string alias = "", bool milestone = false, DateTime createdAt =DateTime.Now, int id = -1)
     {
-        this.id = Config.NextTaskId;
+        this.id = id;
         this.description = description;
         this.alias = alias;
         this.milestone = milestone; 

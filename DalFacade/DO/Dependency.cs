@@ -8,18 +8,10 @@ namespace DO;
 /// <param name="dependsOnTask">NN</param>
 public record Dependency
 {
-    #region Config
-    internal static class Config
-    {
-        internal const int startDependId = 10000;
-        private static int nextDependId = startDependId;
-        internal static int NextDependId { get => nextDependId++; }
-    }
-    #endregion
     #region characters
-    int id;
+    readonly int id;
     int dependentTask;
-    int dependsOnTask
+    int dependsOnTask;
     #endregion
     #region properties
     public int Id { get { return id; } }
@@ -27,12 +19,12 @@ public record Dependency
     public int DependsOnTask { get { return dependsOnTask; } set { dependsOnTask = value; } }
     #endregion
     #region constructors
-    public Task(int dependentTask, int dependsOnTask)
+    public Dependency(int dependentTask, int dependsOnTask, int id = -1)
     {
-        this.id = Config.NextDependId;
+        this.id = id;
         this.dependentTask = dependentTask;   
         this.dependsOnTask = dependsOnTask;
     }
-    public Task() { }
+    public Dependency() { }
     #endregion
 }
