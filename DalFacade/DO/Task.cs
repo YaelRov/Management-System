@@ -47,13 +47,21 @@ public record Task
 
     #endregion
     #region constructors
-    public Task(string description = "", string alias = "", bool milestone = false, DateTime createdAt =DateTime.Now, int id = -1)
+    public Task(string description = "", string alias = "", bool milestone = false, DateTime createdAt =DateTime.Now, DateTime start = DateTime.Now, DateTime scheduledDate = DateTime.Now, DateTime forecastDate = DateTime.Now, DateTime deadline = DateTime.Now, DateTime complete = DateTime.Now, string deliverables="", string remarks="", int engineerId = -1, EngineerExperience? complexityLevel=0)
     {
-        this.id = id;
+        this.id = -1;
         this.description = description;
         this.alias = alias;
         this.milestone = milestone; 
         this.createdAt = createdAt; 
+        this.scheduledDate = scheduledDate;
+        this.forecastDate = forecastDate;
+        this.deadline = deadline;
+        this.complete = complete;
+        this.deliverables = deliverables;
+        this.remarks = remarks;
+        this.engineerId = engineerId;
+        this.complexityLevel = complexityLevel;
     }
     public Task(){ }
     #endregion
