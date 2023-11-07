@@ -37,6 +37,8 @@ public static class Initialization
     { description = "Install plumbing fixtures in bathrooms.", alias = "Plumbing Fixtures" },
     { description = "Apply final coat of paint to all surfaces.", alias = "Painting" }
 };
+        string[] deliverables = []
+        string[] remarks = ["Be carful", "It's easy", "It's hard", "Do it accurately"]
         foreach (var task in buildingTasks)
         {
             string description=task.description;
