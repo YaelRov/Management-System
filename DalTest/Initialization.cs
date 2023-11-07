@@ -22,17 +22,26 @@ public static class Initialization
     }
     private static void createEngineers()
     {
-        string[] firstNames =
+        const int MIN_ID = 200000000;
+        const int MAX_ID = 400000000;
+        string[] names =
         {
-            "Avraham", "Yitzchak", "Yaakov", "Moshe", "Aharon", "Yossef",
-            "David", "Chaim", "Refael", "Menachem", "Uriel", "Shlomo"
+            "Yoni Stern", "Avraham Silver", "Itzchak Elkias", "Yaakov Beker",
+            "Refael Toledano", "Aharon Zusman"
         };
-        string[] lastNames =
+        foreach name in names
         {
-            "Stern", "Rov", "Gold", "Silver", "Weiss", "Cohen", "Levi",
-            "Zusman", "Elkias", "Elchadad", "Shachar", "Maimon", "Toledano"
-        };
-
+            int id;
+            do
+                id = s_rand.Next(MIN_ID, MAX_ID);
+            while (Engineers!.Read(_id) != null);
+            double cost = s_rand.Next(30, 100);
+            EngineerExperience level = s_rand.Next(0, 3);
+            string email = name.Replace(" ", "");
+            email += "@gmail.com";
+            Engineer eng = new(id, nameof, email, level, cost);
+            Engineers.Create(eng);
+        }
     }
     #endregion
 }
