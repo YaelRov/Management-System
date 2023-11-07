@@ -10,13 +10,13 @@ public record Dependency
 {
     #region characters
     readonly int id;
-    int dependentTask;
-    int dependsOnTask;
+    int? dependentTask;
+    int? dependsOnTask;
     #endregion
     #region properties
     public int Id { get { return id; } }
-    public int DependentTask {  get { return dependentTask; } set { dependentTask = value; } }
-    public int DependsOnTask { get { return dependsOnTask; } set { dependsOnTask = value; } }
+    public int? DependentTask {  get { return dependentTask; } set { dependentTask = value; } }
+    public int? DependsOnTask { get { return dependsOnTask; } set { dependsOnTask = value; } }
     #endregion
     #region constructors
     public Dependency(int dependentTask, int dependsOnTask, int id = -1)

@@ -26,7 +26,7 @@ public record Engineer
     public EngineerExperience Level { get { return level; } set { level = value; } }
     public double Cost { get { return cost; } set { cost = value; } }
     #endregion
-    #region constructor
+    #region constructors
     public Engineer(int id, string name = "", string email = "", EngineerExperience level = EngineerExperience.Rookie, double cost = 28.12)
     {
         this.id = id;
