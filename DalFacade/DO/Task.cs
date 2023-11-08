@@ -47,7 +47,8 @@ public record Task
 
     #endregion
     #region constructors
-    public Task(string description = "", string alias = "", bool milestone = false, DateTime createdAt =DateTime.Now, DateTime start = DateTime.Now, DateTime scheduledDate = DateTime.Now, DateTime forecastDate = DateTime.Now, DateTime deadline = DateTime.Now, DateTime complete = DateTime.Now, string deliverables="", string remarks="", int engineerId = -1, EngineerExperience? complexityLevel=0)
+
+    public Task(string description = "", string alias = "", bool milestone = false, DateTime createdAt =  new DateTime(), DateTime start = new DateTime(), DateTime scheduledDate = new DateTime(), DateTime forecastDate = new DateTime(), DateTime deadline = new DateTime(), DateTime complete = new DateTime(), string deliverables="", string remarks="", int engineerId = -1, EngineerExperience? complexityLevel=0)
     {
         this.id = -1;
         this.description = description;

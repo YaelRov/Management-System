@@ -13,4 +13,10 @@
 
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <Compile Remove="DO\**" />
+	  <EmbeddedResource Remove="DO\**" />
+	  <None Remove="DO\**" />
+	</ItemGroup>
+
 </Project>

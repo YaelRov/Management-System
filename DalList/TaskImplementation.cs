@@ -10,7 +10,7 @@ public class TaskImplementation : ITask
     public int Create(Task item)
     {
         int newId = DataSource.Config.NextTaskId;
-        Task newTask = new Task(item.Description, item.Alias, item.Milestone, item.CreatedAt, newId);
+        Task newTask = new Task(item.Description, item.Alias, item.Milestone, item.CreatedAt);
         DataSource.Tasks.Add(newTask);
         return newId;
     }
