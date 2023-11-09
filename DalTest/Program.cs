@@ -105,7 +105,31 @@ internal class Program
     #region update methods
     static void updateEngineers()
     {
+        string userInput;
+        Console.WriteLine("Enter id of engineer to update");
+        int id = Convert.ToInt32(Console.ReadLine());
+        Engineer baseEng = s_dalEngineer!.Read(id) ?? throw new Exception("Engineer with this id does not exist");
+        Console.WriteLine(baseEng);
+        Console.WriteLine("Enter engineer's details to update. If you don't want to change press enter.\n");
 
+        Console.WriteLine("name:");
+        userInput = Console.ReadLine()!;
+        string _name = string.IsNullOrEmpty(userInput) ? baseEng.Name :userInput;
+
+        Console.WriteLine("email:");
+        userInput = Console.ReadLine()!;
+        string _email = string.IsNullOrEmpty(userInput) ? baseEng.Email : userInput;
+
+        Console.WriteLine("level:");
+        userInput = Console.ReadLine()!;
+        EngineerExperience _level = string.IsNullOrEmpty(userInput) ? baseEng.Level : (EngineerExperience)Convert.ToInt32(userInput);
+
+        Console.WriteLine("cost:");
+        userInput = Console.ReadLine()!;
+        double _cost = string.IsNullOrEmpty(userInput) ? baseEng.Cost : Convert.ToDouble(userInput);
+
+        Engineer updateEng = new(id, _name,_email, _level,_cost);
+        s_dalEngineer!.Update(updateEng);
     }
     static void updateTasks()
     {
@@ -165,7 +189,23 @@ internal class Program
 
     static void updateDependenies()
     {
+        string userInput;
+        Console.WriteLine("Enter id of dependency to update");
+        int id = Convert.ToInt32(Console.ReadLine());
+        Dependency baseDep = s_dalDependency!.Read(id) ?? throw new Exception("Dependency with this id does not exist");
+        Console.WriteLine(baseDep);
+        Console.WriteLine("Enter dependency's details to update. If you don't want to change press enter.\n");
 
+        Console.WriteLine("dependent task:");
+        userInput = Console.ReadLine()!;
+        int? _dependentTask = string.IsNullOrEmpty(userInput) ? baseDep.DependentTask : Convert.ToInt32(userInput);
+
+        Console.WriteLine("depends on task:");
+        userInput = Console.ReadLine()!;
+        int? _dependsOnTask = string.IsNullOrEmpty(userInput) ? baseDep.DependsOnTask : Convert.ToInt32(userInput);
+
+        Dependency updateDep = new(id, _dependentTask, _dependsOnTask);
+        s_dalDependency!.Update(updateDep);
     }
     #endregion
 
@@ -326,7 +366,5 @@ internal class Program
                     break;
             }
         }
-
-
     }
 }
