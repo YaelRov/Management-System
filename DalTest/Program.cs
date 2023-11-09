@@ -112,55 +112,64 @@ internal class Program
         string userInput;
         Console.WriteLine("Enter id of task to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        DO.Task updateTask = s_dalTask!.Read(id) ?? throw new Exception("Task with this id does not exist");
-        Console.WriteLine(updateTask);
+        DO.Task baseTask = s_dalTask!.Read(id) ?? throw new Exception("Task with this id does not exist");
+        Console.WriteLine(baseTask);
+        
         Console.WriteLine("Enter task's details to update. If you don't want to change press enter.\n");
        
         Console.WriteLine("description:");
         userInput = Console.ReadLine()!;
-        string _description =  string.IsNullOrEmpty(userInput) ? updateTask.Description : userInput;
+        string _description =  string.IsNullOrEmpty(userInput) ? baseTask.Description : userInput;
 
         Console.WriteLine("alias:");
         userInput = Console.ReadLine()!;
-        string _alias = string.IsNullOrEmpty(userInput) ? updateTask.Alias : userInput;
+        string _alias = string.IsNullOrEmpty(userInput) ? baseTask.Alias : userInput;
 
         Console.WriteLine("milestone:");
         userInput = Console.ReadLine()!;
-        bool _milestone = string.IsNullOrEmpty(userInput) ? updateTask.Milestone : Convert.ToBoolean(userInput);
-
+        bool _milestone = string.IsNullOrEmpty(userInput) ? baseTask.Milestone : Convert.ToBoolean(userInput);
 
         Console.WriteLine("date of creating:");
-        DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
+        userInput = Console.ReadLine()!;
+        DateTime _createdAt = string.IsNullOrEmpty(userInput) ? baseTask.CreatedAt : Convert.ToDateTime(userInput);
 
         Console.WriteLine("date of starting:");
-        DateTime? _start = Convert.ToDateTime(Console.ReadLine());
-        
-        Console.WriteLine("scheduled date:");
-        DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
-        
-        Console.WriteLine("forecast date:");
-        DateTime? _forecastDate = Convert.ToDateTime(Console.ReadLine());
-        
-        Console.WriteLine("date of deadline:");
-        DateTime? _deadline = Convert.ToDateTime(Console.ReadLine());
-        
-        Console.WriteLine("date of complete:");
-        DateTime? _complete = Convert.ToDateTime(Console.ReadLine());
-        
-        Console.WriteLine("deliverables:");
-        string? _deliverables = Console.ReadLine();
-        if (string.IsNullOrEmpty(_deliverables)) _deliverables = updateTask.Deliverables;
-        
-        Console.WriteLine("remarks:");
-        string? _remarks = Console.ReadLine();
-        if (string.IsNullOrEmpty(_remarks)) _remarks = updateTask.Remarks;
-        
-        Console.WriteLine("engineer's id:");
-        int? _engineerId = Convert.ToInt32(Console.ReadLine());
-        
-        Console.WriteLine("_complexity level:");
-        EngineerExperience? _complexityLevel = (EngineerExperience)Convert.ToInt32(Console.ReadLine());
+        userInput = Console.ReadLine()!;
+        DateTime? _start = string.IsNullOrEmpty(userInput) ? baseTask.Start : Convert.ToDateTime(userInput);
 
+        Console.WriteLine("scheduled date:");
+        userInput = Console.ReadLine()!;
+        DateTime? _scheduledDate = string.IsNullOrEmpty(userInput) ? baseTask.ScheduledDate : Convert.ToDateTime(userInput);
+       
+        Console.WriteLine("forecast date:");
+        userInput = Console.ReadLine()!;
+        DateTime? _forecastDate = string.IsNullOrEmpty(userInput) ? baseTask.ForecastDate : Convert.ToDateTime(userInput);
+
+        Console.WriteLine("date of deadline:");
+        userInput = Console.ReadLine()!;
+        DateTime? _deadline = string.IsNullOrEmpty(userInput) ? baseTask.Deadline : Convert.ToDateTime(userInput);
+
+        Console.WriteLine("date of complete:");
+        userInput = Console.ReadLine()!;
+        DateTime? _complete = string.IsNullOrEmpty(userInput) ? baseTask.Complete : Convert.ToDateTime(userInput);
+
+        Console.WriteLine("deliverables:");
+        userInput = Console.ReadLine()!;
+        string? _deliverables = string.IsNullOrEmpty(userInput) ? baseTask.Deliverables : userInput;
+
+        Console.WriteLine("remarks:");
+        userInput = Console.ReadLine()!;
+        string? _remarks = string.IsNullOrEmpty(userInput) ? baseTask.Remarks : userInput;
+
+        Console.WriteLine("engineer's id:");
+        userInput = Console.ReadLine()!;
+        int? _engineerId = string.IsNullOrEmpty(userInput) ? baseTask.EngineerId : Convert.ToInt32(userInput);
+
+        Console.WriteLine("_complexity level:");
+        userInput = Console.ReadLine()!;
+        EngineerExperience? _complexityLevel = string.IsNullOrEmpty(userInput) ? baseTask.ComplexityLevel : (EngineerExperience)(Convert.ToInt32(userInput));
+        DO.Task updateTask = new (id, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
+        s_dalTask!.Update(updateTask);
     }
 
     static void updateDependenies()
