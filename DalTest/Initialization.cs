@@ -10,10 +10,6 @@ public static class Initialization
     private static ITask? s_dalTask;
     private static IDependency? s_dalDependency;
 
-    private static int counterEngineers = 0;
-    private static int counterTasks = 0;
-    private static int counterDependencies = 0;
-
     private static readonly Random s_rand = new();
     #region methods
     private static void createEngineers()
@@ -37,7 +33,6 @@ public static class Initialization
             email += "@gmail.com";
             Engineer eng = new(id, name, email, level, cost);
             s_dalEngineer.Create(eng);
-            counterEngineers++;
         }
     }
     private static void createTasks()
@@ -88,17 +83,16 @@ public static class Initialization
             string deliverables = task.deliverable;
             string remarks = remarksArray[s_rand.Next(0, 4)];
             EngineerExperience complexityLevel = (EngineerExperience)s_rand.Next(0, 5);
-            List<Engineer> engineers = s_dalEngineer.ReadAll();
-            int engineerId = engineers[s_rand.Next(0, counterEngineers)].Id;
+            List<Engineer> engineers = s_dalEngineer!.ReadAll();
+            int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id;
 
-            Task newTask = new(description, alias, milestone, createdAt, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
-            s_dalTask.Create(newTask);
-            counterTasks++;
+            Task newTask = new(-1,description, alias, milestone, createdAt, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
+            s_dalTask!.Create(newTask);
         }
     }
     private static void createDependencies()
-    {
-        List<Task> Tasks = s_dalTask.ReadAll();
+    { 
+        List<Task> Tasks = s_dalTask!.ReadAll();
         int index = 0;
         foreach (var task in Tasks)
         {
@@ -106,9 +100,8 @@ public static class Initialization
             {
                 for (int j = index - 3; j < index; j++)
                 {
-                    Dependency dep = new(task.Id, Tasks[j].Id);
-                    s_dalDependency.Create(dep);
-                    counterDependencies++;
+                    Dependency dep = new(-1,task.Id, Tasks[j].Id);
+                    s_dalDependency!.Create(dep);
                 }
             }
             index++;

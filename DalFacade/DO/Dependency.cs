@@ -7,11 +7,24 @@ namespace DO;
 /// <param name="dependentTask">NN</param>
 /// <param name="dependsOnTask">NN</param>
 public record Dependency
+(
+    int id,
+    int? DependentTask,
+    int? DependsOnTask
+)
 {
-    #region characters
+    public static int counterDependencies = 0;
+    public int Id { get { return id; } }
+    Dependency() :this(0,null,null) { }
+}
+
+/*
+  #region characters
     readonly int id;
     int? dependentTask;
     int? dependsOnTask;
+
+
     #endregion
     #region properties
     public int Id { get { return id; } }
@@ -19,7 +32,7 @@ public record Dependency
     public int? DependsOnTask { get { return dependsOnTask; } set { dependsOnTask = value; } }
     #endregion
     #region constructors
-    public Dependency(int dependentTask, int dependsOnTask, int id = -1)
+    public Dependency(int? dependentTask, int? dependsOnTask, int id = -1)
     {
         this.id = id;
         this.dependentTask = dependentTask;   
@@ -27,4 +40,4 @@ public record Dependency
     }
     public Dependency() { }
     #endregion
-}
+ */
