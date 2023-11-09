@@ -7,13 +7,23 @@ namespace DO;
 /// <param name="dependentTask">NN</param>
 /// <param name="dependsOnTask">NN</param>
 public record Dependency
+(
+    int id,
+    int? DependentTask,
+    int? DependsOnTask
+)
 {
-    #region characters
+    public static int counterDependencies = 0;
+    public int Id { get { return id; } }
+    Dependency() :this(0,null,null) { }
+}
+
+/*
+  #region characters
     readonly int id;
     int? dependentTask;
     int? dependsOnTask;
 
-    public static int counterDependencies = 0;
 
     #endregion
     #region properties
@@ -30,4 +40,4 @@ public record Dependency
     }
     public Dependency() { }
     #endregion
-}
+ */

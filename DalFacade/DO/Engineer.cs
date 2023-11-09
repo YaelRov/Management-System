@@ -11,8 +11,22 @@ namespace DO;
 /// <param name="cost">payment per hour NN</param>
 
 public record Engineer
+(
+    int id,
+    string Name,
+    string Email,
+    EngineerExperience Level,
+    double Cost
+)
 {
-    #region characters
+    public static int counterEngineers = 0;
+    public int Id { get { return id; } }
+    Engineer() : this(-1,"","", EngineerExperience.Novice,0) { }
+}
+
+
+/*
+     #region characters
     int id;
     string name;
     string email;
@@ -40,4 +54,4 @@ public record Engineer
     }
     public Engineer(){}
     #endregion
-}
+ */

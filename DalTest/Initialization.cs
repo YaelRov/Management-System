@@ -83,16 +83,16 @@ public static class Initialization
             string deliverables = task.deliverable;
             string remarks = remarksArray[s_rand.Next(0, 4)];
             EngineerExperience complexityLevel = (EngineerExperience)s_rand.Next(0, 5);
-            List<Engineer> engineers = s_dalEngineer.ReadAll();
+            List<Engineer> engineers = s_dalEngineer!.ReadAll();
             int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id;
 
-            Task newTask = new(description, alias, milestone, createdAt, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
-            s_dalTask.Create(newTask);
+            Task newTask = new(-1,description, alias, milestone, createdAt, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
+            s_dalTask!.Create(newTask);
         }
     }
     private static void createDependencies()
     { 
-        List<Task> Tasks = s_dalTask.ReadAll();
+        List<Task> Tasks = s_dalTask!.ReadAll();
         int index = 0;
         foreach (var task in Tasks)
         {
@@ -100,8 +100,8 @@ public static class Initialization
             {
                 for (int j = index - 3; j < index; j++)
                 {
-                    Dependency dep = new(task.Id, Tasks[j].Id);
-                    s_dalDependency.Create(dep);
+                    Dependency dep = new(-1,task.Id, Tasks[j].Id);
+                    s_dalDependency!.Create(dep);
                 }
             }
             index++;

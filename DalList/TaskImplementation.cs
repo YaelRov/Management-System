@@ -10,7 +10,7 @@ public class TaskImplementation : ITask
     public int Create(Task item)
     {
         int newId = DataSource.Config.NextTaskId;
-        Task newTask = new Task(item.Description, item.Alias, item.Milestone, item.CreatedAt);
+        Task newTask = new Task(newId,item.Description, item.Alias, item.Milestone, item.CreatedAt, item.Start, item.ScheduledDate, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.EngineerId, item.ComplexityLevel);
         DataSource.Tasks.Add(newTask);
         Task.counterTasks++;
         return newId;
@@ -18,11 +18,11 @@ public class TaskImplementation : ITask
 
     public void Delete(int id)
     {
-        Task obj = DataSource.Tasks.Find(curTask => curTask.Id == id);
+        Task? obj = DataSource.Tasks.Find(curTask => curTask.Id == id);
         if (obj == null)
             throw new Exception($"An object of type Task with ID {id} does not exist");
         DataSource.Tasks.Remove(obj);
-        Task.counterTasks--;
+        Task.counterTasks++;
     }
 
     public Task? Read(int id)
@@ -37,7 +37,7 @@ public class TaskImplementation : ITask
 
     public void Update(Task item)
     {
-        Task obj = DataSource.Tasks.Find(curTask => curTask.Id == item.Id);
+        Task? obj = DataSource.Tasks.Find(curTask => curTask.Id == item.Id);
         if (obj == null)
             throw new Exception($"An object of type Task with ID {item.Id} does not exist");
         DataSource.Tasks.Remove(obj);

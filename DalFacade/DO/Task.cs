@@ -12,8 +12,32 @@ namespace DO;
 /// <param name="createdAt">payment per hour NN</param>
 
 public record Task
+(
+int id,
+string Description,
+string Alias,
+bool Milestone,
+DateTime CreatedAt,
+DateTime? Start,
+DateTime? ScheduledDate,
+DateTime? ForecastDate,
+DateTime? Deadline,
+DateTime? Complete,
+string? Deliverables,
+string? Remarks,
+int? EngineerId,
+EngineerExperience? ComplexityLevel
+)
 {
-    #region characters
+    public int Id { get { return id; } }
+
+    public static int counterTasks = 0;
+    Task() : this(-1,"","", false,DateTime.Now,null, null, null, null,null,null,null,null,null) { }
+}
+
+
+/*
+      #region characters
     readonly int id;
     string description;
     string alias;
@@ -43,8 +67,8 @@ public record Task
     public DateTime? ForecastDate { get { return forecastDate; } set {  forecastDate = value; } }
     public DateTime? Deadline { get { return deadline; } set {  deadline = value; } }
     public DateTime? Complete { get { return complete; } set {  complete = value; } }
-    public string Deliverables { get { return deliverables; } set { deliverables = value; } }
-    public string Remarks { get { return remarks; } set { remarks = value; } }
+    public string Deliverables { get { return deliverables!; } set { deliverables = value; } }
+    public string Remarks { get { return remarks!; } set { remarks = value; } }
     public int? EngineerId { get {  return engineerId; } set { engineerId = value; } }
     public EngineerExperience? ComplexityLevel { get { return complexityLevel; } set { complexityLevel = value; } }
 
@@ -69,4 +93,4 @@ public record Task
     }
     public Task(){ }
     #endregion
-}
+  * */
