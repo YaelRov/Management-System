@@ -6,7 +6,7 @@ namespace DalTest;
 
 internal class Program
 {
-    private static IEngineer? s_dalEngineer =new EngineerImplementation();
+    private static IEngineer? s_dalEngineer = new EngineerImplementation();
     private static ITask? s_dalTask = new TaskImplementation();
     private static IDependency? s_dalDependency = new DependencyImplementation();
     static void Main(string[] args)
@@ -16,10 +16,10 @@ internal class Program
             Initialization.Do(s_dalEngineer!, s_dalTask!, s_dalDependency!);
             mainMenu();
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             Console.WriteLine(ex);
-        }    
+        }
     }
     #region create methods
     static int createEngineer()
@@ -39,17 +39,17 @@ internal class Program
         string _description = Console.ReadLine()!;
         string _alias = Console.ReadLine()!;
         bool _milestone = Convert.ToBoolean(Console.ReadLine()!);
-        DateTime _createdAt= Convert.ToDateTime(Console.ReadLine()!);
-        DateTime? _start=Convert.ToDateTime(Console.ReadLine());
-        DateTime? _scheduledDate= Convert.ToDateTime(Console.ReadLine()); 
+        DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
+        DateTime? _start = Convert.ToDateTime(Console.ReadLine());
+        DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
         DateTime? _forecastDate = Convert.ToDateTime(Console.ReadLine());
         DateTime? _deadline = Convert.ToDateTime(Console.ReadLine());
         DateTime? _complete = Convert.ToDateTime(Console.ReadLine());
         string? _deliverables = Console.ReadLine();
         string? _remarks = Console.ReadLine();
         int? _engineerId = Convert.ToInt32(Console.ReadLine());
-        EngineerExperience? _complexityLevel= (EngineerExperience)Convert.ToInt32(Console.ReadLine());
-        DO.Task newTask = new (-1,_description,_alias,_milestone,_createdAt, _start, _scheduledDate,_forecastDate,_deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
+        EngineerExperience? _complexityLevel = (EngineerExperience)Convert.ToInt32(Console.ReadLine());
+        DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
         return s_dalTask!.Create(newTask);
     }
     static int createDependency()
@@ -80,7 +80,7 @@ internal class Program
     static Dependency? readDependency()
     {
         Console.WriteLine("Enter dependency's id for reading:\n");
-        int id= Convert.ToInt32(Console.ReadLine());
+        int id = Convert.ToInt32(Console.ReadLine());
         return s_dalDependency!.Read(id);
     }
     #endregion
@@ -105,10 +105,62 @@ internal class Program
     #region update methods
     static void updateEngineers()
     {
-     
+
     }
     static void updateTasks()
     {
+        string userInput;
+        Console.WriteLine("Enter id of task to update");
+        int id = Convert.ToInt32(Console.ReadLine());
+        DO.Task updateTask = s_dalTask!.Read(id) ?? throw new Exception("Task with this id does not exist");
+        Console.WriteLine(updateTask);
+        Console.WriteLine("Enter task's details to update. If you don't want to change press enter.\n");
+       
+        Console.WriteLine("description:");
+        userInput = Console.ReadLine()!;
+        string _description =  string.IsNullOrEmpty(userInput) ? updateTask.Description : userInput;
+
+        Console.WriteLine("alias:");
+        userInput = Console.ReadLine()!;
+        string _alias = string.IsNullOrEmpty(userInput) ? updateTask.Alias : userInput;
+
+        Console.WriteLine("milestone:");
+        userInput = Console.ReadLine()!;
+        bool _milestone = string.IsNullOrEmpty(userInput) ? updateTask.Milestone : Convert.ToBoolean(userInput);
+
+
+        Console.WriteLine("date of creating:");
+        DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
+
+        Console.WriteLine("date of starting:");
+        DateTime? _start = Convert.ToDateTime(Console.ReadLine());
+        
+        Console.WriteLine("scheduled date:");
+        DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
+        
+        Console.WriteLine("forecast date:");
+        DateTime? _forecastDate = Convert.ToDateTime(Console.ReadLine());
+        
+        Console.WriteLine("date of deadline:");
+        DateTime? _deadline = Convert.ToDateTime(Console.ReadLine());
+        
+        Console.WriteLine("date of complete:");
+        DateTime? _complete = Convert.ToDateTime(Console.ReadLine());
+        
+        Console.WriteLine("deliverables:");
+        string? _deliverables = Console.ReadLine();
+        if (string.IsNullOrEmpty(_deliverables)) _deliverables = updateTask.Deliverables;
+        
+        Console.WriteLine("remarks:");
+        string? _remarks = Console.ReadLine();
+        if (string.IsNullOrEmpty(_remarks)) _remarks = updateTask.Remarks;
+        
+        Console.WriteLine("engineer's id:");
+        int? _engineerId = Convert.ToInt32(Console.ReadLine());
+        
+        Console.WriteLine("_complexity level:");
+        EngineerExperience? _complexityLevel = (EngineerExperience)Convert.ToInt32(Console.ReadLine());
+
     }
 
     static void updateDependenies()
@@ -215,7 +267,7 @@ internal class Program
             }
         }
     }
-   static void dependencyMenu()
+    static void dependencyMenu()
     {
         while (true)
         {
