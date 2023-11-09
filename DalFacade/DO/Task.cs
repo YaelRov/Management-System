@@ -28,6 +28,9 @@ public record Task
     string? remarks;
     int? engineerId;
     EngineerExperience? complexityLevel;
+
+    public static int counterTasks = 0;
+
     #endregion
     #region properties
     public int Id { get { return id; }}

@@ -10,10 +10,6 @@ public static class Initialization
     private static ITask? s_dalTask;
     private static IDependency? s_dalDependency;
 
-    private static int counterEngineers=0;
-    private static int counterTasks=0;
-    private static int counterDependencies=0;
-
     private static readonly Random s_rand = new();
     #region methods
     private static void createEngineers()
@@ -37,7 +33,6 @@ public static class Initialization
             email += "@gmail.com";
             Engineer eng = new(id, name, email, level, cost);
             s_dalEngineer.Create(eng);
-            counterEngineers++;
         }
     }
     private static void createTasks()
@@ -89,11 +84,10 @@ public static class Initialization
             string remarks = remarksArray[s_rand.Next(0, 4)];
             EngineerExperience complexityLevel = (EngineerExperience)s_rand.Next(0, 5);
             List<Engineer> engineers = s_dalEngineer.ReadAll();
-            int engineerId = engineers[s_rand.Next(0, counterEngineers)].Id;
+            int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id;
 
             Task newTask = new(description, alias, milestone, createdAt, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
             s_dalTask.Create(newTask);
-            counterTasks++;
         }
     }
     private static void createDependencies()
@@ -108,7 +102,6 @@ public static class Initialization
                 {
                     Dependency dep = new(task.Id, Tasks[j].Id);
                     s_dalDependency.Create(dep);
-                    counterDependencies++;
                 }
             }
             index++;

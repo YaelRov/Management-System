@@ -12,6 +12,7 @@ public class TaskImplementation : ITask
         int newId = DataSource.Config.NextTaskId;
         Task newTask = new Task(item.Description, item.Alias, item.Milestone, item.CreatedAt);
         DataSource.Tasks.Add(newTask);
+        Task.counterTasks++;
         return newId;
     }
 
@@ -21,6 +22,7 @@ public class TaskImplementation : ITask
         if (obj == null)
             throw new Exception($"An object of type Task with ID {id} does not exist");
         DataSource.Tasks.Remove(obj);
+        Task.counterTasks--;
     }
 
     public Task? Read(int id)

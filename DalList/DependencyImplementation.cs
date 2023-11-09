@@ -11,6 +11,7 @@ public class DependencyImplementation : IDependency
         int newId = DataSource.Config.NextDependId;
         Dependency newDependency = new Dependency(item.DependentTask, item.DependsOnTask, newId);
         DataSource.Dependencies.Add(newDependency);
+        Dependency.counterDependencies++;
         return newId;
     }
 
@@ -20,6 +21,8 @@ public class DependencyImplementation : IDependency
         if (obj == null)
             throw new Exception($"An object of type Dependency with ID {id} does not exist");
         DataSource.Dependencies.Remove(obj);
+        Dependency.counterDependencies--;
+
     }
 
     public Dependency? Read(int id)

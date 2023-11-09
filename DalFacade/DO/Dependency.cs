@@ -12,6 +12,9 @@ public record Dependency
     readonly int id;
     int? dependentTask;
     int? dependsOnTask;
+
+    public static int counterDependencies = 0;
+
     #endregion
     #region properties
     public int Id { get { return id; } }
@@ -19,7 +22,7 @@ public record Dependency
     public int? DependsOnTask { get { return dependsOnTask; } set { dependsOnTask = value; } }
     #endregion
     #region constructors
-    public Dependency(int dependentTask, int dependsOnTask, int id = -1)
+    public Dependency(int? dependentTask, int? dependsOnTask, int id = -1)
     {
         this.id = id;
         this.dependentTask = dependentTask;   

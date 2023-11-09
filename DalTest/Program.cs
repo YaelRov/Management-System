@@ -1,6 +1,5 @@
 ﻿using Dal;
 using DalApi;
-using Do;
 
 namespace DalTest
 {

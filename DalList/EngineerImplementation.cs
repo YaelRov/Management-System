@@ -14,15 +14,17 @@ public class EngineerImplementation : IEngineer
         if (obj == null)
             throw new Exception($"An object of type Engineer with ID {item.Id} already exists");
         DataSource.Engineers.Add(item);
+        Engineer.counterEngineers++;
         return item.Id;
-    }
+}
 
-    public void Delete(int id)
+public void Delete(int id)
     {
         Engineer obj = DataSource.Engineers.Find(curEngineer => curEngineer.Id == id);
         if (obj == null)
             throw new Exception($"An object of type Engineer with ID {id} does not exist");
         DataSource.Engineers.Remove(obj);
+        Engineer.counterEngineers--;
     }
 
     public Engineer? Read(int id)
