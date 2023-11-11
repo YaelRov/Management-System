@@ -25,18 +25,18 @@ internal class Program
     static int createEngineer()
     {
         Console.WriteLine("Enter engineer's details: id, name, email, level and cost:\n");
-        int _id = Convert.ToInt32(Console.ReadLine());
+        int _id = Convert.ToInt32(Console.ReadLine());//get the details
         string _name = Console.ReadLine()!;
         string _email = Console.ReadLine()!;
         EngineerExperience _level = (EngineerExperience)Convert.ToInt32(Console.ReadLine());
         double _cost = Convert.ToDouble(Console.ReadLine());
-        Engineer newEng = new(_id, _name, _email, _level, _cost);
-        return s_dalEngineer!.Create(newEng);
-    }
+        Engineer newEng = new(_id, _name, _email, _level, _cost);//create new enginner
+        return s_dalEngineer!.Create(newEng);//add to the list
+    }//cteate a new object of engineer and return the id number
     static int createTask()
     {
         Console.WriteLine("Enter task's details: description, alias, milestone.\n dates of: creating, start, scheduled date, forecast , deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
-        string _description = Console.ReadLine()!;
+        string _description = Console.ReadLine()!;//get details
         string _alias = Console.ReadLine()!;
         bool _milestone = Convert.ToBoolean(Console.ReadLine()!);
         DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
@@ -50,65 +50,65 @@ internal class Program
         int? _engineerId = Convert.ToInt32(Console.ReadLine());
         Engineer checkExistingEngineer = s_dalEngineer!.Read((int)_engineerId!) ?? throw new Exception($"An object of type Engineer with ID {_engineerId} does not exist");
         EngineerExperience? _complexityLevel = (EngineerExperience)Convert.ToInt32(Console.ReadLine());
-        DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
-        return s_dalTask!.Create(newTask);
-    }
+        DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);//create new task, the id will be created in the Create function
+        return s_dalTask!.Create(newTask);//add to the list
+    }//cteate a new object of task and return the id number
     static int createDependency()
     {
         Console.WriteLine("Enter dependency's details: dependent task and depends-on task:\n");
-        int? _dependentTask = Convert.ToInt32(Console.ReadLine());
-        DO.Task checkExisting1 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");
+        int? _dependentTask = Convert.ToInt32(Console.ReadLine());//get details
+        DO.Task checkExisting1 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");//check if the id of the task exsists
         int? _dependsOnTask = Convert.ToInt32(Console.ReadLine());
-        DO.Task checkExisting2 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");
-        Dependency newDep = new(-1, _dependentTask, _dependsOnTask);
-        return s_dalDependency!.Create(newDep);
-    }
+        DO.Task checkExisting2 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");//check if the id of the task exsists
+        Dependency newDep = new(-1, _dependentTask, _dependsOnTask);//add to the list, the id will be created in the Create function
+        return s_dalDependency!.Create(newDep);//add to the list
+    }//cteate a new object of dependency and return the id number
     #endregion
 
     #region read methods
-    static Engineer? readEngineer()
+    static Engineer? readEngineer()//return an object of the wanted engineer
     {
         Console.WriteLine("Enter engineer's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
-        Engineer? returnedEng = s_dalEngineer!.Read(id);
-        if(returnedEng is null)
+        Engineer? returnedEng = s_dalEngineer!.Read(id);//call the read function
+        if(returnedEng is null)//if the wanted object does not exist
             throw new Exception($"An object of type Engineer with ID {id} does not exist");
-        return returnedEng;
+        return returnedEng;//return the found object
     }
 
-    static DO.Task? readTask()
+    static DO.Task? readTask()//return an object of the wanted task
     {
         Console.WriteLine("Enter task's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
-        DO.Task? returnedTask = s_dalTask!.Read(id);
-        if( returnedTask is null )
+        DO.Task? returnedTask = s_dalTask!.Read(id);//call the read function
+        if ( returnedTask is null)//if the wanted object does not exist
             throw new Exception($"An object of type Task with ID {id} does not exist");
-        return returnedTask;
+        return returnedTask;//return the found object
     }
 
-    static Dependency? readDependency()
+    static Dependency? readDependency()//return an object of the wanted dependency
     {
         Console.WriteLine("Enter dependency's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
-        Dependency? returnedDep= s_dalDependency!.Read(id);
-        if(returnedDep is null)
+        Dependency? returnedDep= s_dalDependency!.Read(id);//call the read function
+        if (returnedDep is null)//if the wanted object does not exist
             throw new Exception($"An object of type Dependency with ID {id} does not exist");
-        return returnedDep;
+        return returnedDep;//return the found object
     }
     #endregion
 
     #region readAll methods
-    static List<Engineer> readAllEngineers()
+    static List<Engineer> readAllEngineers()//return a copy of the list
     {
         return s_dalEngineer!.ReadAll();
     }
 
-    static List<DO.Task> readAllTasks()
+    static List<DO.Task> readAllTasks()//return a copy of the list
     {
         return s_dalTask!.ReadAll();
     }
 
-    static List<Dependency> readAllDependencies()
+    static List<Dependency> readAllDependencies()//return a copy of the list
     {
         return s_dalDependency!.ReadAll();
     }
@@ -238,133 +238,133 @@ internal class Program
     static void deleteEngineer()
     {
         Console.WriteLine("Enter engineer's id for deleting:\n");
-        int id = Convert.ToInt32(Console.ReadLine());
-        s_dalEngineer!.Delete(id);
-    }
+        int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
+        s_dalEngineer!.Delete(id);//call the Delete function
+    }//delete a wanted engineer
 
     static void deleteTask()
     {
         Console.WriteLine("Enter task's id for deleting:\n");
-        int id = Convert.ToInt32(Console.ReadLine());
-        s_dalTask!.Delete(id);
-    }
+        int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
+        s_dalTask!.Delete(id);//call the Delete function
+    }//delete a wanted task
 
     static void deleteDependency()
     {
         Console.WriteLine("Enter dependency's id for deleting:\n");
-        int id = Convert.ToInt32(Console.ReadLine());
-        s_dalDependency!.Delete(id);
-    }
+        int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
+        s_dalDependency!.Delete(id);//call the Delete function
+    }//delete a wanted dependency
     #endregion
-    static void engineerMenu()
+    static void engineerMenu()//the menu of operations on engineers
     {
-        while (true)
+        while (true)//run till the user enter '1' to exit
         {
             Console.WriteLine("Choose the method that you want to execute:\n 1 to exit\n 2 to Create\n 3 to Read\n 4 to ReadAll\n 5 to Update\n 6 to Delete");
-            int methodChoice = Convert.ToInt32(Console.ReadLine());
+            int methodChoice = Convert.ToInt32(Console.ReadLine());//get the choise
             try
             {
                 switch (methodChoice)
                 {
-                    case 1:
+                    case 1://exit
                         return;
-                    case (int)CRUD.CREATE:
-                        int returnedId = createEngineer();
+                    case (int)CRUD.CREATE://2
+                        int returnedId = createEngineer();//get the id of the created engineer
                         Console.WriteLine($"The engineer's id: {returnedId}\n");
                         break;
-                    case (int)CRUD.READ:
-                        Console.WriteLine(readEngineer());
+                    case (int)CRUD.READ://3
+                        Console.WriteLine(readEngineer());//print the wanted engineer
                         break;
-                    case (int)CRUD.READALL:
-                        List<Engineer> returnedList = readAllEngineers();
-                        foreach (var en in returnedList)
+                    case (int)CRUD.READALL://4
+                        List<Engineer> returnedList = readAllEngineers();//get the copy of the list
+                        foreach (var en in returnedList)//print all the object
                             Console.WriteLine(en);
                         break;
-                    case (int)CRUD.UPDATE:
-                        updateEngineers();
+                    case (int)CRUD.UPDATE://5
+                        updateEngineers();//call the update function
                         break;
-                    case (int)CRUD.DELETE:
-                        deleteEngineer();
+                    case (int)CRUD.DELETE://6
+                        deleteEngineer();//call the delete function
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex)//catch exceptions in this menu
             {
                 Console.WriteLine(ex);
             }
         }
     }
-    static void taskMenu()
+    static void taskMenu()//the menu of operations on tasks
     {
-        while (true)
+        while (true)//run till the user enter '1' to exit
         {
             Console.WriteLine("Choose the method that you want to execute:\n 1 to exit\n 2 to Create\n 3 to Read\n 4 to ReadAll\n 5 to Update\n 6 to Delete");
-            int methodChoice = Convert.ToInt32(Console.ReadLine());
+            int methodChoice = Convert.ToInt32(Console.ReadLine());//get the choise
             try
             {
                 switch (methodChoice)
                 {
-                    case 1:
+                    case 1://exit
                         return;
-                    case (int)CRUD.CREATE:
-                        int returnedId = createTask();
+                    case (int)CRUD.CREATE://2
+                        int returnedId = createTask();//get the id of the created task
                         Console.WriteLine($"The task's id: {returnedId}\n");
                         break;
-                    case (int)CRUD.READ:
-                        Console.WriteLine(readTask());
+                    case (int)CRUD.READ://3
+                        Console.WriteLine(readTask());//print the wanted task
                         break;
-                    case (int)CRUD.READALL:
-                        List<DO.Task> returnedList = readAllTasks();
-                        foreach (var task in returnedList)
+                    case (int)CRUD.READALL://4
+                        List<DO.Task> returnedList = readAllTasks();//get the copy of the list
+                        foreach (var task in returnedList)//print all the object
                             Console.WriteLine(task);
                         break;
-                    case (int)CRUD.UPDATE:
-                        updateTasks();
+                    case (int)CRUD.UPDATE://5
+                        updateTasks();//call the update function
                         break;
-                    case (int)CRUD.DELETE:
-                        deleteTask();
+                    case (int)CRUD.DELETE://6
+                        deleteTask();//call the delete function
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex)//catch exceptions in this menu
             {
                 Console.WriteLine(ex);
             }
         }
     }
-    static void dependencyMenu()
+    static void dependencyMenu()//the menu of operations on dependencies
     {
-        while (true)
+        while (true)//run till the user enter '1' to exit
         {
             Console.WriteLine("Choose the method that you want to execute:\n 1 to exit\n 2 to Create\n 3 to Read\n 4 to ReadAll\n 5 to Update\n 6 to Delete");
-            int methodChoice = Convert.ToInt32(Console.ReadLine());
+            int methodChoice = Convert.ToInt32(Console.ReadLine());//get the choise
             try
             {
                 switch (methodChoice)
                 {
-                    case 1:
+                    case 1://exit
                         return;
-                    case (int)CRUD.CREATE:
-                        int returnedId = createDependency();
+                    case (int)CRUD.CREATE://2
+                        int returnedId = createDependency();//get the id of the created dependency
                         Console.WriteLine($"The dependency's id: {returnedId} \n");
                         break;
-                    case (int)CRUD.READ:
-                        Console.WriteLine(readDependency());
+                    case (int)CRUD.READ://3
+                        Console.WriteLine(readDependency());//print the wanted dependency
                         break;
-                    case (int)CRUD.READALL:
-                        List<Dependency> returnedList = readAllDependencies();
-                        foreach (var dep in returnedList)
+                    case (int)CRUD.READALL://4
+                        List<Dependency> returnedList = readAllDependencies();//get the copy of the list
+                        foreach (var dep in returnedList)//print all the object
                             Console.WriteLine(dep);
                         break;
-                    case (int)CRUD.UPDATE:
-                        updateDependenies();
+                    case (int)CRUD.UPDATE://5
+                        updateDependenies();//call the update function
                         break;
-                    case (int)CRUD.DELETE:
-                        deleteDependency();
+                    case (int)CRUD.DELETE://6
+                        deleteDependency();//call the delete function
                         break;
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex)//catch exceptions in this menu
             {
                 Console.WriteLine(ex);
             }
