@@ -286,6 +286,8 @@ internal class Program
                     case (int)CRUD.DELETE://6
                         deleteEngineer();//call the delete function
                         break;
+                    default:
+                        break;
                 }
             }
             catch (Exception ex)//catch exceptions in this menu
@@ -324,6 +326,8 @@ internal class Program
                     case (int)CRUD.DELETE://6
                         deleteTask();//call the delete function
                         break;
+                    default:
+                        break;
                 }
             }
             catch (Exception ex)//catch exceptions in this menu
@@ -361,6 +365,8 @@ internal class Program
                         break;
                     case (int)CRUD.DELETE://6
                         deleteDependency();//call the delete function
+                        break;
+                    default:
                         break;
                 }
             }
