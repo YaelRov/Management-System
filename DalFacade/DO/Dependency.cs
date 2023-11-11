@@ -9,35 +9,11 @@ namespace DO;
 public record Dependency
 (
     int id,
-    int? DependentTask,
-    int? DependsOnTask
+    int? DependentTask,//nullable
+    int? DependsOnTask//nullable
 )
 {
-    public static int counterDependencies = 0;
-    public int Id { get { return id; } }
-    Dependency() :this(0,null,null) { }
+    public static int counterDependencies = 0;//counter for how many dependencies were created
+    public int Id { get { return id; } }//Id cannot be change so there is no set function
+    Dependency() :this(0,null,null) { }//c-tor
 }
-
-/*
-  #region characters
-    readonly int id;
-    int? dependentTask;
-    int? dependsOnTask;
-
-
-    #endregion
-    #region properties
-    public int Id { get { return id; } }
-    public int? DependentTask {  get { return dependentTask; } set { dependentTask = value; } }
-    public int? DependsOnTask { get { return dependsOnTask; } set { dependsOnTask = value; } }
-    #endregion
-    #region constructors
-    public Dependency(int? dependentTask, int? dependsOnTask, int id = -1)
-    {
-        this.id = id;
-        this.dependentTask = dependentTask;   
-        this.dependsOnTask = dependsOnTask;
-    }
-    public Dependency() { }
-    #endregion
- */
