@@ -6,12 +6,18 @@ using DO;
 
 public static class Initialization
 {
+    //defining variables for the interfaces
     private static IEngineer? s_dalEngineer;
     private static ITask? s_dalTask;
     private static IDependency? s_dalDependency;
 
-    private static readonly Random s_rand = new();
+    private static readonly Random s_rand = new();//a variable for randomal numbers
+
     #region methods
+    /// <summary>
+    /// a method that create 6 engineers
+    /// the method doesn't get parameters, and doesn't returns parameters
+    /// </summary>
     private static void createEngineers()
     {
         const int MIN_ID = 200000000;
@@ -21,6 +27,7 @@ public static class Initialization
             "Yoni Stern", "Avraham Silver", "Itzchak Elkias", "Yaakov Beker",
             "Refael Toledano", "Aharon Zusman"
         };
+        //going over the names array, and creating an engineer with each name
         foreach (var name in names)
         {
             int id;
@@ -31,8 +38,8 @@ public static class Initialization
             EngineerExperience level = (EngineerExperience)s_rand.Next(0, 3);
             string email = name.Replace(" ", "");
             email += "@gmail.com";
-            Engineer eng = new(id, name, email, level, cost);
-            s_dalEngineer.Create(eng);
+            Engineer eng = new(id, name, email, level, cost);//creating a new engineer with all the details
+            s_dalEngineer.Create(eng);//adding the engineer to the engineer list
         }
     }
     private static void createTasks()
