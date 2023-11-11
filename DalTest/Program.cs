@@ -3,9 +3,9 @@ using DalApi;
 using DO;
 
 namespace DalTest;
-
 internal class Program
 {
+    //defining interface variables that gets the implementation
     private static IEngineer? s_dalEngineer = new EngineerImplementation();
     private static ITask? s_dalTask = new TaskImplementation();
     private static IDependency? s_dalDependency = new DependencyImplementation();
@@ -13,8 +13,9 @@ internal class Program
     {
         try
         {
+            //calling the method that initializes the database
             Initialization.Do(s_dalEngineer!, s_dalTask!, s_dalDependency!);
-            mainMenu();
+            mainMenu();//calling the method of the main menu
         }
         catch (Exception ex)
         {
@@ -28,7 +29,7 @@ internal class Program
         int _id = Convert.ToInt32(Console.ReadLine());
         string _name = Console.ReadLine()!;
         string _email = Console.ReadLine()!;
-        EngineerExperience _level = (EngineerExperience)Convert.ToInt32(Console.ReadLine());
+        EngineerExperience _level =(EngineerExperience)Enum.Parse(typeof(EngineerExperience),Console.ReadLine()!);
         double _cost = Convert.ToDouble(Console.ReadLine());
         Engineer newEng = new(_id, _name, _email, _level, _cost);
         return s_dalEngineer!.Create(newEng);
@@ -49,7 +50,7 @@ internal class Program
         string? _remarks = Console.ReadLine();
         int? _engineerId = Convert.ToInt32(Console.ReadLine());
         Engineer checkExistingEngineer = s_dalEngineer!.Read((int)_engineerId!) ?? throw new Exception($"An object of type Engineer with ID {_engineerId} does not exist");
-        EngineerExperience? _complexityLevel = (EngineerExperience)Convert.ToInt32(Console.ReadLine());
+        EngineerExperience _complexityLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), Console.ReadLine()!);
         DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
         return s_dalTask!.Create(newTask);
     }
@@ -115,15 +116,20 @@ internal class Program
     #endregion
 
     #region update methods
+    /// <summary>
+    /// a function that updates the details of engineer, doesn't return anything
+    /// </summary>
+    /// <exception cref="Exception"></exception>
     static void updateEngineers()
     {
-        string userInput;
+        string userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of engineer to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        Engineer baseEng = s_dalEngineer!.Read(id) ?? throw new Exception("Engineer with this id does not exist");
-        Console.WriteLine(baseEng);
+        Engineer baseEng = s_dalEngineer!.Read(id) ?? throw new Exception("Engineer with this id does not exist");//reading the engineer with the enterd id
+        Console.WriteLine(baseEng);//printing the details of the engineer
         Console.WriteLine("Enter engineer's details to update. If you don't want to change press enter.\n");
-
+        //getting from the user the details for each field of the engineer for string-type variable, 
+        //and than: if it empty string, assign the last value of this field, and if not- assign the user input
         Console.WriteLine("name:");
         userInput = Console.ReadLine()!;
         string _name = string.IsNullOrEmpty(userInput) ? baseEng.Name :userInput;
@@ -134,25 +140,30 @@ internal class Program
 
         Console.WriteLine("level:");
         userInput = Console.ReadLine()!;
-        EngineerExperience _level = string.IsNullOrEmpty(userInput) ? baseEng.Level : (EngineerExperience)Convert.ToInt32(userInput);
+        EngineerExperience _level = string.IsNullOrEmpty(userInput) ? baseEng.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), userInput);
 
         Console.WriteLine("cost:");
         userInput = Console.ReadLine()!;
         double _cost = string.IsNullOrEmpty(userInput) ? baseEng.Cost : Convert.ToDouble(userInput);
 
-        Engineer updateEng = new(id, _name,_email, _level,_cost);
-        s_dalEngineer!.Update(updateEng);
+        Engineer updateEng = new(id, _name,_email, _level,_cost);//creating a new entity of engineer with the details
+        s_dalEngineer!.Update(updateEng);//updating the engineers list
     }
+    /// <summary>
+    /// a function that updates the details of task, doesn't return anything
+    /// </summary>
+    /// <exception cref="Exception"></exception>
     static void updateTasks()
     {
-        string userInput;
+        string userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of task to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        DO.Task baseTask = s_dalTask!.Read(id) ?? throw new Exception("Task with this id does not exist");
-        Console.WriteLine(baseTask);
-        
+        DO.Task baseTask = s_dalTask!.Read(id) ?? throw new Exception("Task with this id does not exist");//reading the task with the enterd id
+        Console.WriteLine(baseTask);//printing the details of the task
+
         Console.WriteLine("Enter task's details to update. If you don't want to change press enter.\n");
-       
+        //getting from the user the details for each field of the task for string-type variable, 
+        //and than: if it empty string, assign the last value of this field, and if not- assign the user input
         Console.WriteLine("description:");
         userInput = Console.ReadLine()!;
         string _description =  string.IsNullOrEmpty(userInput) ? baseTask.Description : userInput;
@@ -200,37 +211,45 @@ internal class Program
         Console.WriteLine("engineer's id:");
         userInput = Console.ReadLine()!;
         int? _engineerId = string.IsNullOrEmpty(userInput) ? baseTask.EngineerId : Convert.ToInt32(userInput);
+        //checking if the engineer with the entered id is exists
         Engineer checkExistingEngineer = s_dalEngineer!.Read((int)_engineerId!) ?? throw new Exception($"An object of type Engineer with ID {_engineerId} does not exist");
 
 
         Console.WriteLine("complexity level:");
         userInput = Console.ReadLine()!;
-        EngineerExperience? _complexityLevel = string.IsNullOrEmpty(userInput) ? baseTask.ComplexityLevel : (EngineerExperience)(Convert.ToInt32(userInput));
-        DO.Task updateTask = new (id, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
-        s_dalTask!.Update(updateTask);
+        EngineerExperience? _complexityLevel = string.IsNullOrEmpty(userInput) ? baseTask.ComplexityLevel : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), userInput); ;
+        DO.Task updateTask = new (id, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);//creating a new entity of task with the details
+        s_dalTask!.Update(updateTask);//updating the tasks list
     }
+    /// <summary>
+    /// a function that updates the details of dependency, doesn't return anything
+    /// </summary>
+    /// <exception cref="Exception"></exception>
     static void updateDependenies()
     {
-        string userInput;
+        string userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of dependency to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        Dependency baseDep = s_dalDependency!.Read(id) ?? throw new Exception("Dependency with this id does not exist");
-        Console.WriteLine(baseDep);
+        Dependency baseDep = s_dalDependency!.Read(id) ?? throw new Exception("Dependency with this id does not exist");//reading the dependency with the enterd id
+        Console.WriteLine(baseDep);//printing the details of the dependency
         Console.WriteLine("Enter dependency's details to update. If you don't want to change press enter.\n");
-
+        //getting from the user the details for each field of the dependency for string-type variable, 
+        //and than: if it empty string, assign the last value of this field, and if not- assign the user input
         Console.WriteLine("dependent task:");
         userInput = Console.ReadLine()!;
         int? _dependentTask = string.IsNullOrEmpty(userInput) ? baseDep.DependentTask : Convert.ToInt32(userInput);
+        //checking if the task with the entered id is exists
         DO.Task checkExisting1 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");
 
 
         Console.WriteLine("depends on task:");
         userInput = Console.ReadLine()!;
         int? _dependsOnTask = string.IsNullOrEmpty(userInput) ? baseDep.DependsOnTask : Convert.ToInt32(userInput);
+        //checking if the task with the entered id is exists
         DO.Task checkExisting2 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");
 
-        Dependency updateDep = new(id, _dependentTask, _dependsOnTask);
-        s_dalDependency!.Update(updateDep);
+        Dependency updateDep = new(id, _dependentTask, _dependsOnTask);//creating a new entity of dependency with the details
+        s_dalDependency!.Update(updateDep);//updating the dependencies list
     }
     #endregion
 
@@ -370,24 +389,30 @@ internal class Program
             }
         }
     }
+    /// <summary>
+    /// A menu function that manages access to the database, by calling the menu of the requested entity
+    /// </summary>
     static void mainMenu()
     {
+        //run till the user entered '0' to exit
         while (true)
         {
             Console.WriteLine("Choose an entity that you whant to check:\n 0 to exit\n 1 to Engineer\n 2 to Task\n 3 to Dependency\n");
-            int entityChoice = Convert.ToInt32(Console.ReadLine());
+            int entityChoice = Convert.ToInt32(Console.ReadLine());//geting the choice from the user
             switch (entityChoice)
             {
-                case 0:
+                case 0://exit
                     return;
-                case (int)EntityType.ENGINEER:
-                    engineerMenu();
+                case (int)EntityType.ENGINEER://1
+                    engineerMenu();//calling the function that manages the engineer menu
                     break;
-                case (int)EntityType.TASK:
-                    taskMenu();
+                case (int)EntityType.TASK://2
+                    taskMenu();//calling the function that manages the task menu
                     break;
-                case (int)EntityType.DEPENDENCY:
-                    dependencyMenu();
+                case (int)EntityType.DEPENDENCY://3
+                    dependencyMenu();//calling the function that manages the dependency menu
+                    break;
+                default:
                     break;
             }
         }

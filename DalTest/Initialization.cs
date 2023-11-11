@@ -13,10 +13,10 @@ public static class Initialization
 
     private static readonly Random s_rand = new();//a variable for randomal numbers
 
-    #region methods
+    #region functions
     /// <summary>
-    /// a method that create 6 engineers
-    /// the method doesn't get parameters, and doesn't returns parameters
+    /// a function that create 6 engineers
+    /// the function doesn't get parameters, and doesn't returns parameters
     /// </summary>
     private static void createEngineers()
     {
@@ -33,7 +33,7 @@ public static class Initialization
             int id;
             do
                 id = s_rand.Next(MIN_ID, MAX_ID);
-            while (s_dalEngineer!.Read(id) != null);
+            while (s_dalEngineer!.Read(id) != null);//checking if the random id doesn't exists
             double cost = s_rand.Next(30, 100);
             EngineerExperience level = (EngineerExperience)s_rand.Next(0, 3);
             string email = name.Replace(" ", "");
@@ -42,8 +42,13 @@ public static class Initialization
             s_dalEngineer.Create(eng);//adding the engineer to the engineer list
         }
     }
+    /// <summary>
+    /// a function that create 20 tasks
+    /// the function doesn't get parameters, and doesn't returns parameters
+    /// </summary>
     private static void createTasks()
     {
+        //creating an object of details for 20 tasks
         var buildingTasks = new[]
         {
             new{ description = "Measure and mark the dimensions of the foundation.", alias = "Foundation Dimensions", deliverable = "measurement" },
@@ -69,6 +74,8 @@ public static class Initialization
         };
 
         string[] remarksArray = { "Be carful", "It's easy", "It's hard", "Do it accurately" };
+
+        //going over the buildingTasks array, and creating an task with each details object
         foreach (var task in buildingTasks)
         {
             string description = task.description;
@@ -93,27 +100,42 @@ public static class Initialization
             List<Engineer> engineers = s_dalEngineer!.ReadAll();
             int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id;
 
+            // creating a new task with all the details
             Task newTask = new(-1,description, alias, milestone, createdAt, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
-            s_dalTask!.Create(newTask);
+            s_dalTask!.Create(newTask);//adding the new task to the tasks list
         }
     }
+
+    /// <summary>
+    /// a function that create 40 dependencies
+    /// the function doesn't get parameters, and doesn't returns parameters
+    /// </summary>
     private static void createDependencies()
     { 
-        List<Task> Tasks = s_dalTask!.ReadAll();
+        List<Task> Tasks = s_dalTask!.ReadAll();//getting all the tasks list
         int index = 0;
+        //going over the tasks list, and creating dependencies according to the tasks
         foreach (var task in Tasks)
         {
             if (index > 2)
             {
+                //creating 3 dependencies for each task with index>2
                 for (int j = index - 3; j < index; j++)
                 {
-                    Dependency dep = new(-1,task.Id, Tasks[j].Id);
-                    s_dalDependency!.Create(dep);
+                    Dependency dep = new(-1,task.Id, Tasks[j].Id);//creating a new dependency
+                    s_dalDependency!.Create(dep);//adding the dependency to the dependencies list
                 }
             }
             index++;
         }
     }
+    /// <summary>
+    /// a function that initializes the database by calling the functions that creates the entities
+    /// </summary>
+    /// <param name="dalEngineer">interface variable</param>
+    /// <param name="dalTask">interface variable</param>
+    /// <param name="dalDependency">interface variable</param>
+    /// <exception cref="NullReferenceException"></exception>
     public static void Do(IEngineer dalEngineer, ITask dalTask, IDependency dalDependency)
     {
         s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
