@@ -18,7 +18,7 @@ public class DependencyImplementation : IDependency
     public void Delete(int id)
     {
         Dependency? obj = DataSource.Dependencies.Find(curDep => curDep.Id == id);
-        if (obj == null)
+        if (obj is null)
             throw new Exception($"An object of type Dependency with ID {id} does not exist");
         DataSource.Dependencies.Remove(obj);
         Dependency.counterDependencies--;

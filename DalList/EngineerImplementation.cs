@@ -21,7 +21,7 @@ public class EngineerImplementation : IEngineer
 public void Delete(int id)
     {
         Engineer? obj = DataSource.Engineers.Find(curEngineer => curEngineer.Id == id);
-        if (obj == null)
+        if (obj is null)
             throw new Exception($"An object of type Engineer with ID {id} does not exist");
         DataSource.Engineers.Remove(obj);
         Engineer.counterEngineers--;
@@ -40,7 +40,7 @@ public void Delete(int id)
     public void Update(Engineer item)
     {
         Engineer? obj = DataSource.Engineers.Find(curEngineer => curEngineer.Id == item.Id);
-        if (obj == null)
+        if (obj is null)
             throw new Exception($"An object of type Engineer with ID {item.Id} does not exist");
         DataSource.Engineers.Remove(obj);
         DataSource.Engineers.Add(item);
