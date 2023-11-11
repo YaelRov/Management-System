@@ -19,39 +19,8 @@ public record Engineer
     double Cost
 )
 {
-    public static int counterEngineers = 0;
-    public int Id { get { return id; } }
-    Engineer() : this(-1,"","", EngineerExperience.Novice,0) { }
+    public static int counterEngineers = 0;//counter for how many engineers were created
+    public int Id { get { return id; } }//Id cannot be change so there is no set function
+    Engineer() : this(-1,"","", EngineerExperience.Novice,0) { }//c-tor
 }
 
-
-/*
-     #region characters
-    int id;
-    string name;
-    string email;
-    EngineerExperience level;
-    double cost;
-
-    public static int counterEngineers = 0;
-
-    #endregion
-    #region properties
-    public int Id { get { return id; } }
-    public string Name { get { return name; } set { name = value; } }
-    public string Email { get { return email; } set { email = value; } }
-    public EngineerExperience Level { get { return level; } set { level = value; } }
-    public double Cost { get { return cost; } set { cost = value; } }
-    #endregion
-    #region constructors
-    public Engineer(int id, string name = "", string email = "", EngineerExperience level = EngineerExperience.Novice, double cost = 28.12)
-    {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.level = level;
-        this.cost = cost;
-    }
-    public Engineer(){}
-    #endregion
- */
