@@ -17,8 +17,8 @@ public class DependencyImplementation : IDependency
 
     public void Delete(int id)// gets an id number of a dependency and delete it out from the list
     {
-        Dependency? obj = DataSource.Dependencies.Find(curDep => curDep.Id == id);//find the dependency with this id number
-        if (obj == null)//if it's not exsist in the list
+        Dependency? obj = DataSource.Dependencies.Find(curDep => curDep.Id == id);//checks if it exsists in the list
+        if (obj is null)//if the object does not exist
             throw new Exception($"An object of type Dependency with ID {id} does not exist");
         DataSource.Dependencies.Remove(obj);//remove from the list
         Dependency.counterDependencies--;//subtract 1 from the counter
@@ -32,15 +32,15 @@ public class DependencyImplementation : IDependency
 
     public List<Dependency> ReadAll()
     {
-        return new List<Dependency>(DataSource.Dependencies);//
+        return new List<Dependency>(DataSource.Dependencies);//return a copy of the list
     }
 
-    public void Update(Dependency item)
+    public void Update(Dependency item)//get a dependency to update
     {
-        Dependency? obj = DataSource.Dependencies.Find(curDep => curDep.Id == item.Id);
-        if (obj == null)
+        Dependency? obj = DataSource.Dependencies.Find(curDep => curDep.Id == item.Id);//find the object in the list
+        if (obj == null)//if does not exist in the list
             throw new Exception($"An object of type Dependency with ID {item.Id} does not exist");
-        DataSource.Dependencies.Remove(obj);
-        DataSource.Dependencies.Add(item);
+        DataSource.Dependencies.Remove(obj);//delete the old dependency
+        DataSource.Dependencies.Add(item);//add the updated one
     }
 }
