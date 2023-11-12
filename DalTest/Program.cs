@@ -23,6 +23,10 @@ internal class Program
         }
     }
     #region create methods
+    /// <summary>
+    /// cteate a new entity of engineer
+    /// </summary>
+    /// <returns>the id of the new engineer</returns>
     static int createEngineer()
     {
         Console.WriteLine("Enter engineer's details: id, name, email, level and cost:\n");
@@ -33,7 +37,12 @@ internal class Program
         double _cost = Convert.ToDouble(Console.ReadLine());
         Engineer newEng = new(_id, _name, _email, _level, _cost);//create new enginner
         return s_dalEngineer!.Create(newEng);//add to the list
-    }//cteate a new object of engineer and return the id number
+    }
+    /// <summary>
+    ///cteate a new entity of task and
+    /// </summary>
+    /// <returns>the id of the new task</returns>
+    /// <exception cref="Exception"></exception>
     static int createTask()
     {
         Console.WriteLine("Enter task's details: description, alias, milestone.\n dates of: creating, start, scheduled date, forecast , deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
@@ -52,8 +61,14 @@ internal class Program
         Engineer checkExistingEngineer = s_dalEngineer!.Read((int)_engineerId!) ?? throw new Exception($"An object of type Engineer with ID {_engineerId} does not exist");
         EngineerExperience _complexityLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), Console.ReadLine()!);
         DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
-        return s_dalTask!.Create(newTask);
+        return s_dalTask!.Create(newTask);//add to the list
     }
+
+    /// <summary>
+    /// cteate a new entity of dependency
+    /// </summary>
+    /// <returns>the id of the new dependency</returns>
+    /// <exception cref="Exception"></exception>
     static int createDependency()
     {
         Console.WriteLine("Enter dependency's details: dependent task and depends-on task:\n");
@@ -61,13 +76,18 @@ internal class Program
         DO.Task checkExisting1 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");//check if the id of the task exsists
         int? _dependsOnTask = Convert.ToInt32(Console.ReadLine());
         DO.Task checkExisting2 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");//check if the id of the task exsists
-        Dependency newDep = new(-1, _dependentTask, _dependsOnTask);//add to the list, the id will be created in the Create function
+        Dependency newDep = new(-1, _dependentTask, _dependsOnTask);//
         return s_dalDependency!.Create(newDep);//add to the list
-    }//cteate a new object of dependency and return the id number
+    }
     #endregion
 
     #region read methods
-    static Engineer? readEngineer()//return an object of the wanted engineer
+    /// <summary>
+    /// function for reading specific engineer by it's id
+    /// </summary>
+    /// <returns>an object of the reguested engineer</returns>
+    /// <exception cref="Exception"></exception>
+    static Engineer? readEngineer()
     {
         Console.WriteLine("Enter engineer's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
@@ -76,8 +96,12 @@ internal class Program
             throw new Exception($"An object of type Engineer with ID {id} does not exist");
         return returnedEng;//return the found object
     }
-
-    static DO.Task? readTask()//return an object of the wanted task
+    /// <summary>
+    /// function for reading specific task by it's id
+    /// </summary>
+    /// <returns> an object of the requested task</returns>
+    /// <exception cref="Exception"></exception>
+    static DO.Task? readTask()
     {
         Console.WriteLine("Enter task's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
@@ -86,8 +110,12 @@ internal class Program
             throw new Exception($"An object of type Task with ID {id} does not exist");
         return returnedTask;//return the found object
     }
-
-    static Dependency? readDependency()//return an object of the wanted dependency
+    /// <summary>
+    /// function for reading specific dependency by it's id
+    /// </summary>
+    /// <returns>an object of the requested dependency</returns>
+    /// <exception cref="Exception"></exception>
+    static Dependency? readDependency()
     {
         Console.WriteLine("Enter dependency's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
@@ -99,17 +127,29 @@ internal class Program
     #endregion
 
     #region readAll methods
-    static List<Engineer> readAllEngineers()//return a copy of the list
+    /// <summary>
+    /// function for reading all the engineers
+    /// </summary>
+    /// <returns>a copy of the engineers list</returns>
+    static List<Engineer> readAllEngineers()
     {
         return s_dalEngineer!.ReadAll();
     }
 
-    static List<DO.Task> readAllTasks()//return a copy of the list
+    /// <summary>
+    /// function for reading all the tasks
+    /// </summary>
+    /// <returns>a copy of the tasks list</returns>
+    static List<DO.Task> readAllTasks()
     {
         return s_dalTask!.ReadAll();
     }
 
-    static List<Dependency> readAllDependencies()//return a copy of the list
+    /// <summary>
+    /// function for reading all the dependencies
+    /// </summary>
+    /// <returns>a copy of the dependencies list</returns>
+    static List<Dependency> readAllDependencies()
     {
         return s_dalDependency!.ReadAll();
     }
@@ -275,7 +315,11 @@ internal class Program
         s_dalDependency!.Delete(id);//call the Delete function
     }//delete a wanted dependency
     #endregion
-    static void engineerMenu()//the menu of operations on engineers
+
+    /// <summary>
+    /// the menu of operations on engineers
+    /// </summary>
+    static void engineerMenu()
     {
         while (true)//run till the user enter '1' to exit
         {
@@ -315,7 +359,10 @@ internal class Program
             }
         }
     }
-    static void taskMenu()//the menu of operations on tasks
+    /// <summary>
+    /// the menu of operations on tasks
+    /// </summary>
+    static void taskMenu()
     {
         while (true)//run till the user enter '1' to exit
         {
@@ -355,7 +402,10 @@ internal class Program
             }
         }
     }
-    static void dependencyMenu()//the menu of operations on dependencies
+    /// <summary>
+    /// the menu of operations on dependencies
+    /// </summary>
+    static void dependencyMenu()
     {
         while (true)//run till the user enter '1' to exit
         {
