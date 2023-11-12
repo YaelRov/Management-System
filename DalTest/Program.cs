@@ -294,26 +294,33 @@ internal class Program
     #endregion
 
     #region delete methods
+    /// <summary>
+    /// delete a requested engineer
+    /// </summary>
     static void deleteEngineer()
     {
         Console.WriteLine("Enter engineer's id for deleting:\n");
         int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
         s_dalEngineer!.Delete(id);//call the Delete function
-    }//delete a wanted engineer
-
+    }
+    /// <summary>
+    ///delete a reguested task
+    /// </summary>
     static void deleteTask()
     {
         Console.WriteLine("Enter task's id for deleting:\n");
         int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
         s_dalTask!.Delete(id);//call the Delete function
-    }//delete a wanted task
-
+    }
+    /// <summary>
+    ///delete a requested dependency
+    /// </summary>
     static void deleteDependency()
     {
         Console.WriteLine("Enter dependency's id for deleting:\n");
         int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
         s_dalDependency!.Delete(id);//call the Delete function
-    }//delete a wanted dependency
+    }
     #endregion
 
     /// <summary>
