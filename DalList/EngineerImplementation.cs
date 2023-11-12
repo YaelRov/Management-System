@@ -6,7 +6,7 @@ using DO;
 
 using System.Collections.Generic;
 
-public class EngineerImplementation : IEngineer
+internal class EngineerImplementation : IEngineer
 {
     /// <summary>
     /// gets an engineer object and add it to the list

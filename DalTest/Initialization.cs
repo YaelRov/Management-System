@@ -7,9 +7,8 @@ using DO;
 public static class Initialization
 {
     //defining variables for the interfaces
-    private static IEngineer? s_dalEngineer;
-    private static ITask? s_dalTask;
-    private static IDependency? s_dalDependency;
+    private static IDal? s_dal;
+
 
     private static readonly Random s_rand = new();//a variable for randomal numbers
 
@@ -33,13 +32,13 @@ public static class Initialization
             int id;
             do
                 id = s_rand.Next(MIN_ID, MAX_ID);
-            while (s_dalEngineer!.Read(id) != null);//checking if the random id doesn't exists
+            while (s_dal!.Engineer.Read(id) != null);//checking if the random id doesn't exists
             double cost = s_rand.Next(30, 100);
             EngineerExperience level = (EngineerExperience)s_rand.Next(0, 3);
             string email = name.Replace(" ", "");
             email += "@gmail.com";
             Engineer eng = new(id, name, email, level, cost);//creating a new engineer with all the details
-            s_dalEngineer.Create(eng);//adding the engineer to the engineer list
+            s_dal.Engineer.Create(eng);//adding the engineer to the engineer list
         }
     }
     /// <summary>
@@ -97,12 +96,12 @@ public static class Initialization
             string deliverables = task.deliverable;
             string remarks = remarksArray[s_rand.Next(0, 4)];
             EngineerExperience complexityLevel = (EngineerExperience)s_rand.Next(0, 5);
-            List<Engineer> engineers = s_dalEngineer!.ReadAll();
+            List<Engineer> engineers = s_dal!.Engineer.ReadAll();
             int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id;
 
             // creating a new task with all the details
             Task newTask = new(-1,description, alias, milestone, createdAt, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
-            s_dalTask!.Create(newTask);//adding the new task to the tasks list
+            s_dal!.Task.Create(newTask);//adding the new task to the tasks list
         }
     }
 
@@ -112,7 +111,7 @@ public static class Initialization
     /// </summary>
     private static void createDependencies()
     { 
-        List<Task> Tasks = s_dalTask!.ReadAll();//getting all the tasks list
+        List<Task> Tasks = s_dal!.Task.ReadAll();//getting all the tasks list
         int index = 0;
         //going over the tasks list, and creating dependencies according to the tasks
         foreach (var task in Tasks)
@@ -123,7 +122,7 @@ public static class Initialization
                 for (int j = index - 3; j < index; j++)
                 {
                     Dependency dep = new(-1,task.Id, Tasks[j].Id);//creating a new dependency
-                    s_dalDependency!.Create(dep);//adding the dependency to the dependencies list
+                    s_dal!.Dependency.Create(dep);//adding the dependency to the dependencies list
                 }
             }
             index++;
@@ -136,11 +135,9 @@ public static class Initialization
     /// <param name="dalTask">interface variable</param>
     /// <param name="dalDependency">interface variable</param>
     /// <exception cref="NullReferenceException"></exception>
-    public static void Do(IEngineer dalEngineer, ITask dalTask, IDependency dalDependency)
+    public static void Do(IDal dal)
     {
-        s_dalEngineer = dalEngineer ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalTask = dalTask ?? throw new NullReferenceException("DAL can not be null!");
-        s_dalDependency = dalDependency ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal=dal ?? throw new NullReferenceException("DAL can not be null!");
         createEngineers();
         createTasks();
         createDependencies();

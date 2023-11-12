@@ -5,16 +5,14 @@ using DO;
 namespace DalTest;
 internal class Program
 {
-    //defining interface variables that gets the implementation
-    private static IEngineer? s_dalEngineer = new EngineerImplementation();
-    private static ITask? s_dalTask = new TaskImplementation();
-    private static IDependency? s_dalDependency = new DependencyImplementation();
+    //defining interface variable that gets the implementation
+    static readonly IDal s_dal = new DalList();
     static void Main(string[] args)
     {
         try
         {
             //calling the method that initializes the database
-            Initialization.Do(s_dalEngineer!, s_dalTask!, s_dalDependency!);
+            Initialization.Do(s_dal);
             mainMenu();//calling the method of the main menu
         }
         catch (Exception ex)
@@ -36,7 +34,7 @@ internal class Program
         EngineerExperience _level =(EngineerExperience)Enum.Parse(typeof(EngineerExperience),Console.ReadLine()!);
         double _cost = Convert.ToDouble(Console.ReadLine());
         Engineer newEng = new(_id, _name, _email, _level, _cost);//create new enginner
-        return s_dalEngineer!.Create(newEng);//add to the list
+        return s_dal!.Engineer.Create(newEng);//add to the list
     }
     /// <summary>
     ///cteate a new entity of task and
@@ -58,10 +56,10 @@ internal class Program
         string? _deliverables = Console.ReadLine();
         string? _remarks = Console.ReadLine();
         int? _engineerId = Convert.ToInt32(Console.ReadLine());
-        Engineer checkExistingEngineer = s_dalEngineer!.Read((int)_engineerId!) ?? throw new Exception($"An object of type Engineer with ID {_engineerId} does not exist");
+        Engineer checkExistingEngineer = s_dal!.Engineer.Read((int)_engineerId!) ?? throw new Exception($"An object of type Engineer with ID {_engineerId} does not exist");
         EngineerExperience _complexityLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), Console.ReadLine()!);
         DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
-        return s_dalTask!.Create(newTask);//add to the list
+        return s_dal!.Task.Create(newTask);//add to the list
     }
 
     /// <summary>
@@ -73,11 +71,11 @@ internal class Program
     {
         Console.WriteLine("Enter dependency's details: dependent task and depends-on task:\n");
         int? _dependentTask = Convert.ToInt32(Console.ReadLine());//get details
-        DO.Task checkExisting1 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");//check if the id of the task exsists
+        DO.Task checkExisting1 = s_dal!.Task.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");//check if the id of the task exsists
         int? _dependsOnTask = Convert.ToInt32(Console.ReadLine());
-        DO.Task checkExisting2 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");//check if the id of the task exsists
-        Dependency newDep = new(-1, _dependentTask, _dependsOnTask);//
-        return s_dalDependency!.Create(newDep);//add to the list
+        DO.Task checkExisting2 = s_dal!.Task.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");//check if the id of the task exsists
+        Dependency newDep = new(-1, _dependentTask, _dependsOnTask);
+        return s_dal!.Dependency.Create(newDep);//add to the list
     }
     #endregion
 
@@ -91,7 +89,7 @@ internal class Program
     {
         Console.WriteLine("Enter engineer's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
-        Engineer? returnedEng = s_dalEngineer!.Read(id);//call the read function
+        Engineer? returnedEng = s_dal!.Engineer.Read(id);//call the read function
         if(returnedEng is null)//if the wanted object does not exist
             throw new Exception($"An object of type Engineer with ID {id} does not exist");
         return returnedEng;//return the found object
@@ -105,7 +103,7 @@ internal class Program
     {
         Console.WriteLine("Enter task's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
-        DO.Task? returnedTask = s_dalTask!.Read(id);//call the read function
+        DO.Task? returnedTask = s_dal!.Task.Read(id);//call the read function
         if ( returnedTask is null)//if the wanted object does not exist
             throw new Exception($"An object of type Task with ID {id} does not exist");
         return returnedTask;//return the found object
@@ -119,7 +117,7 @@ internal class Program
     {
         Console.WriteLine("Enter dependency's id for reading:\n");
         int id = Convert.ToInt32(Console.ReadLine());
-        Dependency? returnedDep= s_dalDependency!.Read(id);//call the read function
+        Dependency? returnedDep= s_dal!.Dependency.Read(id);//call the read function
         if (returnedDep is null)//if the wanted object does not exist
             throw new Exception($"An object of type Dependency with ID {id} does not exist");
         return returnedDep;//return the found object
@@ -133,7 +131,7 @@ internal class Program
     /// <returns>a copy of the engineers list</returns>
     static List<Engineer> readAllEngineers()
     {
-        return s_dalEngineer!.ReadAll();
+        return s_dal!.Engineer.ReadAll();
     }
 
     /// <summary>
@@ -142,7 +140,7 @@ internal class Program
     /// <returns>a copy of the tasks list</returns>
     static List<DO.Task> readAllTasks()
     {
-        return s_dalTask!.ReadAll();
+        return s_dal!.Task.ReadAll();
     }
 
     /// <summary>
@@ -151,7 +149,7 @@ internal class Program
     /// <returns>a copy of the dependencies list</returns>
     static List<Dependency> readAllDependencies()
     {
-        return s_dalDependency!.ReadAll();
+        return s_dal!.Dependency.ReadAll();
     }
     #endregion
 
@@ -165,7 +163,7 @@ internal class Program
         string userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of engineer to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        Engineer baseEng = s_dalEngineer!.Read(id) ?? throw new Exception("Engineer with this id does not exist");//reading the engineer with the enterd id
+        Engineer baseEng = s_dal!.Engineer.Read(id) ?? throw new Exception("Engineer with this id does not exist");//reading the engineer with the enterd id
         Console.WriteLine(baseEng);//printing the details of the engineer
         Console.WriteLine("Enter engineer's details to update. If you don't want to change press enter.\n");
         //getting from the user the details for each field of the engineer for string-type variable, 
@@ -187,7 +185,7 @@ internal class Program
         double _cost = string.IsNullOrEmpty(userInput) ? baseEng.Cost : Convert.ToDouble(userInput);
 
         Engineer updateEng = new(id, _name,_email, _level,_cost);//creating a new entity of engineer with the details
-        s_dalEngineer!.Update(updateEng);//updating the engineers list
+        s_dal!.Engineer.Update(updateEng);//updating the engineers list
     }
     /// <summary>
     /// a function that updates the details of task, doesn't return anything
@@ -198,7 +196,7 @@ internal class Program
         string userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of task to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        DO.Task baseTask = s_dalTask!.Read(id) ?? throw new Exception("Task with this id does not exist");//reading the task with the enterd id
+        DO.Task baseTask = s_dal!.Task.Read(id) ?? throw new Exception("Task with this id does not exist");//reading the task with the enterd id
         Console.WriteLine(baseTask);//printing the details of the task
 
         Console.WriteLine("Enter task's details to update. If you don't want to change press enter.\n");
@@ -252,14 +250,14 @@ internal class Program
         userInput = Console.ReadLine()!;
         int? _engineerId = string.IsNullOrEmpty(userInput) ? baseTask.EngineerId : Convert.ToInt32(userInput);
         //checking if the engineer with the entered id is exists
-        Engineer checkExistingEngineer = s_dalEngineer!.Read((int)_engineerId!) ?? throw new Exception($"An object of type Engineer with ID {_engineerId} does not exist");
+        Engineer checkExistingEngineer = s_dal!.Engineer.Read((int)_engineerId!) ?? throw new Exception($"An object of type Engineer with ID {_engineerId} does not exist");
 
 
         Console.WriteLine("complexity level:");
         userInput = Console.ReadLine()!;
         EngineerExperience? _complexityLevel = string.IsNullOrEmpty(userInput) ? baseTask.ComplexityLevel : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), userInput); ;
         DO.Task updateTask = new (id, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);//creating a new entity of task with the details
-        s_dalTask!.Update(updateTask);//updating the tasks list
+        s_dal!.Task.Update(updateTask);//updating the tasks list
     }
     /// <summary>
     /// a function that updates the details of dependency, doesn't return anything
@@ -270,7 +268,7 @@ internal class Program
         string userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of dependency to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        Dependency baseDep = s_dalDependency!.Read(id) ?? throw new Exception("Dependency with this id does not exist");//reading the dependency with the enterd id
+        Dependency baseDep = s_dal!.Dependency.Read(id) ?? throw new Exception("Dependency with this id does not exist");//reading the dependency with the enterd id
         Console.WriteLine(baseDep);//printing the details of the dependency
         Console.WriteLine("Enter dependency's details to update. If you don't want to change press enter.\n");
         //getting from the user the details for each field of the dependency for string-type variable, 
@@ -279,17 +277,17 @@ internal class Program
         userInput = Console.ReadLine()!;
         int? _dependentTask = string.IsNullOrEmpty(userInput) ? baseDep.DependentTask : Convert.ToInt32(userInput);
         //checking if the task with the entered id is exists
-        DO.Task checkExisting1 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");
+        DO.Task checkExisting1 = s_dal!.Task.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");
 
 
         Console.WriteLine("depends on task:");
         userInput = Console.ReadLine()!;
         int? _dependsOnTask = string.IsNullOrEmpty(userInput) ? baseDep.DependsOnTask : Convert.ToInt32(userInput);
         //checking if the task with the entered id is exists
-        DO.Task checkExisting2 = s_dalTask!.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");
+        DO.Task checkExisting2 = s_dal!.Task.Read((int)_dependentTask!) ?? throw new Exception($"An object of type Task with ID {_dependentTask} does not exist");
 
         Dependency updateDep = new(id, _dependentTask, _dependsOnTask);//creating a new entity of dependency with the details
-        s_dalDependency!.Update(updateDep);//updating the dependencies list
+        s_dal!.Dependency.Update(updateDep);//updating the dependencies list
     }
     #endregion
 
@@ -301,7 +299,7 @@ internal class Program
     {
         Console.WriteLine("Enter engineer's id for deleting:\n");
         int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
-        s_dalEngineer!.Delete(id);//call the Delete function
+        s_dal!.Engineer.Delete(id);//call the Delete function
     }
     /// <summary>
     ///delete a reguested task
@@ -310,7 +308,7 @@ internal class Program
     {
         Console.WriteLine("Enter task's id for deleting:\n");
         int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
-        s_dalTask!.Delete(id);//call the Delete function
+        s_dal!.Task.Delete(id);//call the Delete function
     }
     /// <summary>
     ///delete a requested dependency
@@ -319,7 +317,7 @@ internal class Program
     {
         Console.WriteLine("Enter dependency's id for deleting:\n");
         int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
-        s_dalDependency!.Delete(id);//call the Delete function
+        s_dal!.Dependency.Delete(id);//call the Delete function
     }
     #endregion
 
