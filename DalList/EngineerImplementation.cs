@@ -16,9 +16,8 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="Exception"></exception>
     public int Create(Engineer item)
     {
-        Engineer? obj = DataSource.Engineers.Find(curEngineer => curEngineer.Id == item.Id);//check if the same id is exist already
-        if (obj is not null)//if exist already the same id number
-            throw new Exception($"An object of type Engineer with ID {item.Id} already exists");
+        if (Read(item.Id) is not null)//if exist already the same id number
+            throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
         DataSource.Engineers.Add(item);//add to the list
         Engineer.counterEngineers++;//add 1 to the counter of the engineers
         return item.Id;
@@ -30,11 +29,9 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        var foundEngineer = DataSource.Engineers
-                      .Where(curEngineer => curEngineer.Id == id)
-                      .FirstOrDefault();
+        Engineer? foundEngineer = Read(id);
         if (foundEngineer is null)//if the object does not exist
-            throw new Exception($"An object of type Engineer with ID {id} does not exist");
+            throw new DalDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
         DataSource.Engineers.Remove(foundEngineer);//remove from the list
         Engineer.counterEngineers--;//subtract 1 from the counter
     }
@@ -51,17 +48,25 @@ internal class EngineerImplementation : IEngineer
                      .FirstOrDefault();
         return foundEngineer;
     }
+
+    public Engineer? Read(Func<Engineer, bool> filter) //stage 2
+    {
+        return DataSource.Engineers
+              .FirstOrDefault(filter);
+    }
     /// <summary>
     /// reading all the list of the engineers
     /// </summary>
     /// <returns>copy of the engineers list</returns>
-    public List<Engineer> ReadAll()
+
+    public IEnumerable<Engineer?> ReadAll(Func<Engineer?, bool>? filter = null) //stage 2
     {
-        var returnedList = DataSource.Engineers
-                    .Where(curEngineer => true)
-                    .ToList<Engineer>();
-        return returnedList;
+        if (filter == null)
+            return DataSource.Engineers.Select(item => item);
+        else
+            return DataSource.Engineers.Where(filter);
     }
+
     /// <summary>
     /// updating an engineer
     /// </summary>
@@ -70,11 +75,9 @@ internal class EngineerImplementation : IEngineer
     public void Update(Engineer item)
     {
         //find the object in the list
-        var foundEngineer = DataSource.Engineers
-             .Where(curEngineer => curEngineer.Id == item.Id)
-             .FirstOrDefault();
+        var foundEngineer = Read(item.Id);
         if (foundEngineer is null)//if does not exist in the list
-            throw new Exception($"An object of type Engineer with ID {item.Id} does not exist");
+            throw new DalDoesNotExistException($"An object of type Engineer with ID {item.Id} does not exist");
         DataSource.Engineers.Remove(foundEngineer);//delete the old engineer
         DataSource.Engineers.Add(item);//add the updated one
     }

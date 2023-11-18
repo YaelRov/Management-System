@@ -28,11 +28,9 @@ internal class TaskImplementation : ITask
     /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        var foundTask = DataSource.Tasks
-                 .Where(curTask => curTask.Id == id)
-                 .FirstOrDefault();
+        Task? foundTask = Read(id);
         if (foundTask is null)//if the object does not exist
-            throw new Exception($"An object of type Task with ID {id} does not exist");
+            throw new DalDoesNotExistException($"An object of type Task with ID {id} does not exist");
         DataSource.Tasks.Remove(foundTask);//remove from the list
         Task.counterTasks--;//subtract 1 from the counter
     }
@@ -45,20 +43,25 @@ internal class TaskImplementation : ITask
     {
         //find the task in the list
         var foundTask = DataSource.Tasks
-                     .Where(curTask => curTask.Id == id)
-                     .FirstOrDefault();
+                     .FirstOrDefault(curTask => curTask.Id == id);
         return foundTask;
+    }
+    public Task? Read(Func<Task, bool> filter) //stage 2
+    {
+        return DataSource.Tasks
+              .FirstOrDefault(filter);
     }
     /// <summary>
     /// reading all the list of the tasks
     /// </summary>
     /// <returns>copy of the tasks list</returns>
-    public List<Task> ReadAll()
+
+    public IEnumerable<Task?> ReadAll(Func<Task?, bool>? filter = null) //stage 2
     {
-        var returnedList = DataSource.Tasks
-                           .Where(curTask => true)
-                           .ToList<Task>();
-        return returnedList;
+        if (filter == null)
+            return DataSource.Tasks.Select(item => item);
+        else
+            return DataSource.Tasks.Where(filter);
     }
     /// <summary>
     /// updating a task
@@ -68,11 +71,9 @@ internal class TaskImplementation : ITask
     public void Update(Task item)
     {
         //find the object in the list
-        var foundTask = DataSource.Tasks
-              .Where(curTask => curTask.Id == item.Id)
-              .FirstOrDefault();
+        Task? foundTask = Read(item.Id);
         if (foundTask is null)//if does not exist in the list
-            throw new Exception($"An object of type Task with ID {item.Id} does not exist");
+            throw new DalDoesNotExistException($"An object of type Task with ID {item.Id} does not exist");
         DataSource.Tasks.Remove(foundTask);//delete the old task
         DataSource.Tasks.Add(item);//add the updated one
     }

@@ -27,11 +27,9 @@ internal class DependencyImplementation : IDependency
     /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        var foundDep = DataSource.Dependencies
-                      .Where(curDep => curDep.Id == id)
-                      .FirstOrDefault();
+        Dependency? foundDep = Read(id);
         if (foundDep is null)//if the object does not exist
-            throw new Exception($"An object of type Dependency with ID {id} does not exist");
+            throw new DalDoesNotExistException($"An object of type Dependency with ID {id} does not exist");
         DataSource.Dependencies.Remove(foundDep);//remove from the list
         Dependency.counterDependencies--;//subtract 1 from the counter
 
@@ -49,16 +47,22 @@ internal class DependencyImplementation : IDependency
                       .FirstOrDefault();
         return foundDep;
     }
+    public Dependency? Read(Func<Dependency, bool> filter) //stage 2
+    {
+        return DataSource.Dependencies
+              .FirstOrDefault(filter);
+    }
     /// <summary>
     /// reading all the list of the dependencies
     /// </summary>
     /// <returns>copy of the dependencies list</returns>
-    public List<Dependency> ReadAll()
+
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency?, bool>? filter = null) //stage 2
     {
-        var returnedList = DataSource.Dependencies
-            .Where(curDependency => true)
-            .ToList<Dependency>();
-        return returnedList;
+        if (filter == null)
+            return DataSource.Dependencies.Select(item => item);
+        else
+            return DataSource.Dependencies.Where(filter);
     }
     /// <summary>
     /// updating a dependency
@@ -68,11 +72,9 @@ internal class DependencyImplementation : IDependency
     public void Update(Dependency item)
     {
         //find the object in the list
-        var foundDep = DataSource.Dependencies
-                     .Where(curDep => curDep.Id == item.Id)
-                     .FirstOrDefault();
+        Dependency? foundDep = Read(item.Id);
         if (foundDep is null)//if does not exist in the list
-            throw new Exception($"An object of type Dependency with ID {item.Id} does not exist");
+            throw new DalDoesNotExistException($"An object of type Dependency with ID {item.Id} does not exist");
         DataSource.Dependencies.Remove(foundDep);//delete the old dependency
         DataSource.Dependencies.Add(item);//add the updated one
     }

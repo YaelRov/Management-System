@@ -96,7 +96,7 @@ public static class Initialization
             string deliverables = task.deliverable;
             string remarks = remarksArray[s_rand.Next(0, 4)];
             EngineerExperience complexityLevel = (EngineerExperience)s_rand.Next(0, 5);
-            List<Engineer> engineers = s_dal!.Engineer.ReadAll();
+            List<Engineer> engineers = s_dal!.Engineer.ReadAll().ToList();
             int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id;
 
             // creating a new task with all the details
@@ -111,7 +111,7 @@ public static class Initialization
     /// </summary>
     private static void createDependencies()
     { 
-        List<Task> Tasks = s_dal!.Task.ReadAll();//getting all the tasks list
+        List<Task> Tasks = s_dal!.Task.ReadAll().ToList();//getting all the tasks list
         int index = 0;
         //going over the tasks list, and creating dependencies according to the tasks
         foreach (var task in Tasks)
