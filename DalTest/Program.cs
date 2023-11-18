@@ -131,7 +131,7 @@ internal class Program
     /// <returns>a copy of the engineers list</returns>
     static List<Engineer> readAllEngineers()
     {
-        return s_dal!.Engineer.ReadAll().ToList();
+        return s_dal!.Engineer.ReadAll().ToList()!;
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ internal class Program
     /// <returns>a copy of the tasks list</returns>
     static List<DO.Task> readAllTasks()
     {
-        return s_dal!.Task.ReadAll().ToList();
+        return s_dal!.Task.ReadAll().ToList()!;
     }
 
     /// <summary>
@@ -149,7 +149,7 @@ internal class Program
     /// <returns>a copy of the dependencies list</returns>
     static List<Dependency> readAllDependencies()
     {
-        return s_dal!.Dependency.ReadAll().ToList();
+        return s_dal!.Dependency.ReadAll().ToList()!;
     }
     #endregion
 

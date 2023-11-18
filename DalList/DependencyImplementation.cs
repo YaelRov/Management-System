@@ -57,7 +57,7 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <returns>copy of the dependencies list</returns>
 
-    public IEnumerable<Dependency?> ReadAll(Func<Dependency?, bool>? filter = null) //stage 2
+    public IEnumerable<Dependency?> ReadAll(Func<Dependency, bool>? filter = null) //stage 2
     {
         if (filter == null)
             return DataSource.Dependencies.Select(item => item);
