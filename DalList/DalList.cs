@@ -9,3 +9,4 @@ sealed public class DalList : IDal
 
     public IDependency Dependency => new DependencyImplementation();
 }
+//
