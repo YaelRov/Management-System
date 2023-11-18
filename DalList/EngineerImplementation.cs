@@ -30,10 +30,12 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        Engineer? obj = DataSource.Engineers.Find(curEngineer => curEngineer.Id == id);//checks if it exsists in the list
-        if (obj is null)//if the object does not exist
+        var foundEngineer = DataSource.Engineers
+                      .Where(curEngineer => curEngineer.Id == id)
+                      .FirstOrDefault();
+        if (foundEngineer is null)//if the object does not exist
             throw new Exception($"An object of type Engineer with ID {id} does not exist");
-        DataSource.Engineers.Remove(obj);//remove from the list
+        DataSource.Engineers.Remove(foundEngineer);//remove from the list
         Engineer.counterEngineers--;//subtract 1 from the counter
     }
     /// <summary>
@@ -43,7 +45,11 @@ internal class EngineerImplementation : IEngineer
     /// <returns>an object type Engineer</returns>
     public Engineer? Read(int id)
     {
-        return DataSource.Engineers.Find(curEngineer => curEngineer.Id == id);//find the engineer in the list
+        //find the engineer in the list
+        var foundEngineer = DataSource.Engineers
+                     .Where(curEngineer => curEngineer.Id == id)
+                     .FirstOrDefault();
+        return foundEngineer;
     }
     /// <summary>
     /// reading all the list of the engineers
@@ -51,7 +57,10 @@ internal class EngineerImplementation : IEngineer
     /// <returns>copy of the engineers list</returns>
     public List<Engineer> ReadAll()
     {
-        return new List<Engineer>(DataSource.Engineers);
+        var returnedList = DataSource.Engineers
+                    .Where(curEngineer => true)
+                    .ToList<Engineer>();
+        return returnedList;
     }
     /// <summary>
     /// updating an engineer
@@ -60,10 +69,13 @@ internal class EngineerImplementation : IEngineer
     /// <exception cref="Exception"></exception>
     public void Update(Engineer item)
     {
-        Engineer? obj = DataSource.Engineers.Find(curEngineer => curEngineer.Id == item.Id);//find the object in the list
-        if (obj is null)//if does not exist in the list
+        //find the object in the list
+        var foundEngineer = DataSource.Engineers
+             .Where(curEngineer => curEngineer.Id == item.Id)
+             .FirstOrDefault();
+        if (foundEngineer is null)//if does not exist in the list
             throw new Exception($"An object of type Engineer with ID {item.Id} does not exist");
-        DataSource.Engineers.Remove(obj);//delete the old engineer
+        DataSource.Engineers.Remove(foundEngineer);//delete the old engineer
         DataSource.Engineers.Add(item);//add the updated one
     }
 }

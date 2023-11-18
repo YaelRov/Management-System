@@ -27,10 +27,12 @@ internal class DependencyImplementation : IDependency
     /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        Dependency? obj = DataSource.Dependencies.Find(curDep => curDep.Id == id);//checks if it exsists in the list
-        if (obj is null)//if the object does not exist
+        var foundDep = DataSource.Dependencies
+                      .Where(curDep => curDep.Id == id)
+                      .FirstOrDefault();
+        if (foundDep is null)//if the object does not exist
             throw new Exception($"An object of type Dependency with ID {id} does not exist");
-        DataSource.Dependencies.Remove(obj);//remove from the list
+        DataSource.Dependencies.Remove(foundDep);//remove from the list
         Dependency.counterDependencies--;//subtract 1 from the counter
 
     }
@@ -41,7 +43,11 @@ internal class DependencyImplementation : IDependency
     /// <returns>an object type Dependency</returns>
     public Dependency? Read(int id)
     {
-        return DataSource.Dependencies.Find(curTask => curTask.Id == id);//find the dependency in the list
+        //find the dependency in the list
+        var foundDep = DataSource.Dependencies
+                      .Where(curDep => curDep.Id == id)
+                      .FirstOrDefault();
+        return foundDep;
     }
     /// <summary>
     /// reading all the list of the dependencies
@@ -49,7 +55,10 @@ internal class DependencyImplementation : IDependency
     /// <returns>copy of the dependencies list</returns>
     public List<Dependency> ReadAll()
     {
-        return new List<Dependency>(DataSource.Dependencies);
+        var returnedList = DataSource.Dependencies
+            .Where(curDependency => true)
+            .ToList<Dependency>();
+        return returnedList;
     }
     /// <summary>
     /// updating a dependency
@@ -58,10 +67,13 @@ internal class DependencyImplementation : IDependency
     /// <exception cref="Exception"></exception>
     public void Update(Dependency item)
     {
-        Dependency? obj = DataSource.Dependencies.Find(curDep => curDep.Id == item.Id);//find the object in the list
-        if (obj == null)//if does not exist in the list
+        //find the object in the list
+        var foundDep = DataSource.Dependencies
+                     .Where(curDep => curDep.Id == item.Id)
+                     .FirstOrDefault();
+        if (foundDep is null)//if does not exist in the list
             throw new Exception($"An object of type Dependency with ID {item.Id} does not exist");
-        DataSource.Dependencies.Remove(obj);//delete the old dependency
+        DataSource.Dependencies.Remove(foundDep);//delete the old dependency
         DataSource.Dependencies.Add(item);//add the updated one
     }
 }
