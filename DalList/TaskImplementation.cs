@@ -4,7 +4,6 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
-using System.Linq;
 
 internal class TaskImplementation : ITask
 {
@@ -46,6 +45,11 @@ internal class TaskImplementation : ITask
                      .FirstOrDefault(curTask => curTask.Id == id);
         return foundTask;
     }
+    /// <summary>
+    /// get condition of a task to read
+    /// </summary>
+    /// <param name="filter">a condition function</param>
+    /// <returns>the first element that satisfies the conditin</returns>
     public Task? Read(Func<Task, bool> filter) //stage 2
     {
         return DataSource.Tasks
@@ -54,7 +58,7 @@ internal class TaskImplementation : ITask
     /// <summary>
     /// reading all the list of the tasks
     /// </summary>
-    /// <returns>copy of the tasks list</returns>
+    /// <returns>IEnumerable of type Task?</returns>
 
     public IEnumerable<Task?> ReadAll(Func<Task?, bool>? filter = null) //stage 2
     {

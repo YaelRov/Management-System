@@ -3,7 +3,6 @@ namespace Dal;
 
 using DalApi;
 using DO;
-
 using System.Collections.Generic;
 
 internal class EngineerImplementation : IEngineer
@@ -49,6 +48,11 @@ internal class EngineerImplementation : IEngineer
         return foundEngineer;
     }
 
+    /// <summary>
+    /// get condition of a engineer to read
+    /// </summary>
+    /// <param name="filter">a condition function</param>
+    /// <returns>the first element that satisfies the conditin</returns>
     public Engineer? Read(Func<Engineer, bool> filter) //stage 2
     {
         return DataSource.Engineers
@@ -57,7 +61,7 @@ internal class EngineerImplementation : IEngineer
     /// <summary>
     /// reading all the list of the engineers
     /// </summary>
-    /// <returns>copy of the engineers list</returns>
+    /// <returns>IEnumerable of type Engineer?</returns>
 
     public IEnumerable<Engineer?> ReadAll(Func<Engineer?, bool>? filter = null) //stage 2
     {

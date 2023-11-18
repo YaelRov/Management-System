@@ -47,6 +47,11 @@ internal class DependencyImplementation : IDependency
                       .FirstOrDefault();
         return foundDep;
     }
+    /// <summary>
+    /// get condition of a dependency to read
+    /// </summary>
+    /// <param name="filter">a condition function</param>
+    /// <returns>the first element that satisfies the conditin</returns>
     public Dependency? Read(Func<Dependency, bool> filter) //stage 2
     {
         return DataSource.Dependencies
@@ -55,7 +60,7 @@ internal class DependencyImplementation : IDependency
     /// <summary>
     /// reading all the list of the dependencies
     /// </summary>
-    /// <returns>copy of the dependencies list</returns>
+    /// <returns>IEnumerable of type Dependency?</returns>
 
     public IEnumerable<Dependency?> ReadAll(Func<Dependency?, bool>? filter = null) //stage 2
     {
