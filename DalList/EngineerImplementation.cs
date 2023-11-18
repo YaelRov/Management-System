@@ -63,7 +63,7 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <returns>IEnumerable of type Engineer?</returns>
 
-    public IEnumerable<Engineer?> ReadAll(Func<Engineer?, bool>? filter = null) //stage 2
+    public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null) //stage 2
     {
         if (filter == null)
             return DataSource.Engineers.Select(item => item);
