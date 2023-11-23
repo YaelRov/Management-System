@@ -20,3 +20,11 @@ public class DalAlreadyExistsException : Exception
     public DalAlreadyExistsException(string? message) : base(message) { }
 }
 
+public class DalXMLFileLoadCreateException : Exception
+{
+    /// <summary>
+    /// a c-tor of exception that occures when it's a promlem with XML file
+    /// </summary>
+    /// <param name="message">nullable atring</param>
+    public DalXMLFileLoadCreateException(string? message) : base(message) { }
+}

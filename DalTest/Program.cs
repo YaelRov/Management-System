@@ -1,12 +1,14 @@
 ﻿using Dal;
 using DalApi;
 using DO;
+using System.Data.SqlTypes;
 
 namespace DalTest;
 internal class Program
 {
     //defining interface variable that gets the implementation
-    static readonly IDal s_dal = new DalList();
+    //static readonly IDal s_dal = new DalList();//stage 2
+    static readonly IDal s_dal = new DalXml(); //stage 3
     static void Main(string[] args)
     {
         try

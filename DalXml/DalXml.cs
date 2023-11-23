@@ -1,7 +1,8 @@
 ﻿
-namespace Dal;
 using DalApi;
-sealed public class DalList : IDal
+namespace Dal;
+
+sealed public class DalXml : IDal
 {
     public IEngineer Engineer => new EngineerImplementation();
 
@@ -9,4 +10,3 @@ sealed public class DalList : IDal
 
     public IDependency Dependency => new DependencyImplementation();
 }
-

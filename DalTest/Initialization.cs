@@ -23,7 +23,7 @@ public static class Initialization
         const int MAX_ID = 400000000;
         string[] names =
         {
-            "Yoni Stern", "Avraham Silver", "Itzchak Elkias", "Yaakov Beker",
+            "Yoni Stern", "Avraham Silver", "Itzchak Elkias", "Yael Rov",
             "Refael Toledano", "Aharon Zusman"
         };
         //going over the names array, and creating an engineer with each name
@@ -48,34 +48,34 @@ public static class Initialization
     private static void createTasks()
     {
         //creating an object of details for 20 tasks
-        var buildingTasks = new[]
+        var engineeringTasks = new[]
         {
-            new{ description = "Measure and mark the dimensions of the foundation.", alias = "Foundation Dimensions", deliverable = "measurement" },
-            new{ description = "Dig the foundation trench to the required depth.", alias = "Foundation Trench", deliverable = "excavation" },
-            new{ description = "Pour and level the concrete foundation.", alias = "Concrete Foundation", deliverable = "concrete foundation" },
-            new{ description = "Construct the framework for the walls.", alias = "Wall Framework", deliverable = "wall framework" },
-            new{ description = "Install electrical and plumbing systems.", alias = "Electrical Plumbing", deliverable = "electrical and plumbing systems" },
-            new{ description = "Insulate the walls and ceiling for energy efficiency.", alias = "Wall Insulation", deliverable = "wall insulation" },
-            new{ description = "Install doors, windows, and roofing materials.", alias = "Doors Windows", deliverable = "doors, windows, and roofing materials" },
-            new{ description = "Finish the walls with drywall or other materials.", alias = "Wall Finishing", deliverable = "finished walls" },
-            new{ description = "Paint the interior and exterior surfaces.", alias = "Surface Painting", deliverable = "painted surfaces" },
-            new{ description = "Install flooring and finish with baseboards.", alias = "Flooring Installation", deliverable = "flooring installation" },
-            new{ description = "Connect utilities and perform final inspections.", alias = "Utilities Inspections", deliverable = "connected utilities and inspections" },
-            new{ description = "Set up scaffolding for elevated work areas.", alias = "Scaffolding Setup", deliverable = "scaffolding setup" },
-            new{ description = "Lay bricks or blocks for walls.", alias = "Wall Construction", deliverable = "wall construction" },
-            new{ description = "Install insulation in the attic.", alias = "Attic Insulation", deliverable = "attic insulation" },
-            new{ description = "Mount cabinets and countertops in the kitchen.", alias = "Cabinets Countertops", deliverable = "cabinets and countertops" },
-            new{ description = "Install lighting fixtures and electrical outlets.", alias = "Lighting and Outlets", deliverable = "lighting fixtures and electrical outlets" },
-            new{ description = "Install plumbing fixtures in bathrooms and kitchen.", alias = "Plumbing Fixtures", deliverable = "plumbing fixtures" },
-            new{ description = "Install heating, ventilation, and air conditioning systems.", alias = "HVAC Systems", deliverable = "heating, ventilation, and air conditioning systems" },
-            new{ description = "Apply decorative finishes to walls and ceilings.", alias = "Decorative Finishes", deliverable = "decorative finishes" },
-            new{ description = "Install appliances in the kitchen and laundry area.", alias = "Appliance Installation", deliverable = "appliance installation" },
+            new { description = "Design and implement software solutions.", alias = "Software Design", deliverable = "software solutions" },
+            new { description = "Write clean and efficient code.", alias = "Code Writing", deliverable = "clean and efficient code" },
+            new { description = "Test and debug software applications.", alias = "Software Testing", deliverable = "tested and debugged applications" },
+            new { description = "Collaborate with cross-functional teams.", alias = "Team Collaboration", deliverable = "cross-functional collaboration" },
+            new { description = "Conduct code reviews and provide feedback.", alias = "Code Reviews", deliverable = "code reviews and feedback" },
+            new { description = "Maintain and update existing software systems.", alias = "Software Maintenance", deliverable = "maintained and updated systems" },
+            new { description = "Troubleshoot and resolve software issues.", alias = "Issue Resolution", deliverable = "resolved software issues" },
+            new { description = "Participate in software planning and estimation.", alias = "Planning and Estimation", deliverable = "software planning and estimation" },
+            new { description = "Research and implement new technologies.", alias = "Technology Research", deliverable = "implemented new technologies" },
+            new { description = "Document software design and specifications.", alias = "Documentation", deliverable = "software design and specifications" },
+            new { description = "Optimize software performance and scalability.", alias = "Performance Optimization", deliverable = "optimized performance and scalability" },
+            new { description = "Create and maintain technical documentation.", alias = "Technical Documentation", deliverable = "technical documentation" },
+            new { description = "Implement and maintain software version control.", alias = "Version Control", deliverable = "software version control" },
+            new { description = "Implement and maintain database systems.", alias = "Database Management", deliverable = "Efficient database systems" },
+            new { description = "Perform code refactoring for improved code quality.", alias = "Code Refactoring", deliverable = "High-quality code" },
+            new { description = "Develop and execute unit tests.", alias = "Unit Testing", deliverable = "Thoroughly tested code" },
+            new { description = "Implement security measures in software solutions.", alias = "Security Implementation", deliverable = "Secure software solutions" },
+            new { description = "Provide technical support and assistance.", alias = "Technical Support", deliverable = "Effective technical support" },
+            new { description = "Monitor and optimize software performance.", alias = "Performance Monitoring", deliverable = "Optimized performance" },
+            new { description = "Plan and execute software deployments.", alias = "Software Deployment", deliverable = "Successful software deployments" }
         };
 
         string[] remarksArray = { "Be carful", "It's easy", "It's hard", "Do it accurately" };
 
-        //going over the buildingTasks array, and creating an task with each details object
-        foreach (var task in buildingTasks)
+        //going over the engineeringTasks array, and creating an task with each details object
+        foreach (var task in engineeringTasks)
         {
             string description = task.description;
             string alias = task.alias;
