@@ -1,9 +1,3 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer>
-  <Engineer Id="266788096" Email="YoniStern@gmail.com" Level="AdvancedBeginner" Cost="71">Yoni Stern</Engineer>
-  <Engineer Id="322456936" Email="AvrahamSilver@gmail.com" Level="Competent" Cost="48">Avraham Silver</Engineer>
-  <Engineer Id="380640346" Email="ItzchakElkias@gmail.com" Level="Competent" Cost="59">Itzchak Elkias</Engineer>
-  <Engineer Id="214316611" Email="YaelRov@gmail.com" Level="Competent" Cost="60">Yael Rov</Engineer>
-  <Engineer Id="209758664" Email="RefaelToledano@gmail.com" Level="Competent" Cost="48">Refael Toledano</Engineer>
-  <Engineer Id="337725169" Email="AharonZusman@gmail.com" Level="Competent" Cost="56">Aharon Zusman</Engineer>
 </ArrayOfEngineer>

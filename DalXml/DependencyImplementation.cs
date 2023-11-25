@@ -9,24 +9,15 @@ internal class DependencyImplementation : IDependency
 
     public int Create(Dependency item)
     {
-
-        //checking if this Dependency is exists already
-        Dependency? isExistDependency = Read(item.Id);
-        if (isExistDependency is not null)
-            throw new DalAlreadyExistsException($"An object of type Dependency with ID {item.Id} already exists");
         XElement? xmlDependenciesFileRoot = XMLTools.LoadListFromXMLElement("dependencies");
-        //checking if the root element "Dependencies" exists
-        XElement? xmlDependencies = xmlDependenciesFileRoot.Descendants("Dependencies").FirstOrDefault();
-        //creating the root element "Dependencies" if it wasn't exist
-        xmlDependencies ??= new XElement("Dependencies");
-
-        //adding the new "Dependency" element
-        xmlDependencies!.Add(new XElement("Dependency",
+        //creating the new "Dependency" element
+        XElement newDep = new XElement("Dependency",
                                         Config.NextDependencyId,
-                                        new XAttribute("DependentTask", item.DependentTask??0),
-                                        new XAttribute("DependsOnTask", item.DependsOnTask??0)
-                                        ));
-        XMLTools.SaveListToXMLElement(xmlDependencies, "Dependencies");
+                                        new XAttribute("DependentTask", item.DependentTask ?? 0),
+                                        new XAttribute("DependsOnTask", item.DependsOnTask ?? 0)
+                                        );
+        xmlDependenciesFileRoot.Add(newDep);
+        XMLTools.SaveListToXMLElement(xmlDependenciesFileRoot, "dependencies");
         Dependency.counterDependencies++;//add 1 to the counter of the dependencies
         return item.Id;
     }
@@ -59,7 +50,7 @@ internal class DependencyImplementation : IDependency
         XElement? xmlDependencies = XMLTools.LoadListFromXMLElement("dependencies");
         if (filter is null)
             filter = (e) => true;
-        List<Dependency> DependenciesList = xmlDependencies.Descendants("dependencies")
+        List<Dependency> DependenciesList = xmlDependencies.Descendants("Dependency")
             .Select(dep => {
                 Dependency dependency_t = new(int.Parse(dep!.Value),
                                         int.Parse(dep.Attribute("DependentTask")!.Value),

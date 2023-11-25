@@ -1,5 +1,6 @@
 ﻿using DalApi;
 using DO;
+using System.Collections;
 using System.Xml.Linq;
 
 namespace Dal;
@@ -8,23 +9,16 @@ internal class TaskImplementation : ITask
 {
     public int Create(DO.Task item)
     {
-        //checking if this Task is exists already
-        DO.Task? isExistTask = Read(item.Id);
-        if (isExistTask is not null)
-            throw new DalAlreadyExistsException($"An object of type Task with ID {item.Id} already exists");
         XElement? xmlTasksFileRoot = XMLTools.LoadListFromXMLElement("tasks");
-        //checking if the root element "Tasks" exists
-        XElement? xmlTasks = xmlTasksFileRoot.Descendants("Tasks").FirstOrDefault();
-        //creating the root element "Tasks" if it wasn't exist
-        xmlTasks ??= new XElement("Tasks");
-        //adding the new "Task" element
-        xmlTasks!.Add(new XElement("Task",
+       
+        //creating the new "Task" element
+        XElement newTask = new XElement("Task",
                                         item.Description,
                                         new XAttribute("Id", Config.NextTaskId),
                                         new XAttribute("Alias", item.Alias),
                                         new XAttribute("Milestone", item.Milestone),
                                         new XAttribute("CreatedAt", item.CreatedAt),
-                                        new XAttribute("Start", item.Start??new DateTime()),
+                                        new XAttribute("Start", item.Start ?? new DateTime()),
                                         new XAttribute("ScheduledDate", item.ScheduledDate ?? new DateTime()),
                                         new XAttribute("ForecastDate", item.ForecastDate ?? new DateTime()),
                                         new XAttribute("Deadline", item.Deadline ?? new DateTime()),
@@ -32,9 +26,10 @@ internal class TaskImplementation : ITask
                                         new XAttribute("Deliverables", item.Deliverables ?? ""),
                                         new XAttribute("Remarks", item.Remarks ?? ""),
                                         new XAttribute("TaskId", item.EngineerId ?? 0),
-                                        new XAttribute("ComplexityLevel", item.ComplexityLevel ?? (EngineerExperience)Enum.Parse(typeof(EngineerExperience),"Novice"))
-                                        ));
-        XMLTools.SaveListToXMLElement(xmlTasks, "Tasks");
+                                        new XAttribute("ComplexityLevel", item.ComplexityLevel ?? (EngineerExperience)Enum.Parse(typeof(EngineerExperience), "Novice"))
+                                        );
+        xmlTasksFileRoot!.Add(newTask);
+        XMLTools.SaveListToXMLElement(xmlTasksFileRoot, "tasks");
         DO.Task.counterTasks++;//add 1 to the counter of the tasks
         return item.Id;
     }
@@ -76,11 +71,13 @@ internal class TaskImplementation : ITask
     public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)
     {
         XElement? xmlTasks = XMLTools.LoadListFromXMLElement("tasks");
+        IEnumerable<XElement> tasksArray = xmlTasks.Descendants("Task");
+
         if (filter is null)
             filter = (e) => true;
-        List<DO.Task> TasksList = xmlTasks.Descendants("Tasks")
+        List<DO.Task> TasksList = tasksArray
             .Select(task => {
-                DO.Task Task_t = new(int.Parse(task.Attribute("Id")!.Value),
+                DO.Task Task_t = new DO.Task(int.Parse(task.Attribute("Id")!.Value),
                                         task.Value,
                                         task.Attribute("Alias")!.Value,
                                         Convert.ToBoolean(task.Attribute("Milestone")!.Value),
