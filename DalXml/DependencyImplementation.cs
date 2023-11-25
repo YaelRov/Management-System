@@ -22,9 +22,10 @@ internal class DependencyImplementation : IDependency
 
         //adding the new "Dependency" element
         xmlDependencies!.Add(new XElement("Dependency",
+                                        item.Id,
                                         new XAttribute("DependentTask", item.DependentTask??0),
-                                        new XAttribute("DependsOnTask", item.DependsOnTask??0),
-                                        item.Id));
+                                        new XAttribute("DependsOnTask", item.DependsOnTask??0)
+                                        ));
         XMLTools.SaveListToXMLElement(xmlDependencies, "Dependencies");
         Dependency.counterDependencies++;//add 1 to the counter of the dependencies
         return item.Id;

@@ -19,6 +19,7 @@ internal class TaskImplementation : ITask
         xmlTasks ??= new XElement("Tasks");
         //adding the new "Task" element
         xmlTasks!.Add(new XElement("Task",
+                                        item.Description,
                                         new XAttribute("Id", item.Id),
                                         new XAttribute("Alias", item.Alias),
                                         new XAttribute("Milestone", item.Milestone),
@@ -31,8 +32,8 @@ internal class TaskImplementation : ITask
                                         new XAttribute("Deliverables", item.Deliverables ?? ""),
                                         new XAttribute("Remarks", item.Remarks ?? ""),
                                         new XAttribute("TaskId", item.EngineerId ?? 0),
-                                        new XAttribute("ComplexityLevel", item.ComplexityLevel ?? (EngineerExperience)Enum.Parse(typeof(EngineerExperience),"Novice")),
-                                        item.Description));
+                                        new XAttribute("ComplexityLevel", item.ComplexityLevel ?? (EngineerExperience)Enum.Parse(typeof(EngineerExperience),"Novice"))
+                                        ));
         XMLTools.SaveListToXMLElement(xmlTasks, "Tasks");
         DO.Task.counterTasks++;//add 1 to the counter of the tasks
         return item.Id;

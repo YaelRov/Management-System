@@ -23,11 +23,12 @@ internal class EngineerImplementation : IEngineer
 
         //adding the new "Engineer" element
         xmlEngineers!.Add(new XElement("Engineer",
+                                        item.Name,
                                         new XAttribute("Id", item.Id),
                                         new XAttribute("Email", item.Email),
                                         new XAttribute("Level", item.Level),
-                                        new XAttribute("Cost", item.Cost)),
-                                        item.Name);
+                                        new XAttribute("Cost", item.Cost))
+                                        );
         XMLTools.SaveListToXMLElement(xmlEngineers, "engineers");
         Engineer.counterEngineers++;//add 1 to the counter of the engineers
         return item.Id;
