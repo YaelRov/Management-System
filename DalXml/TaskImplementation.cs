@@ -20,7 +20,7 @@ internal class TaskImplementation : ITask
         //adding the new "Task" element
         xmlTasks!.Add(new XElement("Task",
                                         item.Description,
-                                        new XAttribute("Id", item.Id),
+                                        new XAttribute("Id", Config.NextTaskId),
                                         new XAttribute("Alias", item.Alias),
                                         new XAttribute("Milestone", item.Milestone),
                                         new XAttribute("CreatedAt", item.CreatedAt),

@@ -22,7 +22,7 @@ internal class DependencyImplementation : IDependency
 
         //adding the new "Dependency" element
         xmlDependencies!.Add(new XElement("Dependency",
-                                        item.Id,
+                                        Config.NextDependencyId,
                                         new XAttribute("DependentTask", item.DependentTask??0),
                                         new XAttribute("DependsOnTask", item.DependsOnTask??0)
                                         ));

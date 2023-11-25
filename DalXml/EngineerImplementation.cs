@@ -13,23 +13,21 @@ internal class EngineerImplementation : IEngineer
     {
         //checking if this engineer is exists already
         Engineer? isExistEngineer = Read(item.Id);
-        if(isExistEngineer is not null)
+        if (isExistEngineer is not null)
             throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
-        XElement? xmlEngineersFileRoot = XMLTools.LoadListFromXMLElement("engineers");
-        //checking if the root element "Engineers" exists
-        XElement? xmlEngineers = xmlEngineersFileRoot.Descendants("Engineers").FirstOrDefault();
-        //creating the root element "Engineers" if it wasn't exist
-        xmlEngineers ??= new XElement("Engineers");
 
-        //adding the new "Engineer" element
-        xmlEngineers!.Add(new XElement("Engineer",
-                                        item.Name,
-                                        new XAttribute("Id", item.Id),
-                                        new XAttribute("Email", item.Email),
-                                        new XAttribute("Level", item.Level),
-                                        new XAttribute("Cost", item.Cost))
-                                        );
-        XMLTools.SaveListToXMLElement(xmlEngineers, "engineers");
+        XElement? xmlEngineersFileRoot = XMLTools.LoadListFromXMLElement("engineers");
+
+        //creating the new "Engineer" element
+        XElement newEng = new XElement("Engineer",
+                                       item.Name,
+                                       new XAttribute("Id", item.Id),
+                                       new XAttribute("Email", item.Email),
+                                       new XAttribute("Level", item.Level),
+                                       new XAttribute("Cost", item.Cost));
+
+        xmlEngineersFileRoot.Add(newEng);
+        XMLTools.SaveListToXMLElement(xmlEngineersFileRoot, "engineers");
         Engineer.counterEngineers++;//add 1 to the counter of the engineers
         return item.Id;
     }
@@ -90,3 +88,14 @@ internal class EngineerImplementation : IEngineer
         throw new NotImplementedException();
     }
 }
+
+/*XDocument doc = XDocument.Load(@"..\xml\engineers.xml");
+doc.Root!.Add(new XElement("Engineer",
+                             new XElement("Id", item.Id),
+                             new XElement("FirstName", item.FirstName),
+                             new XElement("LastName", item.LastName),
+                             new XElement("Email", item.Email),
+                             new XElement("SalaryPerHour", item.SalaryPerHour),
+                             new XElement("EngineerLevel", item.EngineerLevel)));
+     doc.Save(@"..\xml\engineers.xml");
+     return item.Id;*/
