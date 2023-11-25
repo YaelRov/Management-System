@@ -19,7 +19,7 @@ public class DalAlreadyExistsException : Exception
     /// <param name="message">nullable atring</param>
     public DalAlreadyExistsException(string? message) : base(message) { }
 }
-
+[Serializable]
 public class DalXMLFileLoadCreateException : Exception
 {
     /// <summary>
