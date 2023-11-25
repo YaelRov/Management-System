@@ -54,7 +54,7 @@ internal class EngineerImplementation : IEngineer
         Engineer returnedEngineer = new(int.Parse(eng.Attribute("Id")!.Value),
                                         eng.Value, 
                                         eng.Attribute("Email")!.Value,
-                                        (EngineerExperience)Enum.Parse(typeof(EngineerExperience), eng.Attribute("Level")!.Value),
+                                        (EngineerExperience)Enum.Parse(typeof(EngineerExperience),eng.Attribute("Level")!.Value),
                                         double.Parse(eng.Attribute("Cost")!.Value));
         return returnedEngineer;
     }
