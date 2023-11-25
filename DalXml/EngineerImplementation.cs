@@ -15,7 +15,6 @@ internal class EngineerImplementation : IEngineer
         Engineer? isExistEngineer = Read(item.Id);
         if(isExistEngineer is not null)
             throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
-
         XElement? xmlEngineersFileRoot = XMLTools.LoadListFromXMLElement("engineers");
         //checking if the root element "Engineers" exists
         XElement? xmlEngineers = xmlEngineersFileRoot.Descendants("Engineers").FirstOrDefault();
@@ -30,6 +29,7 @@ internal class EngineerImplementation : IEngineer
                                         new XAttribute("Cost", item.Cost)),
                                         item.Name);
         XMLTools.SaveListToXMLElement(xmlEngineers, "engineers");
+        Engineer.counterEngineers++;//add 1 to the counter of the engineers
         return item.Id;
     }
 
@@ -47,7 +47,7 @@ internal class EngineerImplementation : IEngineer
     public Engineer? Read(int id)
     {
         XElement? xmlEngineers = XMLTools.LoadListFromXMLElement("engineers");
-        XElement? eng = xmlEngineers.Descendants("engineers")
+        XElement? eng = xmlEngineers.Descendants("Engineers")
             .FirstOrDefault(engineer => int.Parse(engineer.Attribute("Id")!.Value).Equals(id));
         if (eng is null)
             return null;
@@ -66,7 +66,22 @@ internal class EngineerImplementation : IEngineer
 
     public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
     {
-        throw new NotImplementedException();
+        XElement? xmlEngineers = XMLTools.LoadListFromXMLElement("engineers");
+        if (filter is null)
+            filter = (e) => true;
+        List<Engineer> engineersList = xmlEngineers.Descendants("engineers")
+            .Select(engin => {
+            Engineer engineer_t = new(
+                                        int.Parse(engin.Attribute("Id")!.Value),
+                                        engin.Value,
+                                        engin.Attribute("Email")!.Value,
+                                        (EngineerExperience)Enum.Parse(typeof(EngineerExperience), engin.Attribute("Level")!.Value),
+                                        double.Parse(engin.Attribute("Cost")!.Value)
+                                                );
+                         return engineer_t; })
+            .Where(engin =>  filter(engin) )
+            .ToList();
+        return engineersList;
     }
 
     public void Update(Engineer item)
