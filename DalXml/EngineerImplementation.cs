@@ -15,21 +15,19 @@ internal class EngineerImplementation : IEngineer
         Engineer? isExistEngineer = Read(item.Id);
         if(isExistEngineer is not null)
             throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
-        XElement? xmlEngineersFileRoot = XMLTools.LoadListFromXMLElement("engineers");
-        //checking if the root element "Engineers" exists
-        XElement? xmlEngineers = xmlEngineersFileRoot.Descendants("Engineers").FirstOrDefault();
-        //creating the root element "Engineers" if it wasn't exist
-        xmlEngineers ??= new XElement("Engineers");
 
-        //adding the new "Engineer" element
-        xmlEngineers!.Add(new XElement("Engineer",
-                                        item.Name,
-                                        new XAttribute("Id", item.Id),
-                                        new XAttribute("Email", item.Email),
-                                        new XAttribute("Level", item.Level),
-                                        new XAttribute("Cost", item.Cost))
-                                        );
-        XMLTools.SaveListToXMLElement(xmlEngineers, "engineers");
+        XElement? xmlEngineersFileRoot = XMLTools.LoadListFromXMLElement("engineers");
+
+        //creating the new "Engineer" element
+        XElement newEng = new XElement("Engineer",
+                                       item.Name,
+                                       new XAttribute("Id", item.Id),
+                                       new XAttribute("Email", item.Email),
+                                       new XAttribute("Level", item.Level),
+                                       new XAttribute("Cost", item.Cost));
+
+        xmlEngineersFileRoot.Add(newEng);
+        XMLTools.SaveListToXMLElement(xmlEngineersFileRoot, "engineers");
         Engineer.counterEngineers++;//add 1 to the counter of the engineers
         return item.Id;
     }
@@ -67,10 +65,11 @@ internal class EngineerImplementation : IEngineer
 
     public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
     {
-        XElement? xmlEngineers = XMLTools.LoadListFromXMLElement("engineers");
+        XElement xmlEngineers = XMLTools.LoadListFromXMLElement("engineers");
         if (filter is null)
             filter = (e) => true;
-        List<Engineer> engineersList = xmlEngineers.Descendants("engineers")
+        List<Engineer> engineersList = 
+            xmlEngineers.Descendants("Engineer")
             .Select(engin => {
             Engineer engineer_t = new(
                                         int.Parse(engin.Attribute("Id")!.Value),

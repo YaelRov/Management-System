@@ -72,7 +72,7 @@ public static class Initialization
             new { description = "Plan and execute software deployments.", alias = "Software Deployment", deliverable = "Successful software deployments" }
         };
 
-        string[] remarksArray = { "Be carful", "It's easy", "It's hard", "Do it accurately" };
+        string[] remarksArray = { "Be careful", "It's easy", "It's hard", "Do it accurately" };
 
         //going over the engineeringTasks array, and creating an task with each details object
         foreach (var task in engineeringTasks)
@@ -81,7 +81,7 @@ public static class Initialization
             string alias = task.alias;
             bool milestone = (s_rand.Next() % 2) == 0 ? true : false;
 
-            DateTime createdAt = new DateTime(s_rand.Next(2020, 2025), s_rand.Next(1, 13), s_rand.Next(1, 30));
+            DateTime createdAt = new DateTime(s_rand.Next(2020, 2025), s_rand.Next(1, 13), s_rand.Next(1, 29));
             TimeSpan ts = new TimeSpan(s_rand.Next(0, 1800), 0, 0);
             DateTime start = createdAt.Add(ts);
             ts = new TimeSpan(s_rand.Next(24, 336), 0, 0);
