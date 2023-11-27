@@ -1,86 +1,93 @@
-﻿using DalApi;
-using DO;
-using System.Collections;
-using System.Linq;
-using System.Xml.Linq;
-
+﻿
 namespace Dal;
+
+using DalApi;
+using DO;
+using System.Collections.Generic;
 
 internal class TaskImplementation : ITask
 {
-    public int Create(DO.Task item)
+    /// <summary>
+    /// gets a task object and add it to the list
+    /// </summary>
+    /// <param name="item">an object type Task</param>
+    /// <returns>the id of the task, type int</returns>
+    public int Create(Task item)
     {
-        XElement? xmlTasksFileRoot = XMLTools.LoadListFromXMLElement("tasks");
-       
-        //creating the new "Task" element
-        XElement newTask = new XElement("Task",
-                                        item.Description,
-                                        new XAttribute("Id", Config.NextTaskId),
-                                        new XAttribute("Alias", item.Alias),
-                                        new XAttribute("Milestone", item.Milestone),
-                                        new XAttribute("CreatedAt", item.CreatedAt),
-                                        new XAttribute("Start", item.Start ?? new DateTime()),
-                                        new XAttribute("ScheduledDate", item.ScheduledDate ?? new DateTime()),
-                                        new XAttribute("ForecastDate", item.ForecastDate ?? new DateTime()),
-                                        new XAttribute("Deadline", item.Deadline ?? new DateTime()),
-                                        new XAttribute("Complete", item.Complete ?? new DateTime()),
-                                        new XAttribute("Deliverables", item.Deliverables ?? ""),
-                                        new XAttribute("Remarks", item.Remarks ?? ""),
-                                        new XAttribute("TaskId", item.EngineerId ?? 0),
-                                        new XAttribute("ComplexityLevel", item.ComplexityLevel ?? (EngineerExperience)Enum.Parse(typeof(EngineerExperience), "Novice"))
-                                        );
-        xmlTasksFileRoot!.Add(newTask);
-        XMLTools.SaveListToXMLElement(xmlTasksFileRoot, "tasks");
-        DO.Task.counterTasks++;//add 1 to the counter of the tasks
-        return item.Id;
+        List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
+        int newId = Config.NextTaskId;//get a barcode from the config class
+        Task newTask = new Task(newId, item.Description, item.Alias, item.Milestone, item.CreatedAt, item.Start, item.ScheduledDate, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.EngineerId, item.ComplexityLevel);//create a new task object
+        tasksList.Add(newTask);//add the task object to the list
+        XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
+        Task.counterTasks++;//add 1 to the counter of the tasks
+        return newId;
     }
-
+    /// <summary>
+    /// gets an id number of a task and delete it out from the list
+    /// </summary>
+    /// <param name="id">int</param>
+    /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        throw new NotImplementedException();
+        List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
+        Task? foundTask = Read(id);
+        if (foundTask is null)//if the object does not exist
+            throw new DalDoesNotExistException($"An object of type Task with ID {id} does not exist");
+        tasksList.Remove(foundTask);//remove from the list
+        XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
+        Task.counterTasks--;//subtract 1 from the counter
     }
-
-    public DO.Task? Read(int id)
+    /// <summary>
+    /// get id of a task to read
+    /// </summary>
+    /// <param name="id">int</param>
+    /// <returns>an object type Task</returns>
+    public Task? Read(int id)
     {
-        XElement? xmlTasks = XMLTools.LoadListFromXMLElement("tasks");
-        XElement? task = xmlTasks.Descendants("Tasks")
-            .FirstOrDefault(Task => int.Parse(Task.Attribute("Id")!.Value).Equals(id));
-        if (task is null)
-            return null;
-        DO.Task returnedTask = new(int.Parse(task.Attribute("Id")!.Value),
-                                        task.Value,
-                                        task.Attribute("Alias")!.Value,
-                                        Convert.ToBoolean(task.Attribute("Milestone")!.Value),
-                                        Convert.ToDateTime(task.Attribute("CreatedAt")!.Value),
-                                        Convert.ToDateTime(task.Attribute("Start")!.Value),
-                                        Convert.ToDateTime(task.Attribute("ScheduledDate")!.Value),
-                                        Convert.ToDateTime(task.Attribute("ForecastDate")!.Value),
-                                        Convert.ToDateTime(task.Attribute("Deadline")!.Value),
-                                        Convert.ToDateTime(task.Attribute("Complete")!.Value),
-                                        task.Attribute("Deliverables")!.Value,
-                                        task.Attribute("Remarks")!.Value,
-                                        Convert.ToInt32(task.Attribute("EngineerId")!.Value),
-                                        (EngineerExperience)Enum.Parse(typeof(EngineerExperience), task.Attribute("ComplexityLevel")!.Value));
-        return returnedTask;
+        List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
+        //find the task in the list
+        var foundTask = tasksList
+                     .FirstOrDefault(curTask => curTask.Id == id);
+        return foundTask;
     }
-
-    public DO.Task? Read(Func<DO.Task, bool> filter)
+    /// <summary>
+    /// get condition of a task to read
+    /// </summary>
+    /// <param name="filter">a condition function</param>
+    /// <returns>the first element that satisfies the conditin</returns>
+    public Task? Read(Func<Task, bool> filter) //stage 2
     {
-        throw new NotImplementedException();
+        List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
+        return tasksList
+              .FirstOrDefault(filter);
     }
+    /// <summary>
+    /// reading all the list of the tasks
+    /// </summary>
+    /// <returns>IEnumerable of type Task?</returns>
 
-    public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)
+    public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null) //stage 2
     {
-        List<DO.Task> tasksList = XMLTools.LoadListFromXMLSerializer<DO.Task>("tasks");
-
+        List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
         if (filter == null)
-            return tasksList.Select(item => item).ToList();
+            return tasksList.Select(item => item);
         else
-            return tasksList.Where(filter).ToList();
+            return tasksList.Where(filter);
     }
-
-    public void Update(DO.Task item)
+    /// <summary>
+    /// updating a task
+    /// </summary>
+    /// <param name="item">an object type Task</param>
+    /// <exception cref="Exception"></exception>
+    public void Update(Task item)
     {
-        throw new NotImplementedException();
+        List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
+        //find the object in the list
+        Task? foundTask = Read(item.Id);
+        if (foundTask is null)//if does not exist in the list
+            throw new DalDoesNotExistException($"An object of type Task with ID {item.Id} does not exist");
+        tasksList.Remove(foundTask);//delete the old task
+        tasksList.Add(item);//add the updated one
+        XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
     }
 }
