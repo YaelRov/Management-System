@@ -4,7 +4,9 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
-
+/// <summary>
+/// class Engineer Implementation, by Serializer
+/// </summary>
 internal class EngineerImplementation : IEngineer
 {
     /// <summary>

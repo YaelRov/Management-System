@@ -4,7 +4,9 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
-
+/// <summary>
+/// class Task Implementation, by Serializer
+/// </summary>
 internal class TaskImplementation : ITask
 {
     /// <summary>

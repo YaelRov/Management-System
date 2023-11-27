@@ -11,7 +11,6 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     /// <param name="item">object type Dependency</param>
     /// <returns>id of the dependency, type int</returns>
-    /// <exception cref="Exception"></exception>
     public int Create(Dependency item)
     {
         int newId = DataSource.Config.NextDependId;//get a barcode from the config class
@@ -24,7 +23,7 @@ internal class DependencyImplementation : IDependency
     /// gets an id number of a dependency and delete it out from the list
     /// </summary>
     /// <param name="id">int</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         Dependency? foundDep = Read(id);
@@ -73,7 +72,7 @@ internal class DependencyImplementation : IDependency
     /// updating a dependency
     /// </summary>
     /// <param name="item">an object type Dependency</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Dependency item)
     {
         //find the object in the list

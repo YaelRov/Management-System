@@ -15,20 +15,6 @@
     <Cost>65</Cost>
   </Engineer>
   <Engineer>
-    <id>387540193</id>
-    <Name>Refael Toledano</Name>
-    <Email>RefaelToledano@gmail.com</Email>
-    <Level>AdvancedBeginner</Level>
-    <Cost>37</Cost>
-  </Engineer>
-  <Engineer>
-    <id>378895568</id>
-    <Name>Aharon Zusman</Name>
-    <Email>AharonZusman@gmail.com</Email>
-    <Level>Novice</Level>
-    <Cost>48</Cost>
-  </Engineer>
-  <Engineer>
     <id>295757591</id>
     <Name>t</Name>
     <Email>y</Email>
@@ -41,5 +27,12 @@
     <Email>r</Email>
     <Level>AdvancedBeginner</Level>
     <Cost>3</Cost>
+  </Engineer>
+  <Engineer>
+    <id>387540193</id>
+    <Name>Refael Toledano</Name>
+    <Email>RefaelToledano@gmail.com</Email>
+    <Level>AdvancedBeginner</Level>
+    <Cost>80</Cost>
   </Engineer>
 </ArrayOfEngineer>
