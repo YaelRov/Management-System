@@ -44,7 +44,7 @@ static class XMLTools
     #region SaveLoadWithXElement
     public static void SaveListToXMLElement(XElement rootElem, string entity)
     {
-        string filePath = $"{s_xml_dir + entity}.xml";
+        string filePath = $"{s_xml_dir}{entity}.xml";
         try
         {
             rootElem.Save(filePath);
@@ -57,7 +57,7 @@ static class XMLTools
 
     public static XElement LoadListFromXMLElement(string entity)
     {
-        string filePath = $"{s_xml_dir + entity}.xml";
+        string filePath = $"{s_xml_dir}{entity}.xml";
         try
         {
             if (File.Exists(filePath))
@@ -94,7 +94,7 @@ static class XMLTools
     //public static List<T?> LoadListFromXMLSerializer<T>(string entity) where T : struct
     public static List<T> LoadListFromXMLSerializer<T>(string entity) where T : class
     {
-        string filePath = $"{s_xml_dir + entity}.xml";
+        string filePath = $"{s_xml_dir}{entity}.xml";
         try
         {
             if (!File.Exists(filePath)) return new();
