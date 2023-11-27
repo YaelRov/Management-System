@@ -25,7 +25,7 @@ internal class TaskImplementation : ITask
         return newId;
     }
     /// <summary>
-    /// gets an id number of a task and delete it out from the list
+    /// gets an id number of a task and delete it out from the file
     /// </summary>
     /// <param name="id">int</param>
     /// <exception cref="DalDoesNotExistException"></exception>
