@@ -10,17 +10,17 @@ using System.Collections.Generic;
 internal class EngineerImplementation : IEngineer
 {
     /// <summary>
-    /// gets an engineer object and add it to the list
+    /// gets an engineer object and add it to the file
     /// </summary>
     /// <param name="item">object type Engineer</param>
     /// <returns>id of the engineer, type int</returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalAlreadyExistsException"></exception>
     public int Create(Engineer item)
     {
         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
         if (Read(item.Id) is not null)//if exist already the same id number
             throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
-        engineersList.Add(item);//add to the list
+        engineersList.Add(item);//add to the file
         XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
         Engineer.counterEngineers++;//add 1 to the counter of the engineers
         return item.Id;
@@ -29,14 +29,14 @@ internal class EngineerImplementation : IEngineer
     /// gets an id number of an engineer and delete it out from the list
     /// </summary>
     /// <param name="id">int</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
         Engineer? foundEngineer = Read(id);
         if (foundEngineer is null)//if the object does not exist
             throw new DalDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
-        engineersList.Remove(foundEngineer);//remove from the list
+        engineersList.Remove(foundEngineer);//remove from the file
         XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
         Engineer.counterEngineers--;//subtract 1 from the counter
     }
@@ -48,7 +48,7 @@ internal class EngineerImplementation : IEngineer
     public Engineer? Read(int id)
     {
         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
-        //find the engineer in the list
+        //find the engineer in the file
         var foundEngineer = engineersList
                      .Where(curEngineer => curEngineer.Id == id)
                      .FirstOrDefault();
@@ -67,7 +67,7 @@ internal class EngineerImplementation : IEngineer
               .FirstOrDefault(filter);
     }
     /// <summary>
-    /// reading all the list of the engineers
+    /// reading all the file of the engineers
     /// </summary>
     /// <returns>IEnumerable of type Engineer?</returns>
 
@@ -84,13 +84,13 @@ internal class EngineerImplementation : IEngineer
     /// updating an engineer
     /// </summary>
     /// <param name="item">an object type Engineer</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Engineer item)
     {
         List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
-        //find the object in the list
+        //find the object in the file
         var foundEngineer = Read(item.Id);
-        if (foundEngineer is null)//if does not exist in the list
+        if (foundEngineer is null)//if does not exist in the file
             throw new DalDoesNotExistException($"An object of type Engineer with ID {item.Id} does not exist");
         engineersList.Remove(foundEngineer);//delete the old engineer
         engineersList.Add(item);//add the updated one
