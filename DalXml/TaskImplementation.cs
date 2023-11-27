@@ -1,6 +1,7 @@
 ﻿using DalApi;
 using DO;
 using System.Collections;
+using System.Linq;
 using System.Xml.Linq;
 
 namespace Dal;
@@ -70,32 +71,12 @@ internal class TaskImplementation : ITask
 
     public IEnumerable<DO.Task?> ReadAll(Func<DO.Task, bool>? filter = null)
     {
-        XElement? xmlTasks = XMLTools.LoadListFromXMLElement("tasks");
-        IEnumerable<XElement> tasksArray = xmlTasks.Descendants("Task");
+        List<DO.Task> tasksList = XMLTools.LoadListFromXMLSerializer<DO.Task>("tasks");
 
-        if (filter is null)
-            filter = (e) => true;
-        List<DO.Task> TasksList = tasksArray
-            .Select(task => {
-                DO.Task Task_t = new DO.Task(int.Parse(task.Attribute("Id")!.Value),
-                                        task.Value,
-                                        task.Attribute("Alias")!.Value,
-                                        Convert.ToBoolean(task.Attribute("Milestone")!.Value),
-                                        Convert.ToDateTime(task.Attribute("CreatedAt")!.Value),
-                                        Convert.ToDateTime(task.Attribute("Start")!.Value),
-                                        Convert.ToDateTime(task.Attribute("ScheduledDate")!.Value),
-                                        Convert.ToDateTime(task.Attribute("ForecastDate")!.Value),
-                                        Convert.ToDateTime(task.Attribute("Deadline")!.Value),
-                                        Convert.ToDateTime(task.Attribute("Complete")!.Value),
-                                        task.Attribute("Deliverables")!.Value,
-                                        task.Attribute("Remarks")!.Value,
-                                        Convert.ToInt32(task.Attribute("EngineerId")!.Value),
-                                        (EngineerExperience)Enum.Parse(typeof(EngineerExperience), task.Attribute("ComplexityLevel")!.Value));
-                return Task_t;
-            })
-            .Where(task => filter(task))
-            .ToList();
-        return TasksList;
+        if (filter == null)
+            return tasksList.Select(item => item).ToList();
+        else
+            return tasksList.Where(filter).ToList();
     }
 
     public void Update(DO.Task item)

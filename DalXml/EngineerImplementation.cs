@@ -39,8 +39,6 @@ internal class EngineerImplementation : IEngineer
         if (isExistEngineer is null)
             throw new DalDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
         
-
-
     }
 
     public Engineer? Read(int id)

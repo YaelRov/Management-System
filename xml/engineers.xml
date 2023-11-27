@@ -1,3 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer>
+  <Engineer Id="304114748" Email="YoniStern@gmail.com" Level="Competent" Cost="92">Yoni Stern</Engineer>
+  <Engineer Id="378272777" Email="AvrahamSilver@gmail.com" Level="AdvancedBeginner" Cost="61">Avraham Silver</Engineer>
+  <Engineer Id="247235247" Email="ItzchakElkias@gmail.com" Level="AdvancedBeginner" Cost="91">Itzchak Elkias</Engineer>
+  <Engineer Id="255132200" Email="YaelRov@gmail.com" Level="AdvancedBeginner" Cost="79">Yael Rov</Engineer>
+  <Engineer Id="266739716" Email="RefaelToledano@gmail.com" Level="AdvancedBeginner" Cost="66">Refael Toledano</Engineer>
+  <Engineer Id="354771828" Email="AharonZusman@gmail.com" Level="Competent" Cost="66">Aharon Zusman</Engineer>
+  <Engineer Id="334176975" Email="YoniStern@gmail.com" Level="Novice" Cost="90">Yoni Stern</Engineer>
+  <Engineer Id="287412318" Email="AvrahamSilver@gmail.com" Level="AdvancedBeginner" Cost="98">Avraham Silver</Engineer>
+  <Engineer Id="364917968" Email="ItzchakElkias@gmail.com" Level="Novice" Cost="34">Itzchak Elkias</Engineer>
+  <Engineer Id="267655400" Email="YaelRov@gmail.com" Level="Competent" Cost="95">Yael Rov</Engineer>
+  <Engineer Id="313230532" Email="RefaelToledano@gmail.com" Level="AdvancedBeginner" Cost="78">Refael Toledano</Engineer>
+  <Engineer Id="321251085" Email="AharonZusman@gmail.com" Level="Novice" Cost="39">Aharon Zusman</Engineer>
+  <Engineer Id="397027289" Email="YoniStern@gmail.com" Level="Competent" Cost="66">Yoni Stern</Engineer>
+  <Engineer Id="237037561" Email="AvrahamSilver@gmail.com" Level="Novice" Cost="50">Avraham Silver</Engineer>
+  <Engineer Id="346119115" Email="ItzchakElkias@gmail.com" Level="Novice" Cost="56">Itzchak Elkias</Engineer>
+  <Engineer Id="390549794" Email="YaelRov@gmail.com" Level="Novice" Cost="32">Yael Rov</Engineer>
+  <Engineer Id="278863051" Email="RefaelToledano@gmail.com" Level="AdvancedBeginner" Cost="57">Refael Toledano</Engineer>
+  <Engineer Id="365675654" Email="AharonZusman@gmail.com" Level="AdvancedBeginner" Cost="76">Aharon Zusman</Engineer>
 </ArrayOfEngineer>
