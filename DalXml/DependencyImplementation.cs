@@ -12,9 +12,9 @@ internal class DependencyImplementation : IDependency
         XElement? xmlDependenciesFileRoot = XMLTools.LoadListFromXMLElement("dependencies");
         //creating the new "Dependency" element
         XElement newDep = new XElement("Dependency",
-                                        Config.NextDependencyId,
-                                        new XAttribute("DependentTask", item.DependentTask ?? 0),
-                                        new XAttribute("DependsOnTask", item.DependsOnTask ?? 0)
+                                        new XElement("Id", Config.NextDependencyId),
+                                        new XElement("DependentTask", item.DependentTask ?? 0),
+                                        new XElement("DependsOnTask", item.DependsOnTask ?? 0)
                                         );
         xmlDependenciesFileRoot.Add(newDep);
         XMLTools.SaveListToXMLElement(xmlDependenciesFileRoot, "dependencies");
@@ -52,9 +52,10 @@ internal class DependencyImplementation : IDependency
             filter = (e) => true;
         List<Dependency> DependenciesList = xmlDependencies.Descendants("Dependency")
             .Select(dep => {
-                Dependency dependency_t = new(int.Parse(dep!.Value),
-                                        int.Parse(dep.Attribute("DependentTask")!.Value),
-                                        int.Parse(dep.Attribute("DependsOnTask")!.Value));
+                Dependency dependency_t = new(
+                                        int.Parse(dep.Element("Id")!.Value),
+                                        int.Parse(dep.Element("DependentTask")!.Value),
+                                        int.Parse(dep.Element("DependsOnTask")!.Value));
                 return dependency_t;
             })
             .Where(dep => filter(dep))

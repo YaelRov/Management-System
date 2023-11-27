@@ -140,7 +140,7 @@ public static class Initialization
         s_dal=dal ?? throw new NullReferenceException("DAL can not be null!");
         //createEngineers();
         //createTasks();
-        //createDependencies();
+        createDependencies();
     }
     #endregion
 }
