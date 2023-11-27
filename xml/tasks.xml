@@ -1,3 +1,323 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<ArrayOfTask>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Task>
+    <id>1</id>
+    <Description>Design and implement software solutions.</Description>
+    <Alias>Software Design</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2020-12-11T00:00:00</CreatedAt>
+    <Start>2020-12-25T09:00:00</Start>
+    <ScheduledDate>2020-12-26T09:00:00</ScheduledDate>
+    <ForecastDate>2021-01-01T05:00:00</ForecastDate>
+    <Deadline>2021-01-04T05:00:00</Deadline>
+    <Complete>2021-01-01T10:00:00</Complete>
+    <Deliverables>software solutions</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>AdvancedBeginner</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>2</id>
+    <Description>Write clean and efficient code.</Description>
+    <Alias>Code Writing</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2020-08-12T00:00:00</CreatedAt>
+    <Start>2020-09-21T02:00:00</Start>
+    <ScheduledDate>2020-09-22T18:00:00</ScheduledDate>
+    <ForecastDate>2020-09-26T22:00:00</ForecastDate>
+    <Deadline>2020-09-29T22:00:00</Deadline>
+    <Complete>2020-09-28T15:00:00</Complete>
+    <Deliverables>clean and efficient code</Deliverables>
+    <Remarks>Be careful</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>Novice</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>3</id>
+    <Description>Test and debug software applications.</Description>
+    <Alias>Software Testing</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2020-11-03T00:00:00</CreatedAt>
+    <Start>2020-11-10T12:00:00</Start>
+    <ScheduledDate>2020-11-12T05:00:00</ScheduledDate>
+    <ForecastDate>2020-11-16T10:00:00</ForecastDate>
+    <Deadline>2020-11-19T10:00:00</Deadline>
+    <Complete>2020-11-18T08:00:00</Complete>
+    <Deliverables>tested and debugged applications</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>Novice</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>4</id>
+    <Description>Collaborate with cross-functional teams.</Description>
+    <Alias>Team Collaboration</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2020-07-23T00:00:00</CreatedAt>
+    <Start>2020-09-26T20:00:00</Start>
+    <ScheduledDate>2020-10-03T19:00:00</ScheduledDate>
+    <ForecastDate>2020-10-11T01:00:00</ForecastDate>
+    <Deadline>2020-10-14T01:00:00</Deadline>
+    <Complete>2020-10-12T07:00:00</Complete>
+    <Deliverables>cross-functional collaboration</Deliverables>
+    <Remarks>It's easy</Remarks>
+    <EngineerId>295757591</EngineerId>
+    <ComplexityLevel>Expert</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>5</id>
+    <Description>Conduct code reviews and provide feedback.</Description>
+    <Alias>Code Reviews</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2021-02-10T00:00:00</CreatedAt>
+    <Start>2021-04-05T22:00:00</Start>
+    <ScheduledDate>2021-04-13T03:00:00</ScheduledDate>
+    <ForecastDate>2021-04-22T17:00:00</ForecastDate>
+    <Deadline>2021-04-25T17:00:00</Deadline>
+    <Complete>2021-04-24T14:00:00</Complete>
+    <Deliverables>code reviews and feedback</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>356054894</EngineerId>
+    <ComplexityLevel>Expert</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>6</id>
+    <Description>Maintain and update existing software systems.</Description>
+    <Alias>Software Maintenance</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2023-12-02T00:00:00</CreatedAt>
+    <Start>2024-01-23T18:00:00</Start>
+    <ScheduledDate>2024-01-31T14:00:00</ScheduledDate>
+    <ForecastDate>2024-02-02T19:00:00</ForecastDate>
+    <Deadline>2024-02-05T19:00:00</Deadline>
+    <Complete>2024-02-03T13:00:00</Complete>
+    <Deliverables>maintained and updated systems</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>387540193</EngineerId>
+    <ComplexityLevel>Novice</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>7</id>
+    <Description>Troubleshoot and resolve software issues.</Description>
+    <Alias>Issue Resolution</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2023-09-16T00:00:00</CreatedAt>
+    <Start>2023-10-17T07:00:00</Start>
+    <ScheduledDate>2023-10-23T12:00:00</ScheduledDate>
+    <ForecastDate>2023-11-06T00:00:00</ForecastDate>
+    <Deadline>2023-11-09T00:00:00</Deadline>
+    <Complete>2023-11-08T13:00:00</Complete>
+    <Deliverables>resolved software issues</Deliverables>
+    <Remarks>It's easy</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>AdvancedBeginner</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>8</id>
+    <Description>Participate in software planning and estimation.</Description>
+    <Alias>Planning and Estimation</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2023-01-12T00:00:00</CreatedAt>
+    <Start>2023-01-22T09:00:00</Start>
+    <ScheduledDate>2023-01-28T20:00:00</ScheduledDate>
+    <ForecastDate>2023-02-03T09:00:00</ForecastDate>
+    <Deadline>2023-02-06T09:00:00</Deadline>
+    <Complete>2023-02-05T21:00:00</Complete>
+    <Deliverables>software planning and estimation</Deliverables>
+    <Remarks>It's hard</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>Expert</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>9</id>
+    <Description>Research and implement new technologies.</Description>
+    <Alias>Technology Research</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2022-10-18T00:00:00</CreatedAt>
+    <Start>2022-12-08T22:00:00</Start>
+    <ScheduledDate>2022-12-17T10:00:00</ScheduledDate>
+    <ForecastDate>2022-12-20T20:00:00</ForecastDate>
+    <Deadline>2022-12-23T20:00:00</Deadline>
+    <Complete>2022-12-22T05:00:00</Complete>
+    <Deliverables>implemented new technologies</Deliverables>
+    <Remarks>It's hard</Remarks>
+    <EngineerId>378895568</EngineerId>
+    <ComplexityLevel>Novice</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>10</id>
+    <Description>Document software design and specifications.</Description>
+    <Alias>Documentation</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2022-04-01T00:00:00</CreatedAt>
+    <Start>2022-06-08T18:00:00</Start>
+    <ScheduledDate>2022-06-21T14:00:00</ScheduledDate>
+    <ForecastDate>2022-06-30T20:00:00</ForecastDate>
+    <Deadline>2022-07-03T20:00:00</Deadline>
+    <Complete>2022-06-30T23:00:00</Complete>
+    <Deliverables>software design and specifications</Deliverables>
+    <Remarks>Be careful</Remarks>
+    <EngineerId>321342085</EngineerId>
+    <ComplexityLevel>Expert</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>11</id>
+    <Description>Optimize software performance and scalability.</Description>
+    <Alias>Performance Optimization</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2023-04-13T00:00:00</CreatedAt>
+    <Start>2023-04-15T12:00:00</Start>
+    <ScheduledDate>2023-04-25T23:00:00</ScheduledDate>
+    <ForecastDate>2023-05-07T09:00:00</ForecastDate>
+    <Deadline>2023-05-10T09:00:00</Deadline>
+    <Complete>2023-05-08T18:00:00</Complete>
+    <Deliverables>optimized performance and scalability</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>321342085</EngineerId>
+    <ComplexityLevel>Expert</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>12</id>
+    <Description>Create and maintain technical documentation.</Description>
+    <Alias>Technical Documentation</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2024-10-28T00:00:00</CreatedAt>
+    <Start>2024-11-04T09:00:00</Start>
+    <ScheduledDate>2024-11-13T08:00:00</ScheduledDate>
+    <ForecastDate>2024-11-17T06:00:00</ForecastDate>
+    <Deadline>2024-11-20T06:00:00</Deadline>
+    <Complete>2024-11-17T14:00:00</Complete>
+    <Deliverables>technical documentation</Deliverables>
+    <Remarks>It's easy</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>AdvancedBeginner</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>13</id>
+    <Description>Implement and maintain software version control.</Description>
+    <Alias>Version Control</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2022-01-07T00:00:00</CreatedAt>
+    <Start>2022-03-14T05:00:00</Start>
+    <ScheduledDate>2022-03-27T15:00:00</ScheduledDate>
+    <ForecastDate>2022-04-03T15:00:00</ForecastDate>
+    <Deadline>2022-04-06T15:00:00</Deadline>
+    <Complete>2022-04-05T02:00:00</Complete>
+    <Deliverables>software version control</Deliverables>
+    <Remarks>Be careful</Remarks>
+    <EngineerId>356054894</EngineerId>
+    <ComplexityLevel>Proficient</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>14</id>
+    <Description>Implement and maintain database systems.</Description>
+    <Alias>Database Management</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2024-10-26T00:00:00</CreatedAt>
+    <Start>2024-12-20T16:00:00</Start>
+    <ScheduledDate>2025-01-02T12:00:00</ScheduledDate>
+    <ForecastDate>2025-01-04T09:00:00</ForecastDate>
+    <Deadline>2025-01-07T09:00:00</Deadline>
+    <Complete>2025-01-06T00:00:00</Complete>
+    <Deliverables>Efficient database systems</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>Expert</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>15</id>
+    <Description>Perform code refactoring for improved code quality.</Description>
+    <Alias>Code Refactoring</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2023-03-21T00:00:00</CreatedAt>
+    <Start>2023-04-11T05:00:00</Start>
+    <ScheduledDate>2023-04-12T15:00:00</ScheduledDate>
+    <ForecastDate>2023-04-14T23:00:00</ForecastDate>
+    <Deadline>2023-04-17T23:00:00</Deadline>
+    <Complete>2023-04-17T05:00:00</Complete>
+    <Deliverables>High-quality code</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>378895568</EngineerId>
+    <ComplexityLevel>Competent</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>16</id>
+    <Description>Develop and execute unit tests.</Description>
+    <Alias>Unit Testing</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2024-03-20T00:00:00</CreatedAt>
+    <Start>2024-03-30T01:00:00</Start>
+    <ScheduledDate>2024-04-09T16:00:00</ScheduledDate>
+    <ForecastDate>2024-04-22T08:00:00</ForecastDate>
+    <Deadline>2024-04-25T08:00:00</Deadline>
+    <Complete>2024-04-22T18:00:00</Complete>
+    <Deliverables>Thoroughly tested code</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>Proficient</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>17</id>
+    <Description>Implement security measures in software solutions.</Description>
+    <Alias>Security Implementation</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2021-01-22T00:00:00</CreatedAt>
+    <Start>2021-02-05T03:00:00</Start>
+    <ScheduledDate>2021-02-13T00:00:00</ScheduledDate>
+    <ForecastDate>2021-02-20T08:00:00</ForecastDate>
+    <Deadline>2021-02-23T08:00:00</Deadline>
+    <Complete>2021-02-23T03:00:00</Complete>
+    <Deliverables>Secure software solutions</Deliverables>
+    <Remarks>Be careful</Remarks>
+    <EngineerId>353952124</EngineerId>
+    <ComplexityLevel>Proficient</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>18</id>
+    <Description>Provide technical support and assistance.</Description>
+    <Alias>Technical Support</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2024-08-13T00:00:00</CreatedAt>
+    <Start>2024-09-16T10:00:00</Start>
+    <ScheduledDate>2024-09-25T23:00:00</ScheduledDate>
+    <ForecastDate>2024-10-06T14:00:00</ForecastDate>
+    <Deadline>2024-10-09T14:00:00</Deadline>
+    <Complete>2024-10-08T02:00:00</Complete>
+    <Deliverables>Effective technical support</Deliverables>
+    <Remarks>It's hard</Remarks>
+    <EngineerId>321342085</EngineerId>
+    <ComplexityLevel>AdvancedBeginner</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>19</id>
+    <Description>Monitor and optimize software performance.</Description>
+    <Alias>Performance Monitoring</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2021-05-11T00:00:00</CreatedAt>
+    <Start>2021-05-27T05:00:00</Start>
+    <ScheduledDate>2021-05-29T20:00:00</ScheduledDate>
+    <ForecastDate>2021-06-06T21:00:00</ForecastDate>
+    <Deadline>2021-06-09T21:00:00</Deadline>
+    <Complete>2021-06-08T02:00:00</Complete>
+    <Deliverables>Optimized performance</Deliverables>
+    <Remarks>Be careful</Remarks>
+    <EngineerId>356054894</EngineerId>
+    <ComplexityLevel>AdvancedBeginner</ComplexityLevel>
+  </Task>
+  <Task>
+    <id>20</id>
+    <Description>Plan and execute software deployments.</Description>
+    <Alias>Software Deployment</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2024-02-19T00:00:00</CreatedAt>
+    <Start>2024-04-21T20:00:00</Start>
+    <ScheduledDate>2024-05-03T04:00:00</ScheduledDate>
+    <ForecastDate>2024-05-12T02:00:00</ForecastDate>
+    <Deadline>2024-05-15T02:00:00</Deadline>
+    <Complete>2024-05-13T08:00:00</Complete>
+    <Deliverables>Successful software deployments</Deliverables>
+    <Remarks>It's easy</Remarks>
+    <EngineerId>356054894</EngineerId>
+    <ComplexityLevel>Expert</ComplexityLevel>
+  </Task>
 </ArrayOfTask>

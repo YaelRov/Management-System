@@ -1,91 +1,97 @@
 ﻿
+namespace Dal;
+
 using DalApi;
 using DO;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Xml.Linq;
-
-namespace Dal;
+using System.Collections.Generic;
 
 internal class EngineerImplementation : IEngineer
 {
+    /// <summary>
+    /// gets an engineer object and add it to the list
+    /// </summary>
+    /// <param name="item">object type Engineer</param>
+    /// <returns>id of the engineer, type int</returns>
+    /// <exception cref="Exception"></exception>
     public int Create(Engineer item)
     {
-        //checking if this engineer is exists already
-        Engineer? isExistEngineer = Read(item.Id);
-        if(isExistEngineer is not null)
+        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+        if (Read(item.Id) is not null)//if exist already the same id number
             throw new DalAlreadyExistsException($"An object of type Engineer with ID {item.Id} already exists");
-
-        XElement? xmlEngineersFileRoot = XMLTools.LoadListFromXMLElement("engineers");
-
-        //creating the new "Engineer" element
-        XElement newEng = new XElement("Engineer",
-                                       item.Name,
-                                       new XAttribute("Id", item.Id),
-                                       new XAttribute("Email", item.Email),
-                                       new XAttribute("Level", item.Level),
-                                       new XAttribute("Cost", item.Cost));
-
-        xmlEngineersFileRoot.Add(newEng);
-        XMLTools.SaveListToXMLElement(xmlEngineersFileRoot, "engineers");
+        engineersList.Add(item);//add to the list
+        XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
         Engineer.counterEngineers++;//add 1 to the counter of the engineers
         return item.Id;
     }
-
+    /// <summary>
+    /// gets an id number of an engineer and delete it out from the list
+    /// </summary>
+    /// <param name="id">int</param>
+    /// <exception cref="Exception"></exception>
     public void Delete(int id)
     {
-        //checking if this engineer does not exists 
-        Engineer? isExistEngineer = Read(id);
-        if (isExistEngineer is null)
+        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+        Engineer? foundEngineer = Read(id);
+        if (foundEngineer is null)//if the object does not exist
             throw new DalDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
-        
-
-
+        engineersList.Remove(foundEngineer);//remove from the list
+        XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
+        Engineer.counterEngineers--;//subtract 1 from the counter
     }
-
+    /// <summary>
+    /// get id of a engineer to read
+    /// </summary>
+    /// <param name="id">int</param>
+    /// <returns>an object type Engineer</returns>
     public Engineer? Read(int id)
     {
-        XElement? xmlEngineers = XMLTools.LoadListFromXMLElement("engineers");
-        XElement? eng = xmlEngineers.Descendants("engineers")
-            .FirstOrDefault(engineer => int.Parse(engineer.Attribute("Id")!.Value).Equals(id));
-        if (eng is null)
-            return null;
-        Engineer returnedEngineer = new(int.Parse(eng.Attribute("Id")!.Value),
-                                        eng.Value, 
-                                        eng.Attribute("Email")!.Value,
-                                        (EngineerExperience)Enum.Parse(typeof(EngineerExperience), eng.Attribute("Level")!.Value),
-                                        double.Parse(eng.Attribute("Cost")!.Value));
-        return returnedEngineer;
+        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+        //find the engineer in the list
+        var foundEngineer = engineersList
+                     .Where(curEngineer => curEngineer.Id == id)
+                     .FirstOrDefault();
+        return foundEngineer;
     }
 
-    public Engineer? Read(Func<Engineer, bool> filter)
+    /// <summary>
+    /// get condition of a engineer to read
+    /// </summary>
+    /// <param name="filter">a condition function</param>
+    /// <returns>the first element that satisfies the conditin</returns>
+    public Engineer? Read(Func<Engineer, bool> filter) //stage 2
     {
-        throw new NotImplementedException();
+        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+        return engineersList
+              .FirstOrDefault(filter);
     }
+    /// <summary>
+    /// reading all the list of the engineers
+    /// </summary>
+    /// <returns>IEnumerable of type Engineer?</returns>
 
-    public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null)
+    public IEnumerable<Engineer?> ReadAll(Func<Engineer, bool>? filter = null) //stage 2
     {
-        XElement xmlEngineers = XMLTools.LoadListFromXMLElement("engineers");
-        if (filter is null)
-            filter = (e) => true;
-        List<Engineer> engineersList = 
-            xmlEngineers.Descendants("Engineer")
-            .Select(engin => {
-            Engineer engineer_t = new(
-                                        int.Parse(engin.Attribute("Id")!.Value),
-                                        engin.Value,
-                                        engin.Attribute("Email")!.Value,
-                                        (EngineerExperience)Enum.Parse(typeof(EngineerExperience), engin.Attribute("Level")!.Value),
-                                        double.Parse(engin.Attribute("Cost")!.Value)
-                                                );
-                         return engineer_t; })
-            .Where(engin =>  filter(engin) )
-            .ToList();
-        return engineersList;
+        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+        if (filter == null)
+            return engineersList.Select(item => item);
+        else
+            return engineersList.Where(filter);
     }
 
+    /// <summary>
+    /// updating an engineer
+    /// </summary>
+    /// <param name="item">an object type Engineer</param>
+    /// <exception cref="Exception"></exception>
     public void Update(Engineer item)
     {
-        throw new NotImplementedException();
+        List<Engineer> engineersList = XMLTools.LoadListFromXMLSerializer<Engineer>("engineers");
+        //find the object in the list
+        var foundEngineer = Read(item.Id);
+        if (foundEngineer is null)//if does not exist in the list
+            throw new DalDoesNotExistException($"An object of type Engineer with ID {item.Id} does not exist");
+        engineersList.Remove(foundEngineer);//delete the old engineer
+        engineersList.Add(item);//add the updated one
+        XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
     }
 }
