@@ -12,7 +12,7 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     /// <param name="item">object type Engineer</param>
     /// <returns>id of the engineer, type int</returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalAlreadyExistsException"></exception>
     public int Create(Engineer item)
     {
         if (Read(item.Id) is not null)//if exist already the same id number
@@ -25,7 +25,7 @@ internal class EngineerImplementation : IEngineer
     /// gets an id number of an engineer and delete it out from the list
     /// </summary>
     /// <param name="id">int</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
         Engineer? foundEngineer = Read(id);
@@ -75,7 +75,7 @@ internal class EngineerImplementation : IEngineer
     /// updating an engineer
     /// </summary>
     /// <param name="item">an object type Engineer</param>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Engineer item)
     {
         //find the object in the list
