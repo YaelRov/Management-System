@@ -45,22 +45,24 @@ internal class Program
     /// <exception cref="Exception"></exception>
     static int createTask()
     {
-        Console.WriteLine("Enter task's details: description, alias, milestone.\n dates of: creating, start, scheduled date, forecast , deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
-        string _description = Console.ReadLine()!;//get details
-        string _alias = Console.ReadLine()!;
-        bool _milestone = Convert.ToBoolean(Console.ReadLine()!);
-        DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
-        DateTime? _start = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _forecastDate = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _deadline = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _complete = Convert.ToDateTime(Console.ReadLine());
-        string? _deliverables = Console.ReadLine();
-        string? _remarks = Console.ReadLine();
-        int? _engineerId = Convert.ToInt32(Console.ReadLine());
-        Engineer checkExistingEngineer = s_dal!.Engineer.Read((int)_engineerId!) ?? throw new DalDoesNotExistException($"An object of type Engineer with ID {_engineerId} does not exist");
-        EngineerExperience _complexityLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), Console.ReadLine()!);
-        DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
+        //Console.WriteLine("Enter task's details: description, alias, milestone.\n dates of: creating, start, scheduled date, forecast , deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
+        //string _description = Console.ReadLine()!;//get details
+        //string _alias = Console.ReadLine()!;
+        //bool _milestone = Convert.ToBoolean(Console.ReadLine()!);
+        //DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
+        //DateTime? _start = Convert.ToDateTime(Console.ReadLine());
+        //DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
+        //DateTime? _forecastDate = Convert.ToDateTime(Console.ReadLine());
+        //DateTime? _deadline = Convert.ToDateTime(Console.ReadLine());
+        //DateTime? _complete = Convert.ToDateTime(Console.ReadLine());
+        //string? _deliverables = Console.ReadLine();
+        //string? _remarks = Console.ReadLine();
+        //int? _engineerId = Convert.ToInt32(Console.ReadLine());
+        //Engineer checkExistingEngineer = s_dal!.Engineer.Read((int)_engineerId!) ?? throw new DalDoesNotExistException($"An object of type Engineer with ID {_engineerId} does not exist");
+        //EngineerExperience _complexityLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), Console.ReadLine()!);
+        //DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
+        DateTime d = new();
+        DO.Task newTask = new(-1, "a", "b", true,d, null, null, null, null, null, null, null, null, null);
         return s_dal!.Task.Create(newTask);//add to the list
     }
 

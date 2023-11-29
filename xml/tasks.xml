@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfTask xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Task>
     <id>1</id>
@@ -319,5 +319,19 @@
     <Remarks>It's easy</Remarks>
     <EngineerId>356054894</EngineerId>
     <ComplexityLevel>Expert</ComplexityLevel>
+  </Task>
+  <Task>
+    <Id>23</Id>
+    <Description>a</Description>
+    <Alias>b</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>0001-01-01T00:00:00</CreatedAt>
+  </Task>
+  <Task>
+    <Id>24</Id>
+    <Description>a</Description>
+    <Alias>b</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>0001-01-01T00:00:00</CreatedAt>
   </Task>
 </ArrayOfTask>

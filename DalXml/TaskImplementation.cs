@@ -34,7 +34,7 @@ internal class TaskImplementation : ITask
                                         new XElement("Id", item.Id == -1 ? nextId : item.Id),
                                         new XElement("Description", item.Description),
                                         new XElement("Alias", item.Alias),
-                                        new XElement("Milestone", (bool)item.Milestone),
+                                        new XElement("Milestone", Convert.ToBoolean(item.Milestone)),
                                         new XElement("CreatedAt", Convert.ToDateTime(item.CreatedAt)),
                                         item.Start is not null ? new XElement("Start", Convert.ToDateTime(item.Start)) : null,
                                         item.ScheduledDate is not null ? new XElement("ScheduledDate", Convert.ToDateTime(item.ScheduledDate)) : null,
@@ -44,7 +44,7 @@ internal class TaskImplementation : ITask
                                         item.Deliverables is not null ? new XElement("Deliverables", item.Deliverables) : null,
                                         item.Remarks is not null ? new XElement("Remarks", item.Remarks) : null,
                                         item.EngineerId is not null ? new XElement("EngineerId", Convert.ToInt32(item.EngineerId)) : null,
-                                        item.ComplexityLevel is not null ? new XElement("ComplexityLevel", (EngineerExperience)item.ComplexityLevel) : null
+                                        item.ComplexityLevel is not null ? new XElement("ComplexityLevel", (EngineerExperience)item.ComplexityLevel): null
                                         );
         xmlTasksFileRoot.Add(newTask);
         XMLTools.SaveListToXMLElement(xmlTasksFileRoot, "tasks");
