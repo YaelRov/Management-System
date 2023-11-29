@@ -19,9 +19,9 @@ internal class DependencyImplementation : IDependency
         //creating the new "Dependency" element
         int nextId = Config.NextDependencyId;
         XElement newDep = new XElement("Dependency",
-                                        new XElement("Id", item.Id==-1?nextId:item.Id),
-                                        new XElement("DependentTask", item.DependentTask ?? 0),
-                                        new XElement("DependsOnTask", item.DependsOnTask ?? 0)
+                                        new XElement("Id", item.Id == -1 ? nextId : item.Id),
+                                        item.DependentTask is not null ? new XElement("DependentTask", item.DependentTask) : null,
+                                        item.DependsOnTask is not null ? new XElement("DependsOnTask", item.DependsOnTask) : null
                                         );
         xmlDependenciesFileRoot.Add(newDep);
         XMLTools.SaveListToXMLElement(xmlDependenciesFileRoot, "dependencies");
@@ -59,8 +59,8 @@ internal class DependencyImplementation : IDependency
         if (dep is null)
             return null;
         Dependency returnedDependency = new(int.Parse(dep.Element("Id")!.Value),
-                                        int.Parse(dep.Element("DependentTask")!.Value),
-                                        int.Parse(dep.Element("DependsOnTask")!.Value));
+                                        dep.Element("DependentTask") is not null ? int.Parse(dep.Element("DependentTask")!.Value) : null,
+                                        dep.Element("DependsOnTask") is not null ? int.Parse(dep.Element("DependsOnTask")!.Value) : null);
         return returnedDependency;
     }
     /// <summary>
@@ -73,13 +73,13 @@ internal class DependencyImplementation : IDependency
         XElement? xmlDependencies = XMLTools.LoadListFromXMLElement("dependencies");
         XElement? dep = xmlDependencies.Descendants("Dependency")
             .FirstOrDefault(depend => filter(new(int.Parse(depend.Element("Id")!.Value),
-                                        int.Parse(depend.Element("DependentTask")!.Value),
-                                        int.Parse(depend.Element("DependsOnTask")!.Value))));
+                                        depend.Element("DependentTask") is not null ? int.Parse(depend.Element("DependentTask")!.Value) : null,
+                                        depend.Element("DependsOnTask") is not null ? int.Parse(depend.Element("DependsOnTask")!.Value) : null)));
         if (dep is null)
             return null;
         Dependency returnedDependency = new(int.Parse(dep.Element("Id")!.Value),
-                                        int.Parse(dep.Element("DependentTask")!.Value),
-                                        int.Parse(dep.Element("DependsOnTask")!.Value));
+                                        dep.Element("DependentTask") is not null ? int.Parse(dep.Element("DependentTask")!.Value) : null,
+                                        dep.Element("DependsOnTask") is not null ? int.Parse(dep.Element("DependsOnTask")!.Value) : null);
         return returnedDependency;
     }
     /// <summary>
@@ -92,11 +92,12 @@ internal class DependencyImplementation : IDependency
         if (filter is null)
             filter = (e) => true;
         List<Dependency> DependenciesList = xmlDependencies.Descendants("Dependency")
-            .Select(dep => {
+            .Select(dep =>
+            {
                 Dependency dependency_t = new(
                                         int.Parse(dep.Element("Id")!.Value),
-                                        int.Parse(dep.Element("DependentTask")!.Value),
-                                        int.Parse(dep.Element("DependsOnTask")!.Value));
+                                        dep.Element("DependentTask") is not null ? int.Parse(dep.Element("DependentTask")!.Value) : null,
+                                        dep.Element("DependsOnTask") is not null ? int.Parse(dep.Element("DependsOnTask")!.Value) : null);
                 return dependency_t;
             })
             .Where(dep => filter(dep))

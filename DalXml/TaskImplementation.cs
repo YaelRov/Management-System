@@ -4,6 +4,8 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Xml.Linq;
+
 /// <summary>
 /// class Task Implementation, by Serializer
 /// </summary>
@@ -23,6 +25,21 @@ internal class TaskImplementation : ITask
         XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
         Task.counterTasks++;//add 1 to the counter of the tasks
         return newId;
+        //=============================
+        XElement? xmlTasksFileRoot = XMLTools.LoadListFromXMLElement("tasks");
+        //creating the new "Task" element
+        int nextId = Config.NextTaskId;
+        XElement newDep = new XElement("Dependency",
+                                        new XElement("Id", item.Id == -1 ? nextId : item.Id),
+                                        item.DependentTask is not null ? new XElement("DependentTask", item.DependentTask) : null,
+                                        item.DependsOnTask is not null ? new XElement("DependsOnTask", item.DependsOnTask) : null
+                                        );
+        xmlDependenciesFileRoot.Add(newDep);
+        XMLTools.SaveListToXMLElement(xmlDependenciesFileRoot, "dependencies");
+        Dependency.counterDependencies++;//add 1 to the counter of the dependencies
+        return nextId;
+
+
     }
     /// <summary>
     /// gets an id number of a task and delete it out from the file
