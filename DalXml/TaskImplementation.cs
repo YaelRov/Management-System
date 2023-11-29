@@ -19,25 +19,36 @@ internal class TaskImplementation : ITask
     /// <returns>the id of the task, type int</returns>
     public int Create(Task item)
     {
-        List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
-        int newId = Config.NextTaskId;//get a barcode from the config class
-        Task newTask = new Task(newId, item.Description, item.Alias, item.Milestone, item.CreatedAt, item.Start, item.ScheduledDate, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.EngineerId, item.ComplexityLevel);//create a new task object
-        tasksList.Add(newTask);//add the task object to the file
-        XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
-        Task.counterTasks++;//add 1 to the counter of the tasks
-        return newId;
+        //List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
+        //int newId = Config.NextTaskId;//get a barcode from the config class
+        //Task newTask = new Task(newId, item.Description, item.Alias, item.Milestone, item.CreatedAt, item.Start, item.ScheduledDate, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.EngineerId, item.ComplexityLevel);//create a new task object
+        //tasksList.Add(newTask);//add the task object to the file
+        //XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
+        //Task.counterTasks++;//add 1 to the counter of the tasks
+        //return newId;
         //=============================
         XElement? xmlTasksFileRoot = XMLTools.LoadListFromXMLElement("tasks");
         //creating the new "Task" element
         int nextId = Config.NextTaskId;
-        XElement newDep = new XElement("Dependency",
+        XElement newTask = new XElement("Task",
                                         new XElement("Id", item.Id == -1 ? nextId : item.Id),
-                                        item.DependentTask is not null ? new XElement("DependentTask", item.DependentTask) : null,
-                                        item.DependsOnTask is not null ? new XElement("DependsOnTask", item.DependsOnTask) : null
+                                        new XElement("Description", item.Description),
+                                        new XElement("Alias", item.Alias),
+                                        new XElement("Milestone", (bool)item.Milestone),
+                                        new XElement("CreatedAt", Convert.ToDateTime(item.CreatedAt)),
+                                        item.Start is not null ? new XElement("Start", Convert.ToDateTime(item.Start)) : null,
+                                        item.ScheduledDate is not null ? new XElement("ScheduledDate", Convert.ToDateTime(item.ScheduledDate)) : null,
+                                        item.ForecastDate is not null ? new XElement("ForecastDate", Convert.ToDateTime(item.ForecastDate)) : null,
+                                        item.Deadline is not null ? new XElement("Deadline", Convert.ToDateTime(item.Deadline)) : null,
+                                        item.Complete is not null ? new XElement("Complete", Convert.ToDateTime(item.Complete)) : null,
+                                        item.Deliverables is not null ? new XElement("Deliverables", item.Deliverables) : null,
+                                        item.Remarks is not null ? new XElement("Remarks", item.Remarks) : null,
+                                        item.EngineerId is not null ? new XElement("EngineerId", Convert.ToInt32(item.EngineerId)) : null,
+                                        item.ComplexityLevel is not null ? new XElement("ComplexityLevel", (EngineerExperience)item.ComplexityLevel) : null
                                         );
-        xmlDependenciesFileRoot.Add(newDep);
-        XMLTools.SaveListToXMLElement(xmlDependenciesFileRoot, "dependencies");
-        Dependency.counterDependencies++;//add 1 to the counter of the dependencies
+        xmlTasksFileRoot.Add(newTask);
+        XMLTools.SaveListToXMLElement(xmlTasksFileRoot, "tasks");
+        Task.counterTasks++;//add 1 to the counter of the tasks
         return nextId;
 
 
