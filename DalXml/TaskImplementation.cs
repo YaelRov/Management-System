@@ -8,7 +8,7 @@ using System.Runtime.Intrinsics.Arm;
 using System.Xml.Linq;
 
 /// <summary>
-/// class Task Implementation, by Serializer
+/// class Task Implementation, by XElement
 /// </summary>
 internal class TaskImplementation : ITask
 {
@@ -19,14 +19,6 @@ internal class TaskImplementation : ITask
     /// <returns>the id of the task, type int</returns>
     public int Create(Task item)
     {
-        //List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
-        //int newId = Config.NextTaskId;//get a barcode from the config class
-        //Task newTask = new Task(newId, item.Description, item.Alias, item.Milestone, item.CreatedAt, item.Start, item.ScheduledDate, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.EngineerId, item.ComplexityLevel);//create a new task object
-        //tasksList.Add(newTask);//add the task object to the file
-        //XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
-        //Task.counterTasks++;//add 1 to the counter of the tasks
-        //return newId;
-        //=============================
         XElement? xmlTasksFileRoot = XMLTools.LoadListFromXMLElement("tasks");
         //creating the new "Task" element
         int nextId = Config.NextTaskId;
@@ -60,14 +52,6 @@ internal class TaskImplementation : ITask
     /// <exception cref="DalDoesNotExistException"></exception>
     public void Delete(int id)
     {
-        //List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
-        //Task? foundTask = Read(id);
-        //if (foundTask is null)//if the object does not exist
-        //    throw new DalDoesNotExistException($"An object of type Task with ID {id} does not exist");
-        //tasksList.Remove(foundTask);//remove from the file
-        //XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
-        //Task.counterTasks--;//subtract 1 from the counter
-                            //=================
         Task? foundTask = Read(id);
         if (foundTask is null)//if the object does not exist
             throw new DalDoesNotExistException($"An object of type Task with ID {id} does not exist");
@@ -86,12 +70,6 @@ internal class TaskImplementation : ITask
     /// <returns>an object type Task</returns>
     public Task? Read(int id)
     {
-        //List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
-        ////find the task in the file
-        //var foundTask = tasksList
-        //             .FirstOrDefault(curTask => curTask.Id == id);
-        //return foundTask;
-        //=============
         XElement? xmlTasks = XMLTools.LoadListFromXMLElement("tasks");
         XElement? task = xmlTasks.Descendants("Task")
             .FirstOrDefault(Task => int.Parse(Task.Element("Id")!.Value).Equals(id));
@@ -122,10 +100,6 @@ internal class TaskImplementation : ITask
     /// <returns>the first element that satisfies the conditin</returns>
     public Task? Read(Func<Task, bool> filter) //stage 2
     {
-        //List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
-        //return tasksList
-        //      .FirstOrDefault(filter);
-        //=====
         XElement? xmlTasks = XMLTools.LoadListFromXMLElement("tasks");
         XElement? task = xmlTasks.Descendants("Task")
             .FirstOrDefault(task => filter(new(
@@ -171,12 +145,6 @@ internal class TaskImplementation : ITask
 
     public IEnumerable<Task?> ReadAll(Func<Task, bool>? filter = null) //stage 2
     {
-        //List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
-        //if (filter == null)
-        //    return tasksList.Select(item => item);
-        //else
-        //    return tasksList.Where(filter);
-        //===============
         XElement? xmlTasks = XMLTools.LoadListFromXMLElement("tasks");
         if (filter is null)
             filter = (e) => true;
@@ -212,18 +180,9 @@ internal class TaskImplementation : ITask
     /// <exception cref="DalDoesNotExistException"></exception>
     public void Update(Task item)
     {
-        //List<Task> tasksList = XMLTools.LoadListFromXMLSerializer<Task>("tasks");
-        ////find the object in the file
-        //Task? foundTask = Read(item.Id);
-        //if (foundTask is null)//if does not exist in the file
-        //    throw new DalDoesNotExistException($"An object of type Task with ID {item.Id} does not exist");
-        //tasksList.Remove(foundTask);//delete the old task
-        //tasksList.Add(item);//add the updated one
-        //XMLTools.SaveListToXMLSerializer<Task>(tasksList, "tasks");
-        //====
-        //find the object in the list
+        //find the object in the file
         Task? foundTask = Read(item.Id);
-        if (foundTask is null)//if does not exist in the list
+        if (foundTask is null)//if does not exist in the file
             throw new DalDoesNotExistException($"An object of type Task with ID {item.Id} does not exist");
         Delete(item.Id);
         Create(item);
