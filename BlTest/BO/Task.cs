@@ -20,6 +20,20 @@ public class Task
     public string? Remarks { get; set; }
     public int? EngineerId { get; set; }
     public EngineerExperience? ComplexityLevel { get; set; }
-    //public override string ToString() => this.ToStringProperty();
+    public override string ToString() => this.ToStringProperty();
+    string ToStringProperty()
+    {
+        string str = $" Id: {Id}, Description: {Description}, Alias: {Alias}, Milestone: {Milestone}, CreatedAt: {CreatedAt}";
+        str +=  Start is not null ?  $", Start: {Start}" : "";
+        str += ScheduledDate is not null ?  $", Scheduled Date: {ScheduledDate}" : "";
+        str += ForecastDate is not null ?  $", Forecast Date: {ForecastDate}" : "";
+        str += Deadline is not null ?  $", Deadline: {Deadline}" : "";
+        str += Complete is not null ?  $", Complete: {Complete}" : "";
+        str += Deliverables is not null ?  $", Deliverables: {Deliverables}" : "";
+        str += Remarks is not null ?  $", Remarks: {Remarks}" : "";
+        str += EngineerId is not null ?  $", Engineer Id: {EngineerId}" : "";
+        str += ComplexityLevel is not null ?  $", Complexity Level: {ComplexityLevel}" : "";
+        return str;
+    }
 }
 
