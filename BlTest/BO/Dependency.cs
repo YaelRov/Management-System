@@ -2,7 +2,7 @@
 
 namespace BlTest.BO;
 
-internal class Dependency
+public class Dependency
 {
     public int Id { get; init; }
     public int? DependentTask { get; set; }
