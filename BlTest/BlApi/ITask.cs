@@ -1,13 +1,43 @@
 ﻿
 
 namespace BlTest.BlApi;
-
+/// <summary>
+/// Task Interface
+/// </summary>
 public interface ITask
 {
-    int Create(BO.Task item); //Creates new entity object in DAL
-    BO.Task? Read(int id); //Reads entity object by its ID 
+    /// <summary>
+    /// Creates new entity object of Task
+    /// </summary>
+    /// <param name="item">BO.Task</param>
+    /// <returns>Id number of Task,type int</returns>
+    int Create(BO.Task item);
+    /// <summary>
+    /// Reads entity object by its ID 
+    /// </summary>
+    /// <param name="id">Task Id</param>
+    /// <returns>type BO.Task? </returns>
+    BO.Task? Read(int id);
+    /// <summary>
+    /// Reads entity object according to given condition
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns>type BO.Task?</returns>
     BO.Task? Read(Func<BO.Task, bool> filter);
-    IEnumerable<BO.Task?> ReadAll(Func<BO.Task, bool>? filter = null);//Reads all entity objects
-    void Update(BO.Task item); //Updates entity object
-    void Delete(int id); //Deletes an object by its Id
+    /// <summary>
+    /// Reads all entity objects
+    /// </summary>
+    /// <param name="filter">a condition, type Func<BO.Task, bool>?</param>
+    /// <returns>type IEnumerable<BO.Task?></returns>
+    IEnumerable<BO.Task?> ReadAll(Func<BO.Task, bool>? filter = null);
+    /// <summary>
+    /// Updates entity object
+    /// </summary>
+    /// <param name="item">BO.Task</param>
+    void Update(BO.Task item);
+    /// <summary>
+    /// Deletes an object by its Id
+    /// </summary>
+    /// <param name="id">Task Id</param>
+    void Delete(int id); 
 }
