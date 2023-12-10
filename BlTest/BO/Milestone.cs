@@ -26,6 +26,8 @@ internal class Milestone
         str += CompleteDate is not null ? $", Complete Date: {CompleteDate}" : "";
         str += CompletionPercentage is not null ? $", Completion Percentage: {CompletionPercentage}" : "";
         str += Remarks is not null ? $", Remarks: {Remarks}" : "";
+        str += Dependencies is not null ? $", Dependencies: {Dependencies}" : "";
+
         return str;
     }
 }
