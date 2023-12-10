@@ -1,7 +1,7 @@
 ﻿
 namespace BlTest.BO;
 
-internal class Milestone
+public class Milestone
 {
     public int Id { get; init; }
     public string Description { get; set; }
