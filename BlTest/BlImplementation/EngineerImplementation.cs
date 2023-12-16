@@ -5,7 +5,7 @@ using BlApi;
 
 internal class EngineerImplementation : IEngineer
 {
-    private DalApi.IDal _dal = Factory.Get;
+    private DalApi.IDal _dal = DalApi.Factory.Get;
     public int Create(BO.Engineer boEngineer)
     {
         DO.Engineer doEngineer = new DO.Engineer

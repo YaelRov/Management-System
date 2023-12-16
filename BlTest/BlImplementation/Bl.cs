@@ -10,6 +10,6 @@ internal class Bl : IBl
 
     public ITask Task => new TaskImplementation();
 
-    public IMilestone Milestone =>  new MilestoneImplemention();
+    public IMilestone Milestone =>  new MilestoneImplementation();
 
 }

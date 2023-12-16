@@ -1,12 +1,10 @@
 ﻿
 namespace BlTest.BlImplementation;
 using BlApi;
-//lo tzarich et ze===================
-//ma matzchik otach
-//chchchchchchch
 
 internal class MilestoneImplementation : IMilestone
 {
+    private DalApi.IDal _dal = DalApi.Factory.Get;
     public void CreateProjectsSchedule()
     {
         throw new NotImplementedException();
