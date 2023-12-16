@@ -2,7 +2,7 @@
 
 using DO;
 
-namespace BlTest.BO;
+namespace BO;
 /// <summary>
 /// Engineer class
 /// </summary>
@@ -13,7 +13,7 @@ public class Engineer
     public string Email { get; set; }
     public EngineerExperience Level { get; set; }
     public double Cost { get; set; }
-    public BO.TaskInEngineer? Task { get; set; }    
+    public BO.TaskInEngineer? Task { get; set; }
 
     public override string ToString() => this.ToStringProperty();
     string ToStringProperty()

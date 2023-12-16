@@ -1,6 +1,6 @@
 ﻿
 
-namespace BlTest.BlApi;
+namespace BlApi;
 /// <summary>
 /// Task Interface
 /// </summary>
@@ -39,5 +39,5 @@ public interface ITask
     /// Deletes an object by its Id
     /// </summary>
     /// <param name="id">Task Id</param>
-    void Delete(int id); 
+    void Delete(int id);
 }

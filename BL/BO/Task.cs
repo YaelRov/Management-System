@@ -2,7 +2,7 @@
 
 using DO;
 
-namespace BlTest.BO;
+namespace BO;
 
 public class Task
 {
@@ -26,18 +26,18 @@ public class Task
     string ToStringProperty()
     {
         string str = $" Id: {Id}, Description: {Description}, Alias: {Alias}, Milestone: {Milestone}, CreatedAt: {CreatedAt}";
-        str +=  Status is not null ?  $", Status: {Status}" : "";
-        str += Milestone is not null ?  $", Milestone: {Milestone}" : "";
-        str += BaselineStartDate is not null ?  $", Baseline Start Date: {BaselineStartDate}" : "";
-        str +=  Start is not null ?  $", Start: {Start}" : "";
-        str += ScheduledDate is not null ?  $", Scheduled Date: {ScheduledDate}" : "";
-        str += ForecastDate is not null ?  $", Forecast Date: {ForecastDate}" : "";
-        str += Deadline is not null ?  $", Deadline: {Deadline}" : "";
-        str += Complete is not null ?  $", Complete: {Complete}" : "";
-        str += Deliverables is not null ?  $", Deliverables: {Deliverables}" : "";
-        str += Remarks is not null ?  $", Remarks: {Remarks}" : "";
-        str += Engineer is not null ?  $", Engineer: {Engineer}" : "";
-        str += ComplexityLevel is not null ?  $", Complexity Level: {ComplexityLevel}" : "";
+        str += Status is not null ? $", Status: {Status}" : "";
+        str += Milestone is not null ? $", Milestone: {Milestone}" : "";
+        str += BaselineStartDate is not null ? $", Baseline Start Date: {BaselineStartDate}" : "";
+        str += Start is not null ? $", Start: {Start}" : "";
+        str += ScheduledDate is not null ? $", Scheduled Date: {ScheduledDate}" : "";
+        str += ForecastDate is not null ? $", Forecast Date: {ForecastDate}" : "";
+        str += Deadline is not null ? $", Deadline: {Deadline}" : "";
+        str += Complete is not null ? $", Complete: {Complete}" : "";
+        str += Deliverables is not null ? $", Deliverables: {Deliverables}" : "";
+        str += Remarks is not null ? $", Remarks: {Remarks}" : "";
+        str += Engineer is not null ? $", Engineer: {Engineer}" : "";
+        str += ComplexityLevel is not null ? $", Complexity Level: {ComplexityLevel}" : "";
         return str;
     }
 }

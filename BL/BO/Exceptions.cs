@@ -1,5 +1,5 @@
 ﻿
-namespace BlTest.BO;
+namespace BO;
 
 [Serializable]
 public class BlDoesNotExistException : Exception
@@ -9,6 +9,8 @@ public class BlDoesNotExistException : Exception
     /// </summary>
     /// <param name="message">nullable atring</param>
     public BlDoesNotExistException(string? message) : base(message) { }
+    public BlDoesNotExistException(string message, Exception innerException)
+: base(message, innerException) { }
 }
 [Serializable]
 public class BlAlreadyExistsException : Exception
@@ -18,6 +20,9 @@ public class BlAlreadyExistsException : Exception
     /// </summary>
     /// <param name="message">nullable atring</param>
     public BlAlreadyExistsException(string? message) : base(message) { }
+    public BlAlreadyExistsException(string message, Exception innerException)
+: base(message, innerException) { }
+
 }
 [Serializable]
 public class BlXMLFileLoadCreateException : Exception
@@ -27,4 +32,12 @@ public class BlXMLFileLoadCreateException : Exception
     /// </summary>
     /// <param name="message">nullable atring</param>
     public BlXMLFileLoadCreateException(string? message) : base(message) { }
+    public BlXMLFileLoadCreateException(string message, Exception innerException)
+: base(message, innerException) { }
+
+}
+[Serializable]
+public class BlNullPropertyException : Exception
+{
+    public BlNullPropertyException(string? message) : base(message) { }
 }

@@ -1,6 +1,6 @@
 ﻿
 
-namespace BlTest.BlApi;
+namespace BlApi;
 /// <summary>
 /// Engineer Interface
 /// </summary>
@@ -11,7 +11,7 @@ public interface IEngineer
     /// </summary>
     /// <param name="item">BO.Engineer</param>
     /// <returns>id number of the engineer , int</returns>
-    int Create(BO.Engineer item); 
+    int Create(BO.Engineer item);
     /// <summary>
     /// Reads entity object by its ID 
     /// </summary>
@@ -39,5 +39,5 @@ public interface IEngineer
     /// Deletes an object by its Id
     /// </summary>
     /// <param name="id">int</param>
-    void Delete(int id); 
+    void Delete(int id);
 }

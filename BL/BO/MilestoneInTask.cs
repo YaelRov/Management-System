@@ -1,13 +1,15 @@
 ﻿
 
-namespace BlTest.BO;
-public class EngineerInTask
+namespace BO;
+
+public class MilestoneInTask
 {
     public int Id { get; init; }
-    public string Name { get; set; }
+    public string Alias { get; set; }
+
     public override string ToString() => this.ToStringProperty();
     string ToStringProperty()
     {
-        return $"Id: {Id}, Name:{Name}";
+        return $"Id: {Id}, Alias:{Alias}";
     }
 }

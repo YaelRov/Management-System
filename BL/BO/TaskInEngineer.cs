@@ -1,8 +1,7 @@
 ﻿
+namespace BO;
 
-namespace BlTest.BO;
-
-public class MilestoneInTask
+public class TaskInEngineer
 {
     public int Id { get; init; }
     public string Alias { get; set; }

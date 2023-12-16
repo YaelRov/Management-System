@@ -1,5 +1,5 @@
 ﻿
-namespace BlTest.BlApi;
+namespace BlApi;
 /// <summary>
 /// Milestone Interface
 /// </summary>
@@ -16,5 +16,5 @@ public interface IMilestone
     /// Updates entity object
     /// </summary>
     /// <param name="item">BO.Milestone NN</param>
-    void Update(BO.Milestone item); 
+    void Update(BO.Milestone item);
 }

@@ -1,11 +1,12 @@
 ﻿
-namespace BlTest.BlImplementation;
+namespace BlImplementation;
 using BlApi;
+using System;
 
 
 internal class EngineerImplementation : IEngineer
 {
-    private DalApi.IDal _dal = Factory.Get;
+    private DalApi.IDal _dal = DalApi.Factory.Get;
     public int Create(BO.Engineer boEngineer)
     {
         DO.Engineer doEngineer = new DO.Engineer
@@ -17,7 +18,7 @@ internal class EngineerImplementation : IEngineer
         }
         catch (DO.DalAlreadyExistsException exception)
         {
-            throw new BO.BlAlreadyExistsException($"An object of type Engineer with ID {boEngineer.Id} already exists");//, exception);
+            throw new BO.BlAlreadyExistsException($"An object of type Engineer with ID {boEngineer.Id} already exists", exception);
         }
 
     }
@@ -27,11 +28,11 @@ internal class EngineerImplementation : IEngineer
     {
         try
         {
-           _dal.Engineer.Delete(id);
+            _dal.Engineer.Delete(id);
         }
-        catch(DO.DalDoesNotExistException exception)
-        { 
-            throw new BO.BlDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
+        catch (DO.DalDoesNotExistException exception)
+        {
+            throw new BO.BlDoesNotExistException($"An object of type Engineer with ID {id} does not exist", exception);
         }
     }
 
@@ -53,7 +54,7 @@ internal class EngineerImplementation : IEngineer
 
     public BO.Engineer? Read(Func<BO.Engineer, bool> filter)
     {
-     throw new Exception();
+        throw new Exception();
     }
 
 
@@ -78,11 +79,11 @@ internal class EngineerImplementation : IEngineer
        (boEngineer.Id, boEngineer.Name, boEngineer.Email, (DO.EngineerExperience)boEngineer.Level, boEngineer.Cost);
         try
         {
-           _dal.Engineer.Update(doEngineer);
+            _dal.Engineer.Update(doEngineer);
         }
         catch (DO.DalDoesNotExistException exception)
         {
-            throw new BO.BlDoesNotExistException($"An object of type Engineer with ID {boEngineer.Id} does not exist");//, exception);
+            throw new BO.BlDoesNotExistException($"An object of type Engineer with ID {boEngineer.Id} does not exist", exception);
         }
     }
 }
