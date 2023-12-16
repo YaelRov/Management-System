@@ -1,7 +1,6 @@
 ﻿
 
 namespace BlTest.BO;
-
 public class EngineerInTask
 {
     public int Id { get; init; }

@@ -3,7 +3,9 @@
 using DO;
 
 namespace BlTest.BO;
-
+/// <summary>
+/// Engineer class
+/// </summary>
 public class Engineer
 {
     public int Id { get; init; }

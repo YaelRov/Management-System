@@ -1,7 +1,9 @@
 ﻿
 
 namespace BlTest.BO;
-
+/// <summary>
+/// Dependency Class
+/// </summary>
 public class Dependency
 {
     public int Id { get; init; }
