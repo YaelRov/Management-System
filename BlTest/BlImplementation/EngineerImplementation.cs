@@ -68,7 +68,6 @@ internal class EngineerImplementation : IEngineer
                     Level = (BO.EngineerExperience)doEngineer.Level,
                     Cost = doEngineer.Cost,
                 });
-
     }
 
 
