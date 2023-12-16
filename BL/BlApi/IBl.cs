@@ -1,5 +1,6 @@
 ﻿
-namespace BlTest.BlApi;
+
+namespace BlApi;
 
 public interface IBl
 {
@@ -7,3 +8,4 @@ public interface IBl
     public ITask Task { get; }
     public IMilestone Milestone { get; }
 }
+
