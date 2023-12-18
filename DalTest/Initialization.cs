@@ -135,9 +135,10 @@ public static class Initialization
     /// <param name="dalTask">interface variable</param>
     /// <param name="dalDependency">interface variable</param>
     /// <exception cref="NullReferenceException"></exception>
-    public static void Do(IDal dal)
+    public static void Do()
     {
-        s_dal=dal ?? throw new NullReferenceException("DAL can not be null!");
+       // s_dal=dal ?? throw new NullReferenceException("DAL can not be null!");
+        s_dal = Factory.Get ?? throw new NullReferenceException("DAL can not be null!");
         //createEngineers();
         //createTasks();
         //createDependencies();
