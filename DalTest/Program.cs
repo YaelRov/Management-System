@@ -15,7 +15,7 @@ internal class Program
         try
         {
             //calling the method that initializes the database
-            Initialization.Do(s_dal);
+            Initialization.Do();
             mainMenu();//calling the method of the main menu
         }
         catch (Exception ex)
