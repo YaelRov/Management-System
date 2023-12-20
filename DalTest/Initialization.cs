@@ -82,6 +82,7 @@ public static class Initialization
             bool milestone = (s_rand.Next() % 2) == 0 ? true : false;
 
             DateTime createdAt = new DateTime(s_rand.Next(2020, 2025), s_rand.Next(1, 13), s_rand.Next(1, 29));
+            TimeSpan requiredOffertTime = new TimeSpan(s_rand.Next(1, 21), 0, 0, 0);
             TimeSpan ts = new TimeSpan(s_rand.Next(0, 1800), 0, 0);
             DateTime start = createdAt.Add(ts);
             ts = new TimeSpan(s_rand.Next(24, 336), 0, 0);
@@ -97,10 +98,10 @@ public static class Initialization
             string remarks = remarksArray[s_rand.Next(0, 4)];
             EngineerExperience complexityLevel = (EngineerExperience)s_rand.Next(0, 5);
             List<Engineer> engineers = s_dal!.Engineer.ReadAll().ToList()!;
-            int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id;
+            int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id; 
 
             // creating a new task with all the details
-            Task newTask = new(-1,description, alias, milestone, createdAt, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
+            Task newTask = new(-1,description, alias, milestone, createdAt, requiredOffertTime, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
             s_dal!.Task.Create(newTask);//adding the new task to the tasks list
         }
     }

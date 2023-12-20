@@ -46,10 +46,11 @@ internal class Program
     /// <exception cref="Exception"></exception>
     static int createTask()
     {
-        Console.WriteLine("Enter task's details: description, alias, milestone.\n dates of: creating, start, scheduled date, forecast , deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
+        Console.WriteLine("Enter task's details: description, alias, milestone, required effort time. \ndates of: creating, start, scheduled date, forecast , deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
         string _description = Console.ReadLine()!;//get details
         string _alias = Console.ReadLine()!;
         bool _milestone = Convert.ToBoolean(Console.ReadLine()!);
+        TimeSpan? _requiredEffortTime = new TimeSpan(Convert.ToInt32(Console.ReadLine()),0,0,0);
         DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
         DateTime? _start = Convert.ToDateTime(Console.ReadLine());
         DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
@@ -61,7 +62,7 @@ internal class Program
         int? _engineerId = Convert.ToInt32(Console.ReadLine());
         Engineer checkExistingEngineer = s_dal!.Engineer.Read((int)_engineerId!) ?? throw new DalDoesNotExistException($"An object of type Engineer with ID {_engineerId} does not exist");
         EngineerExperience _complexityLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), Console.ReadLine()!);
-        DO.Task newTask = new(-1, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
+        DO.Task newTask = new(-1, _description, _alias, _milestone , _createdAt, _requiredEffortTime, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);
         return s_dal!.Task.Create(newTask);//add to the list
     }
 
@@ -221,6 +222,10 @@ internal class Program
         userInput = Console.ReadLine()!;
         DateTime _createdAt = string.IsNullOrEmpty(userInput) ? baseTask.CreatedAt : Convert.ToDateTime(userInput);
 
+        Console.WriteLine("required offert time:");
+        userInput = Console.ReadLine()!;
+        TimeSpan? _requiredSpanTime = string.IsNullOrEmpty(userInput) ? baseTask.RequiredEffortTime : new TimeSpan(Convert.ToInt32(userInput),0,0,0);
+
         Console.WriteLine("date of starting:");
         userInput = Console.ReadLine()!;
         DateTime? _start = string.IsNullOrEmpty(userInput) ? baseTask.Start : Convert.ToDateTime(userInput);
@@ -259,7 +264,7 @@ internal class Program
         Console.WriteLine("complexity level:");
         userInput = Console.ReadLine()!;
         EngineerExperience? _complexityLevel = string.IsNullOrEmpty(userInput) ? baseTask.ComplexityLevel : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), userInput); ;
-        DO.Task updateTask = new (id, _description, _alias, _milestone, _createdAt, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);//creating a new entity of task with the details
+        DO.Task updateTask = new (id, _description, _alias, _milestone, _createdAt, _requiredSpanTime, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineerId, _complexityLevel);//creating a new entity of task with the details
         s_dal!.Task.Update(updateTask);//updating the tasks list
     }
     /// <summary>

@@ -1,5 +1,6 @@
 ﻿using BO;
 using DalApi;
+using System.Security.Cryptography;
 
 namespace BlTest;
 
@@ -37,8 +38,11 @@ internal class Program
         double _cost = Convert.ToDouble(Console.ReadLine());
         int? _taskId = Convert.ToInt32(Console.ReadLine()?? null);
         string? _taskAlias = Console.ReadLine() ?? null;
-        TaskInEngineer? _taskEng = new(_taskId, _taskAlias);
-        BO.Engineer newEng = new(_id, _name, _email, _level, _cost, _taskEng);//create new enginner
+        TaskInEngineer? _task = null;
+        if (_taskId is not null && _taskAlias is not null)
+            _task = new() { Id = (int)_taskId, Alias = _taskAlias };
+        //create new enginner
+        BO.Engineer newEng = new() { Id=_id, Name=_name, Email=_email, Level=_level, Cost=_cost, Task=_task };
         return s_bl!.Engineer.Create(newEng);//add to the list
     }
     /// <summary>
@@ -55,7 +59,9 @@ internal class Program
         Status? _status = (Status)Enum.Parse(typeof(Status), Console.ReadLine()!);
         int? _milestoneId = Convert.ToInt32(Console.ReadLine() ?? null);
         string? _milestoneAlias = Console.ReadLine() ?? null;
-        MilestoneInTask _milestone = new(_milestoneId, _milestoneAlias);
+        MilestoneInTask? _milestone = null;
+        if (_milestoneId is not null && _milestoneAlias is not null)
+            _milestone = new() { Id = (int)_milestoneId, Alias = _milestoneAlias };
         DateTime? _baselineStartDate = Convert.ToDateTime(Console.ReadLine());
         DateTime? _start = Convert.ToDateTime(Console.ReadLine());
         DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
@@ -67,16 +73,18 @@ internal class Program
         int? _engId = Convert.ToInt32(Console.ReadLine() ?? null);
         Engineer checkExistingEngineer = s_bl!.Engineer.Read((int)_engId!) ?? throw new BlDoesNotExistException($"An object of type Engineer with ID {_engId} does not exist");
         string? _engName= Console.ReadLine() ?? null;
-        EngineerInTask? _engineer = new(_engId, _engName);
+        EngineerInTask? _engineer = null;
+        if (_engId is not null && _engName is not null)
+            _engineer = new() { Id = (int)_engId, Name = _engName };
         EngineerExperience _complexityLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), Console.ReadLine()!);
-        BO.Task newTask = new(-1, _description, _alias, _createdAt, _status, _milestone, _baselineStartDate, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineer, _complexityLevel);
+        BO.Task newTask = new() { Id = -1, Description = _description, Alias = _alias, CreatedAt = _createdAt, Status = _status, Milestone = _milestone, BaselineStartDate = _baselineStartDate, Start = _start, ScheduledDate = _scheduledDate, ForecastDate = _forecastDate, Deadline = _deadline, Complete = _complete, Deliverables = _deliverables, Remarks = _remarks, Engineer = _engineer, ComplexityLevel = _complexityLevel };
         return s_bl!.Task.Create(newTask);//add to the list
     }
 
     /// <summary>
-    /// cteate a new entity of dependency
+    /// cteate a new entity of milestone
     /// </summary>
-    /// <returns>the id of the new dependency</returns>
+    /// <returns>the id of the new milestone</returns>
     /// <exception cref="Exception"></exception>
     //static int createMilestone()
     //{
@@ -126,9 +134,9 @@ internal class Program
         return returnedTask;//return the found object
     }
     /// <summary>
-    /// function for reading specific dependency by it's id
+    /// function for reading specific milestone by it's id
     /// </summary>
-    /// <returns>an object of the requested dependency</returns>
+    /// <returns>an object of the requested milestone</returns>
     /// <exception cref="Exception"></exception>
     static Milestone? readMilestone()
     {
@@ -201,8 +209,13 @@ internal class Program
         userInput = Console.ReadLine()!;
         string? _taskAlias = string.IsNullOrEmpty(userInput) ? (baseEng.Task is not null) ? baseEng.Task.Alias : null : userInput;
 
-        TaskInEngineer _task = new(_taskId, _taskAlias);
-        Engineer updateEng = new(id, _name, _email, _level, _cost, _task);//creating a new entity of engineer with the details
+        TaskInEngineer? _task = null;
+        if (_taskId is not null && _taskAlias is not null)
+            _task = new() { Id = (int)_taskId, Alias = _taskAlias };
+
+        //creating a new entity of engineer with the details
+        BO.Engineer updateEng = new() { Id = id, Name = _name, Email = _email, Level = _level, Cost = _cost, Task = _task };
+
         s_bl!.Engineer.Update(updateEng);//updating the engineers list
     }
     /// <summary>
@@ -244,8 +257,10 @@ internal class Program
         userInput = Console.ReadLine()!;
         string? _milestoneAlias = string.IsNullOrEmpty(userInput) ? (baseTask.Milestone is not null) ? baseTask.Milestone.Alias : null : userInput;
 
-        MilestoneInTask _milestone = new(_milestoneId, _milestoneAlias);
 
+        MilestoneInTask? _milestone = null;
+        if (_milestoneId is not null && _milestoneAlias is not null)
+            _milestone = new() { Id = (int)_milestoneId, Alias = _milestoneAlias };
         Console.WriteLine("date of baseline start:");
         userInput = Console.ReadLine()!;
         DateTime? _baselineStart = string.IsNullOrEmpty(userInput) ? baseTask.Start : Convert.ToDateTime(userInput);
@@ -287,17 +302,18 @@ internal class Program
         Console.WriteLine("engineer name:");
         userInput = Console.ReadLine()!;
         string? _engineerName = string.IsNullOrEmpty(userInput) ? (baseTask.Engineer is not null) ? baseTask.Engineer.Name : null : userInput;
-
-        EngineerInTask _engineer = new(_engineerId, _engineerName);
-
+        EngineerInTask? _engineer=null;
+        if (_engineerId is not null&& _engineerName is not null)
+            _engineer = new() { Id = (int)_engineerId, Name=_engineerName};
         Console.WriteLine("complexity level:");
         userInput = Console.ReadLine()!;
+        //creating a new entity of task with the details
         EngineerExperience? _complexityLevel = string.IsNullOrEmpty(userInput) ? baseTask.ComplexityLevel : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), userInput); 
-        BO.Task updateTask = new(id, _description, _alias, _createdAt,_status,_milestone,_baselineStart, _start, _scheduledDate, _forecastDate, _deadline, _complete, _deliverables, _remarks, _engineer, _complexityLevel);//creating a new entity of task with the details
+        BO.Task updateTask = new() { Id=id, Description=_description, Alias=_alias,CreatedAt= _createdAt, Status=_status, Milestone=_milestone, BaselineStartDate = _baselineStart,Start= _start,ScheduledDate= _scheduledDate, ForecastDate= _forecastDate,  Deadline=_deadline,Complete= _complete,Deliverables= _deliverables,Remarks= _remarks,Engineer= _engineer,ComplexityLevel= _complexityLevel };
         s_bl!.Task.Update(updateTask);//updating the tasks list
     }
     /// <summary>
-    /// a function that updates the details of dependency, doesn't return anything
+    /// a function that updates the details of milestone, doesn't return anything
     /// </summary>
     /// <exception cref="Exception"></exception>
     static void updateMilestone()
@@ -305,14 +321,23 @@ internal class Program
         string userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of milestone to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        Milestone baseMil = s_bl!.Milestone.Read(id) ?? throw new BlDoesNotExistException("Milestone with this id does not exist");//reading the dependency with the enterd id
-        Console.WriteLine(baseMil);//printing the details of the dependency
+        Milestone baseMil = s_bl!.Milestone.Read(id) ?? throw new BlDoesNotExistException("Milestone with this id does not exist");//reading the milestone with the enterd id
+        Console.WriteLine(baseMil);//printing the details of the milestone
         Console.WriteLine("Enter milestone's details to update. If you don't want to change press enter.\n");
         //getting from the user the details for each field of the milestone for string-type variable, 
         //and than: if it empty string, assign the last value of this field, and if not- assign the user input
-       
+        Console.WriteLine("descriptons:");
+        userInput = Console.ReadLine()!;
+        string? _descriptions = string.IsNullOrEmpty(userInput) ? baseMil.Description : userInput;
+        Console.WriteLine("alias:");
+        userInput = Console.ReadLine()!;
+        string? _alias = string.IsNullOrEmpty(userInput) ? baseMil.Alias : userInput;
+        Console.WriteLine("remarks:");
+        userInput = Console.ReadLine()!;
+        string? _remarks = string.IsNullOrEmpty(userInput) ? baseMil.Remarks : userInput;
+        //creating a new entity of milestone with the details
+        Milestone updateMil = new(){Id=id, Description= _descriptions,Alias= _alias,Status= baseMil.Status,CreatedAtDate= baseMil.CreatedAtDate,ForecastDate= baseMil.ForecastDate,DeadlineDate= baseMil.DeadlineDate,CompleteDate= baseMil.CompleteDate,CompletionPercentage= baseMil.CompletionPercentage,Remarks= _remarks};
 
-        Milestone updateMil = new(id, _dependentTask, _dependsOnTask);//creating a new entity of dependency with the details
         s_bl!.Milestone.Update(updateMil);//updating the dependencies list
     }
     #endregion
@@ -431,7 +456,7 @@ internal class Program
     {
         while (true)//run till the user enter '1' to exit
         {
-            Console.WriteLine("Choose the method that you want to execute:\n 1 to exit\n 2 to Create\n 3 to Read\n 4 to ReadAll\n 5 to Update\n 6 to Delete");
+            Console.WriteLine("Choose the method that you want to execute:\n 1 to exit\n 2 to Create Projects Schedule \n 3 to Read\n 4 Update\n ");
             int methodChoice = Convert.ToInt32(Console.ReadLine());//get the choise
             try
             {
@@ -439,20 +464,15 @@ internal class Program
                 {
                     case 1://exit
                         return;
-                    case "1":
-                        Console.WriteLine(readDependency());//print the wanted dependency
+                    case 2://Create Projects Schedule
+                        Console.WriteLine(readMilestone());//print the wanted milestone
                         break;
-                    case (int)CRUD.READALL://4
-                        List<Dependency> returnedList = readAllDependencies();//get the copy of the list
-                        foreach (var dep in returnedList)//print all the object
-                            Console.WriteLine(dep);
+                    case 3://read
+                        Console.WriteLine(readMilestone());//print the wanted milestone
                         break;
-                    case (int)CRUD.UPDATE://5
-                        updateDependenies();//call the update function
-                        break;
-                    case (int)CRUD.DELETE://6
-                        deleteDependency();//call the delete function
-                        break;
+                    case 4://update
+                        updateMilestone();//call the update function
+                        break; 
                     default:
                         break;
                 }
@@ -471,7 +491,7 @@ internal class Program
         //run till the user entered '0' to exit
         while (true)
         {
-            Console.WriteLine("Choose an entity that you whant to check:\n 0 to exit\n 1 to Engineer\n 2 to Task\n 3 to Dependency\n");
+            Console.WriteLine("Choose an entity that you whant to check:\n 0 to exit\n 1 to Engineer\n 2 to Task\n 3 to Milestone\n");
             int entityChoice = Convert.ToInt32(Console.ReadLine());//geting the choice from the user
             switch (entityChoice)
             {
@@ -483,13 +503,12 @@ internal class Program
                 case (int)EntityType.TASK://2
                     taskMenu();//calling the function that manages the task menu
                     break;
-                case (int)EntityType.DEPENDENCY://3
-                    dependencyMenu();//calling the function that manages the dependency menu
+                case (int)EntityType.MILESTONE://3
+                    milestoneMenu();//calling the function that manages the milestone menu
                     break;
                 default:
                     break;
             }
         }
     }
-}
 }

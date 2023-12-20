@@ -54,7 +54,7 @@ internal class EngineerImplementation : IEngineer
 
     public BO.Engineer? Read(Func<BO.Engineer, bool> filter)
     {
-        throw new Exception();
+         return ReadAll(filter).FirstOrDefault();
     }
 
 

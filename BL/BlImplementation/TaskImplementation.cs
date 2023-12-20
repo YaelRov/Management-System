@@ -13,6 +13,7 @@ internal class TaskImplementation : ITask
                boTask.Alias,
                boTask.Milestone is not null ? true : false,
                boTask.CreatedAt,
+               boTask.RequiredEffortTime,
                boTask.Start, 
                boTask.ScheduledDate, 
                boTask.ForecastDate, 
@@ -71,7 +72,7 @@ internal class TaskImplementation : ITask
 
     public BO.Task? Read(Func<BO.Task, bool> filter)
     {
-        throw new NotImplementedException();
+        return ReadAll(filter).FirstOrDefault();
     }
 
     public IEnumerable<BO.Task?> ReadAll(Func<BO.Task, bool>? filter = null)
@@ -104,6 +105,7 @@ internal class TaskImplementation : ITask
                boTask.Alias,
                boTask.Milestone is not null ? true : false,
                boTask.CreatedAt,
+               boTask.RequiredEffortTime,
                boTask.Start,
                boTask.ScheduledDate,
                boTask.ForecastDate,

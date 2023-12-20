@@ -1,7 +1,4 @@
-﻿
-
-using DO;
-
+﻿using DO;
 namespace BO;
 
 public class Task
@@ -10,6 +7,7 @@ public class Task
     public string Description { get; set; }
     public string Alias { get; set; }
     public DateTime CreatedAt { get; set; }
+    public TimeSpan? RequiredEffortTime { get; set; }
     public BO.Status? Status { get; set; }
     public BO.MilestoneInTask? Milestone { get; set; }
     public DateTime? BaselineStartDate { get; set; }

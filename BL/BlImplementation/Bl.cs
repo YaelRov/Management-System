@@ -1,7 +1,4 @@
 ﻿
-using BlTest.BlApi;
-using BlTest.BO;
-
 namespace BlImplementation;
 using BlApi;
 
