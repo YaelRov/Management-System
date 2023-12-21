@@ -85,4 +85,11 @@ internal class EngineerImplementation : IEngineer
         DataSource.Engineers.Remove(foundEngineer);//delete the old engineer
         DataSource.Engineers.Add(item);//add the updated one
     }
+    /// <summary>
+    /// reset the repository
+    /// </summary>
+    public void Reset()
+    {
+        DataSource.Engineers.Clear();
+    }
 }

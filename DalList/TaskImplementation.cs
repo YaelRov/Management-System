@@ -81,4 +81,11 @@ internal class TaskImplementation : ITask
         DataSource.Tasks.Remove(foundTask);//delete the old task
         DataSource.Tasks.Add(item);//add the updated one
     }
+    /// <summary>
+    /// reset the repository
+    /// </summary>
+    public void Reset()
+    {
+        DataSource.Tasks.Clear();
+    }
 }

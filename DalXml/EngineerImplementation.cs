@@ -96,4 +96,11 @@ internal class EngineerImplementation : IEngineer
         engineersList.Add(item);//add the updated one
         XMLTools.SaveListToXMLSerializer<Engineer>(engineersList, "engineers");
     }
+    /// <summary>
+    /// reset the repository
+    /// </summary>
+    public void Reset()
+    {
+        XMLTools.ResetFile("engineers");
+    }
 }

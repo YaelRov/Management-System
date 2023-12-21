@@ -188,4 +188,11 @@ internal class TaskImplementation : ITask
         Delete(item.Id);
         Create(item);
     }
+    /// <summary>
+    /// reset the repository
+    /// </summary>
+    public void Reset()
+    {
+        XMLTools.ResetFile("tasks");
+    }
 }

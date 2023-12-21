@@ -82,4 +82,11 @@ internal class DependencyImplementation : IDependency
         DataSource.Dependencies.Remove(foundDep);//delete the old dependency
         DataSource.Dependencies.Add(item);//add the updated one
     }
+    /// <summary>
+    /// reset the repository
+    /// </summary>
+    public void Reset()
+    {
+        DataSource.Dependencies.Clear();
+    }
 }

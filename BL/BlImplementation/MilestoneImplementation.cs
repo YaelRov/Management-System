@@ -18,9 +18,14 @@ internal class MilestoneImplementation : IMilestone
         var listAfterDistinct = (from dep in groupDependencies
                                  select dep._value).Distinct();
 
+        List<DO.Dependency> newTasksList = new List<DO.Dependency>();
+        int i = 1;
         foreach (var item in listAfterDistinct)
         {
-            DO.Task milestone=new DO.Task()
+            DO.Task milestone = new DO.Task(-1, "Description",$"M{i}", true, DateTime.Now, null, null, null, null, null, null, null, null, null);
+            i++;
+            tasks.Add(milestone);
+
         }
     }
 
