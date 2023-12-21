@@ -5,7 +5,7 @@ namespace BlApi;
 /// </summary>
 public interface IMilestone
 {
-    void CreateProjectsSchedule();
+    void CreateProjectsSchedule(List<DO.Task> tasks, List<DO.Dependency> dependencies);
     /// <summary>
     /// Reads entity object by its ID
     /// </summary>

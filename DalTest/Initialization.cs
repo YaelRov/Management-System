@@ -101,7 +101,7 @@ public static class Initialization
             int engineerId = engineers[s_rand.Next(0, Engineer.counterEngineers)].Id; 
 
             // creating a new task with all the details
-            Task newTask = new(-1,description, alias, milestone, createdAt, requiredOffertTime, start, scheduledDate, forecastDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
+            Task newTask = new(-1,description, alias, milestone, createdAt, requiredOffertTime, start, scheduledDate, deadline, complete, deliverables, remarks, engineerId, complexityLevel);
             s_dal!.Task.Create(newTask);//adding the new task to the tasks list
         }
     }

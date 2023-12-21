@@ -15,7 +15,7 @@ internal class TaskImplementation : ITask
     public int Create(Task item)
     {
         int newId = DataSource.Config.NextTaskId;//get a barcode from the config class
-        Task newTask = new Task(newId,item.Description, item.Alias, item.Milestone, item.CreatedAt, item.Start, item.ScheduledDate, item.ForecastDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.EngineerId, item.ComplexityLevel);//create a new task object
+        Task newTask = new Task(newId,item.Description, item.Alias, item.Milestone, item.CreatedAt,item.RequiredEffortTime, item.Start, item.ScheduledDate, item.Deadline, item.Complete, item.Deliverables, item.Remarks, item.EngineerId, item.ComplexityLevel);//create a new task object
         DataSource.Tasks.Add(newTask);//add the task object to the list
         Task.counterTasks++;//add 1 to the counter of the tasks
         return newId;

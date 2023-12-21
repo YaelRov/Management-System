@@ -16,7 +16,6 @@ public class Milestone
 
     public List<BO.TaskInList>? Dependencies { get; set; }
 
-
     public override string ToString() => this.ToStringProperty();
     string ToStringProperty()
     {

@@ -7,16 +7,16 @@ internal class TaskImplementation : ITask
     private DalApi.IDal _dal = DalApi.Factory.Get;
     public int Create(BO.Task boTask)
     {
+        TimeSpan requiredEffortTime = new TimeSpan();
         DO.Task doTask = new DO.Task
                (boTask.Id,
                boTask.Description,
                boTask.Alias,
                boTask.Milestone is not null ? true : false,
                boTask.CreatedAt,
-               boTask.RequiredEffortTime,
+               requiredEffortTime,
                boTask.Start, 
                boTask.ScheduledDate, 
-               boTask.ForecastDate, 
                boTask.Deadline, 
                boTask.Complete, 
                boTask.Deliverables, 
@@ -58,9 +58,12 @@ internal class TaskImplementation : ITask
             Alias = doTask.Alias,
             Milestone = doTask.Milestone is true ? new BO.MilestoneInTask() : null,
             CreatedAt = doTask.CreatedAt,
+            Status=(BO.Status)(doTask.ScheduledDate is null?0:
+                               doTask.Start is null?1:
+                               doTask.Complete is null?2
+                               :3),
             Start = doTask.Start,
             ScheduledDate = doTask.ScheduledDate,
-            ForecastDate = doTask.ForecastDate,
             Deadline = doTask.Deadline,
             Complete = doTask.Complete,
             Deliverables = doTask.Deliverables,
@@ -87,7 +90,6 @@ internal class TaskImplementation : ITask
                     CreatedAt = doTask.CreatedAt,
                     Start = doTask.Start,
                     ScheduledDate = doTask.ScheduledDate,
-                    ForecastDate = doTask.ForecastDate,
                     Deadline = doTask.Deadline,
                     Complete = doTask.Complete,
                     Deliverables = doTask.Deliverables,
@@ -99,16 +101,16 @@ internal class TaskImplementation : ITask
 
     public void Update(BO.Task boTask)
     {
+        TimeSpan requiredEffortTime = new TimeSpan();
         DO.Task doTask = new DO.Task
              (boTask.Id,
                boTask.Description,
                boTask.Alias,
                boTask.Milestone is not null ? true : false,
                boTask.CreatedAt,
-               boTask.RequiredEffortTime,
+               requiredEffortTime,
                boTask.Start,
                boTask.ScheduledDate,
-               boTask.ForecastDate,
                boTask.Deadline,
                boTask.Complete,
                boTask.Deliverables,

@@ -4,6 +4,7 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Xml.Linq;
 
@@ -28,9 +29,9 @@ internal class TaskImplementation : ITask
                                         new XElement("Alias", item.Alias),
                                         new XElement("Milestone", Convert.ToBoolean(item.Milestone)),
                                         new XElement("CreatedAt", Convert.ToDateTime(item.CreatedAt)),
+                                        item.RequiredEffortTime is not null ? new XElement("RequiredEffortTime", new TimeSpan( Convert.ToInt32(item.RequiredEffortTime),0,0,0) ): null,
                                         item.Start is not null ? new XElement("Start", Convert.ToDateTime(item.Start)) : null,
                                         item.ScheduledDate is not null ? new XElement("ScheduledDate", Convert.ToDateTime(item.ScheduledDate)) : null,
-                                        item.ForecastDate is not null ? new XElement("ForecastDate", Convert.ToDateTime(item.ForecastDate)) : null,
                                         item.Deadline is not null ? new XElement("Deadline", Convert.ToDateTime(item.Deadline)) : null,
                                         item.Complete is not null ? new XElement("Complete", Convert.ToDateTime(item.Complete)) : null,
                                         item.Deliverables is not null ? new XElement("Deliverables", item.Deliverables) : null,
@@ -81,9 +82,9 @@ internal class TaskImplementation : ITask
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
+                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value),0,0,0) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
-                                task.Element("ForecastDate") is not null ? Convert.ToDateTime(task.Element("ForecastDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,
                                 task.Element("Complete") is not null ? Convert.ToDateTime(task.Element("Complete")!.Value) : null,
                                 task.Element("Deliverables") is not null ? task.Element("Deliverables")!.Value : null,
@@ -108,9 +109,9 @@ internal class TaskImplementation : ITask
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
+                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value), 0, 0, 0) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
-                                task.Element("ForecastDate") is not null ? Convert.ToDateTime(task.Element("ForecastDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,
                                 task.Element("Complete") is not null ? Convert.ToDateTime(task.Element("Complete")!.Value) : null,
                                 task.Element("Deliverables") is not null ? task.Element("Deliverables")!.Value : null,
@@ -126,9 +127,9 @@ internal class TaskImplementation : ITask
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
+                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value), 0, 0, 0) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
-                                task.Element("ForecastDate") is not null ? Convert.ToDateTime(task.Element("ForecastDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,
                                 task.Element("Complete") is not null ? Convert.ToDateTime(task.Element("Complete")!.Value) : null,
                                 task.Element("Deliverables") is not null ? task.Element("Deliverables")!.Value : null,
@@ -157,9 +158,9 @@ internal class TaskImplementation : ITask
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
+                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value), 0, 0, 0) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
-                                task.Element("ForecastDate") is not null ? Convert.ToDateTime(task.Element("ForecastDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,
                                 task.Element("Complete") is not null ? Convert.ToDateTime(task.Element("Complete")!.Value) : null,
                                 task.Element("Deliverables") is not null ? task.Element("Deliverables")!.Value : null,
