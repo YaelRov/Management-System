@@ -7,7 +7,7 @@ using System.Runtime.Intrinsics.Arm;
 internal class MilestoneImplementation : IMilestone
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
-    public void CreateProjectsSchedule(List<DO.Task> tasks, List<DO.Dependency> dependencies)
+    private List<DO.Dependency> createMilestones(List<DO.Task> tasks, List<DO.Dependency> dependencies)
     {
         var groupDependencies = (from dep in dependencies
                                 where dep.DependentTask is not null && dep.DependsOnTask is not null
@@ -27,6 +27,12 @@ internal class MilestoneImplementation : IMilestone
             tasks.Add(milestone);
 
         }
+        return 
+    }
+
+    public void CreateProjectsSchedule(List<DO.Task> tasks, List<DO.Dependency> dependencies)
+    {
+
     }
 
     public BO.Milestone? Read(int id)
