@@ -8,7 +8,10 @@ using System.Xml.Linq;
 
 internal class MilestoneImplementation : IMilestone
 {
+
     private DalApi.IDal _dal = DalApi.Factory.Get;
+
+    #region private help methods
     private List<DO.Dependency> createMilestones(List<DO.Dependency?> dependencies)
     {
         var groupDependencies = (from dep in dependencies
@@ -19,13 +22,13 @@ internal class MilestoneImplementation : IMilestone
                                  select new { _key = gropByDependentTask.Key, _value = depList });
         var listAfterDistinct = (from dep in groupDependencies
                                  select dep._value).Distinct();
-                                      
+
         List<DO.Dependency> newDepsList = new List<DO.Dependency>();
         int i = 1;
         //List<DO.Task?> tasks = _dal.Task.ReadAll().ToList();
         foreach (var groupOfDepentOnTasks in listAfterDistinct)
         {
-            DO.Task milestone = new DO.Task(-1, "Description", $"M{i}", true, DateTime.Now, new TimeSpan(0),null, null, null, null, null, null, null, null);
+            DO.Task milestone = new DO.Task(-1, "Description", $"M{i}", true, DateTime.Now, new TimeSpan(0), null, null, null, null, null, null, null, null);
             int idMilestone = _dal.Task.Create(milestone);
 
             foreach (var taskListwithDeps in groupDependencies)
@@ -77,61 +80,62 @@ internal class MilestoneImplementation : IMilestone
         return newDepsList;
     }
 
-
-    DateTime? updateDeadlines(int taskId, int endMilestoneId,List<DO.Dependency> depList)
+    private DateTime? updateDeadlines(int taskId, int endMilestoneId, List<DO.Dependency> depList)
     {
         if (taskId == endMilestoneId)
             return _dal.EndProjectDate;
-        DO.Task currentTask = _dal.Task.Read(taskId)??throw new BO.BlNullPropertyException($"Task with Id {taskId} does not exists");
-        
-        List<int?> listOfDepentOnCurrentTask=(from dep in depList
-                                       where dep.DependsOnTask==taskId
-                                       select dep.DependentTask).ToList();
+        DO.Task currentTask = _dal.Task.Read(taskId) ?? throw new BO.BlNullPropertyException($"Task with Id {taskId} does not exists");
 
-        DateTime? deadline=null;
+        List<int?> listOfDepentOnCurrentTask = (from dep in depList
+                                                where dep.DependsOnTask == taskId
+                                                select dep.DependentTask).ToList();
+
+        DateTime? deadline = null;
         foreach (int? task in listOfDepentOnCurrentTask)
         {
             DO.Task readTask = _dal.Task.Read(taskId)!;
-            if(readTask.Deadline is null)
-                readTask.Deadline=updateDeadlines((int)task!, endMilestoneId, depList);
-            if (deadline is null||readTask.Deadline - readTask.RequiredEffortTime < deadline)
+            if (readTask.Deadline is null)
+                readTask = readTask with { Deadline = updateDeadlines((int)task!, endMilestoneId, depList) };
+            if (deadline is null || readTask.Deadline - readTask.RequiredEffortTime < deadline)
                 deadline = readTask.Deadline - readTask.RequiredEffortTime;
         }
         if (deadline > _dal.EndProjectDate)
             throw new BO.BlInsufficientTime("There is insufficient time to complete this task\n");
-        currentTask.Deadline = deadline;
+        currentTask = currentTask with { Deadline = deadline };
 
         _dal.Task.Update(currentTask);
         return currentTask.Deadline;
     }
 
-    DateTime? updateScheduledDates(int taskId, int startMilestoneId, List<DO.Dependency> depList)
+    private DateTime? updateScheduledDates(int taskId, int startMilestoneId, List<DO.Dependency> depList)
     {
         if (taskId == startMilestoneId)
             return _dal.StartProjectDate;
         DO.Task currentTask = _dal.Task.Read(taskId) ?? throw new BO.BlNullPropertyException($"Task with Id {taskId} does not exists");
 
         List<int?> listOfTasksThatCurrentDepsOnThem = (from dep in depList
-                                                where dep.DependentTask == taskId
-                                                select dep.DependsOnTask).ToList();
+                                                       where dep.DependentTask == taskId
+                                                       select dep.DependsOnTask).ToList();
 
         DateTime? scheduledDate = null;
         foreach (int? task in listOfTasksThatCurrentDepsOnThem)
         {
             DO.Task readTask = _dal.Task.Read(taskId)!;
             if (readTask.ScheduledDate is null)
-                readTask.ScheduledDate = updateDeadlines((int)task!, startMilestoneId, depList);
+                readTask = readTask with { ScheduledDate = updateDeadlines((int)task!, startMilestoneId, depList) };
             if (scheduledDate is null || readTask.ScheduledDate + readTask.RequiredEffortTime > scheduledDate)
                 scheduledDate = readTask.ScheduledDate + readTask.RequiredEffortTime;
         }
 
         if (scheduledDate < _dal.StartProjectDate)
             throw new BO.BlInsufficientTime("There is insufficient time to complete this task\n");
-        currentTask.ScheduledDate = scheduledDate;
+        currentTask = currentTask with { ScheduledDate = scheduledDate };
+
 
         _dal.Task.Update(currentTask);
         return currentTask.ScheduledDate;
     }
+    #endregion
 
     public void CreateProjectsSchedule()
     {
@@ -149,50 +153,67 @@ internal class MilestoneImplementation : IMilestone
 
         DO.Task startMilestone = _dal.Task.Read(startMilestoneId)!;
         if (startMilestone is not null)
-            startMilestone.ScheduledDate = _dal.StartProjectDate;
+            startMilestone = startMilestone with { ScheduledDate = _dal.StartProjectDate };
 
         int endMilestoneId = allTasks.Where(task => task!.Alias == "end").Select(task => task!.Id).First();
 
         DO.Task endMilestone = _dal.Task.Read(endMilestoneId)!;
         if (endMilestone is not null)
-            endMilestone.Deadline = _dal.EndProjectDate;
+            endMilestone = endMilestone with { Deadline = _dal.EndProjectDate };
 
-        startMilestone.Deadline = updateDeadlines(startMilestoneId, endMilestoneId, newDepsList);
+        startMilestone = startMilestone! with { Deadline = updateDeadlines(startMilestoneId, endMilestoneId, newDepsList) };
         _dal.Task.Update(startMilestone!);
 
-        endMilestone.ScheduledDate= updateScheduledDates(endMilestoneId, startMilestoneId, newDepsList);
+        endMilestone = endMilestone! with { ScheduledDate = updateScheduledDates(endMilestoneId, startMilestoneId, newDepsList) };
         _dal.Task.Update(endMilestone);
     }
-
-
+        
     public BO.Milestone? Read(int id)
     {
         DO.Task milestoneFromDo = _dal.Task.Read(id) ?? throw new BlDoesNotExistException($"An object of type Milestone with ID {id} does not exist");
+        //calculating the forecast date
         DateTime? forecastDate = null;
         if (milestoneFromDo.Start is not null && milestoneFromDo.RequiredEffortTime is not null)
         {
-            TimeSpan ts = milestoneFromDo.RequiredEffortTime ?? new TimeSpan(0, 0, 0);
+            TimeSpan ts = milestoneFromDo.RequiredEffortTime ?? new TimeSpan(0);
             forecastDate = milestoneFromDo.Start?.Add(ts);
         }
 
+        //calculating the completion percentage
+        double? completionPercentage = ((DateTime.Now - milestoneFromDo.Start) / milestoneFromDo.RequiredEffortTime) * 100;
+        if (completionPercentage > 100)
+            completionPercentage = 100;
+
+        //casting to BO entity of milestone
         BO.Milestone milestone = new()
         {
             Id = milestoneFromDo.Id,
             Description = milestoneFromDo.Description,
             Alias = milestoneFromDo.Alias,
-            Status = Status.InJeopardy,//to fix
+            Status = (Status)(milestoneFromDo.ScheduledDate is null ? 0 :
+                               milestoneFromDo.Start is null ? 1 :
+                               milestoneFromDo.Complete is null ? 2
+                               : 3),
             CreatedAtDate = milestoneFromDo.CreatedAt,
             ForecastDate = forecastDate,
             DeadlineDate = milestoneFromDo.Deadline,
             CompleteDate = milestoneFromDo.Complete,
-            CompletionPercentage = 0,//to fix
+            CompletionPercentage = completionPercentage,
             Remarks = milestoneFromDo.Remarks
         };
         return milestone;
     }
 
-    public void Update(BO.Milestone item)
+    public void Update(BO.Milestone m)
     {
-
+        DO.Task doMilestone = new DO.Task(m.Id, m.Description, m.Alias, true, m.CreatedAtDate, new TimeSpan(0), null, m.ForecastDate, m.DeadlineDate, m.CompleteDate, null, m.Remarks, null, null);
+        try
+        {
+            _dal.Task.Update(doMilestone);
+        }
+        catch (DO.DalDoesNotExistException exception)
+        {
+            throw new BO.BlDoesNotExistException($"An object of type Task with ID {doMilestone.Id} does not exist", exception);
+        }
     }
 }
