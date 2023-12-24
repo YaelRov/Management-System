@@ -36,8 +36,16 @@ public class BlXMLFileLoadCreateException : Exception
 : base(message, innerException) { }
 
 }
+
 [Serializable]
 public class BlNullPropertyException : Exception
 {
     public BlNullPropertyException(string? message) : base(message) { }
+}
+
+
+[Serializable]
+public class BlInsufficientTime: Exception
+{
+    public BlInsufficientTime(string? message) : base(message) { }
 }
