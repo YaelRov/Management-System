@@ -138,11 +138,10 @@ public static class Initialization
     /// <exception cref="NullReferenceException"></exception>
     public static void Do()
     {
-       // s_dal=dal ?? throw new NullReferenceException("DAL can not be null!");
         s_dal = Factory.Get ?? throw new NullReferenceException("DAL can not be null!");
-        //createEngineers();
-        //createTasks();
-        //createDependencies();
+        createEngineers();
+        createTasks();
+        createDependencies();
     }
     #endregion
 }

@@ -1,5 +1,6 @@
 ﻿using BO;
 using DalApi;
+using System.Runtime.InteropServices.ObjectiveC;
 using System.Security.Cryptography;
 
 namespace BlTest;
@@ -12,10 +13,10 @@ internal class Program
         try
         {
             Console.Write("Would you like to create Initial data? (Y/N)");
-        string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
-        if (ans == "Y")
-            DalTest.Initialization.Do(); //calling the method that initializes the database
-        mainMenu();//calling the method of the main menu
+            string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
+            if (ans == "Y")
+                DalTest.Initialization.Do(); //calling the method that initializes the database
+            mainMenu();//calling the method of the main menu
         }
         catch (Exception ex)
         {
@@ -30,19 +31,33 @@ internal class Program
     /// <returns>the id of the new engineer</returns>
     static int createEngineer()
     {
-        Console.WriteLine("Enter engineer's details: id, name, email, level, cost, task's id and task's alias:\n");
-        int _id = Convert.ToInt32(Console.ReadLine());//get the details
-        string _name = Console.ReadLine()!;
-        string _email = Console.ReadLine()!;
-        BO.EngineerExperience _level = (BO.EngineerExperience)Enum.Parse(typeof(BO.EngineerExperience), Console.ReadLine()!);
-        double _cost = Convert.ToDouble(Console.ReadLine());
-        int? _taskId = Convert.ToInt32(Console.ReadLine()?? null);
-        string? _taskAlias = Console.ReadLine() ?? null;
-        TaskInEngineer? _task = null;
-        if (_taskId is not null && _taskAlias is not null)
-            _task = new() { Id = (int)_taskId, Alias = _taskAlias };
+        Console.WriteLine("Enter engineer's details: id, name, email, level and cost:\n");
+        bool succesTryParse;
+        int _id;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _id);
+        if (!succesTryParse || _id > 0)
+            throw new BlInvalidInput("Invalid id number.\n");
+
+        string _name = Console.ReadLine()?? throw new BlInvalidInput("Name cannot be empty string.\n");
+        
+        string _email = Console.ReadLine()?? throw new BlInvalidInput("Email cannot be empty string.\n");
+        
+        BO.EngineerExperience _level;
+        succesTryParse = Enum.TryParse( Console.ReadLine(), out _level);
+        if (!succesTryParse)
+            throw new BlInvalidInput("Invalid level.\n");
+
+        double _cost;
+        succesTryParse = double.TryParse(Console.ReadLine(), out _cost);
+        if (!succesTryParse || _cost > 0)
+            throw new BlInvalidInput("Invalid cost number.\n");
+        //int? _taskId = Convert.ToInt32(Console.ReadLine()?? null);
+        //string? _taskAlias = Console.ReadLine() ?? null;
+        //TaskInEngineer? _task = null;
+        //if (_taskId is not null && _taskAlias is not null)
+        //    _task = new() { Id = (int)_taskId, Alias = _taskAlias };
         //create new enginner
-        BO.Engineer newEng = new() { Id=_id, Name=_name, Email=_email, Level=_level, Cost=_cost, Task=_task };
+        BO.Engineer newEng = new() { Id=_id, Name=_name, Email=_email, Level=_level, Cost=_cost, Task= null };
         return s_bl!.Engineer.Create(newEng);//add to the list
     }
     /// <summary>
@@ -465,7 +480,8 @@ internal class Program
                     case 1://exit
                         return;
                     case 2://Create Projects Schedule
-                        Console.WriteLine(readMilestone());//print the wanted milestone
+                        s_bl.Milestone.CreateProjectsSchedule();
+                        Console.WriteLine("Projects schedule created successfuly");
                         break;
                     case 3://read
                         Console.WriteLine(readMilestone());//print the wanted milestone

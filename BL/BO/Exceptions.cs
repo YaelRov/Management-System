@@ -49,3 +49,10 @@ public class BlInsufficientTime: Exception
 {
     public BlInsufficientTime(string? message) : base(message) { }
 }
+
+
+[Serializable]
+public class BlInvalidInput : Exception
+{
+    public BlInvalidInput(string? message) : base(message) { }
+}

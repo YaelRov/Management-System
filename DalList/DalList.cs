@@ -16,7 +16,7 @@ sealed internal class DalList : IDal
 
     public DateTime StartProjectDate { get ; }
     public DateTime EndProjectDate { get ;  }
-
+    
     public void Reset()
     {
         DataSource.Engineers.Clear();
