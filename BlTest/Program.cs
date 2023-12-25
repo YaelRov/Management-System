@@ -68,10 +68,17 @@ internal class Program
     static int createTask()
     {
         Console.WriteLine("Enter task's details: description, alias, milestone.\n dates of: creating, start, scheduled date, forecast , deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
-        string _description = Console.ReadLine()!;//get details
-        string _alias = Console.ReadLine()!;
+
+        bool succesTryParse;
+        string _description = Console.ReadLine() ?? throw new BlInvalidInput("Description cannot be empty string.\n");//get details
+        string _alias = Console.ReadLine() ?? throw new BlInvalidInput("Alias cannot be empty string.\n");
         DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
-        Status? _status = (Status)Enum.Parse(typeof(Status), Console.ReadLine()!);
+
+        BO.Status _status;
+        succesTryParse = Enum.TryParse(Console.ReadLine(), out _status);
+        if (!succesTryParse)
+            throw new BlInvalidInput("Invalid status.\n");
+
         int? _milestoneId = Convert.ToInt32(Console.ReadLine() ?? null);
         string? _milestoneAlias = Console.ReadLine() ?? null;
         MilestoneInTask? _milestone = null;
