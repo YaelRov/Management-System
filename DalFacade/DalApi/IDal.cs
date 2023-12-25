@@ -6,7 +6,6 @@ public interface IDal
     IEngineer Engineer { get; }
     ITask Task { get; }
     IDependency Dependency { get; }
-
-    DateTime StartProjectDate { get; set; }
-    DateTime EndProjectDate { get; set; }
+    DateTime StartProjectDate { get; }
+    DateTime EndProjectDate { get;  }
 }

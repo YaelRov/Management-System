@@ -1,6 +1,8 @@
 ﻿
 namespace Dal;
 using DalApi;
+using System;
+
 sealed internal class DalList : IDal
 {
     public static IDal Instance { get; } = new DalList();
@@ -11,6 +13,10 @@ sealed internal class DalList : IDal
     public ITask Task => new TaskImplementation();
 
     public IDependency Dependency => new DependencyImplementation();
+
+    public DateTime StartProjectDate { get ; }
+    public DateTime EndProjectDate { get ;  }
+
     public void Reset()
     {
         DataSource.Engineers.Clear();
