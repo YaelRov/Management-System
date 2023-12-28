@@ -296,66 +296,50 @@ internal class Program
     /// <exception cref="Exception"></exception>
     static void updateTasks()
     {
-        string userInput;//a variable that the input that the user enters assign in it
+        string? userInput = null;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of task to update");
-        int id = Convert.ToInt32(Console.ReadLine());
-        BO.Task baseTask = s_bl!.Task.Read(id) ?? throw new BlDoesNotExistException("Task with this id does not exist");//reading the task with the enterd id
+        bool succesTryParse = false;
+        int _id;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _id);
+        if (!succesTryParse || _id < 0)
+            throw new BlInvalidInput("Invalid id number.\n");
+        BO.Task baseTask = s_bl!.Task.Read(_id) ?? throw new BlDoesNotExistException("Task with this id does not exist");//reading the task with the enterd id
         Console.WriteLine(baseTask);//printing the details of the task
 
         Console.WriteLine("Enter task's details to update. If you don't want to change press enter.\n");
         //getting from the user the details for each field of the task for string-type variable, 
         //and than: if it empty string, assign the last value of this field, and if not- assign the user input
         Console.WriteLine("description:");
-        userInput = Console.ReadLine()!;
+        userInput = Console.ReadLine();
         string _description = string.IsNullOrEmpty(userInput) ? baseTask.Description : userInput;
 
         Console.WriteLine("alias:");
-        userInput = Console.ReadLine()!;
+        userInput = Console.ReadLine();
         string _alias = string.IsNullOrEmpty(userInput) ? baseTask.Alias : userInput;
 
-        Console.WriteLine("date of creating:");
-        userInput = Console.ReadLine()!;
-        DateTime _createdAt = string.IsNullOrEmpty(userInput) ? baseTask.CreatedAt : Convert.ToDateTime(userInput);
-
-        Console.WriteLine("status:");
-        userInput = Console.ReadLine()!;
-        Status? _status = string.IsNullOrEmpty(userInput) ? baseTask.Status : (Status)Enum.Parse(typeof(Status), userInput); ;
-
-        Console.WriteLine("task id:");
-        userInput = Console.ReadLine()!;
-        int? _milestoneId = string.IsNullOrEmpty(userInput) ? (baseTask.Milestone is not null) ? baseTask.Milestone.Id : null : Convert.ToInt32(userInput);
-
-        Console.WriteLine("task alias:");
-        userInput = Console.ReadLine()!;
-        string? _milestoneAlias = string.IsNullOrEmpty(userInput) ? (baseTask.Milestone is not null) ? baseTask.Milestone.Alias : null : userInput;
-
-
-        MilestoneInTask? _milestone = null;
-        if (_milestoneId is not null && _milestoneAlias is not null)
-            _milestone = new() { Id = (int)_milestoneId, Alias = _milestoneAlias };
-        Console.WriteLine("date of baseline start:");
-        userInput = Console.ReadLine()!;
-        DateTime? _baselineStart = string.IsNullOrEmpty(userInput) ? baseTask.Start : Convert.ToDateTime(userInput);
-
         Console.WriteLine("date of start:");
-        userInput = Console.ReadLine()!;
-        DateTime? _start = string.IsNullOrEmpty(userInput) ? baseTask.Start : Convert.ToDateTime(userInput);
-
-        Console.WriteLine("scheduled date:");
-        userInput = Console.ReadLine()!;
-        DateTime? _scheduledDate = string.IsNullOrEmpty(userInput) ? baseTask.ScheduledDate : Convert.ToDateTime(userInput);
-
-        Console.WriteLine("forecast date:");
-        userInput = Console.ReadLine()!;
-        DateTime? _forecastDate = string.IsNullOrEmpty(userInput) ? baseTask.ForecastDate : Convert.ToDateTime(userInput);
-
-        Console.WriteLine("date of deadline:");
-        userInput = Console.ReadLine()!;
-        DateTime? _deadline = string.IsNullOrEmpty(userInput) ? baseTask.Deadline : Convert.ToDateTime(userInput);
+        DateTime _start_nn;
+        DateTime? _start;
+        userInput = Console.ReadLine();
+        _start = baseTask.Start;
+        if(!string.IsNullOrEmpty(userInput))
+        {
+            succesTryParse = Enum.TryParse(userInput, out _start_nn);
+            if (succesTryParse)
+                _start = _start_nn;
+        }
 
         Console.WriteLine("date of complete:");
-        userInput = Console.ReadLine()!;
-        DateTime? _complete = string.IsNullOrEmpty(userInput) ? baseTask.Complete : Convert.ToDateTime(userInput);
+        DateTime _complete_nn;
+        DateTime? _complete;
+        userInput = Console.ReadLine();
+        _complete = baseTask.Complete;
+        if (!string.IsNullOrEmpty(userInput))
+        {
+            succesTryParse = Enum.TryParse(userInput, out _complete_nn);
+            if (succesTryParse)
+                _complete = _complete_nn;
+        }
 
         Console.WriteLine("deliverables:");
         userInput = Console.ReadLine()!;
@@ -364,24 +348,39 @@ internal class Program
         Console.WriteLine("remarks:");
         userInput = Console.ReadLine()!;
         string? _remarks = string.IsNullOrEmpty(userInput) ? baseTask.Remarks : userInput;
-
+       
         Console.WriteLine("engineer id:");
-        userInput = Console.ReadLine()!;
-        int? _engineerId = string.IsNullOrEmpty(userInput) ? (baseTask.Engineer is not null) ? baseTask.Engineer.Id : null : Convert.ToInt32(userInput);
-        //checking if the engineer with the entered id is exists
-        Engineer checkExistingEngineer = s_bl!.Engineer.Read((int)_engineerId!) ?? throw new BlDoesNotExistException($"An object of type Engineer with ID {_engineerId} does not exist");
-
-        Console.WriteLine("engineer name:");
-        userInput = Console.ReadLine()!;
-        string? _engineerName = string.IsNullOrEmpty(userInput) ? (baseTask.Engineer is not null) ? baseTask.Engineer.Name : null : userInput;
-        EngineerInTask? _engineer=null;
-        if (_engineerId is not null&& _engineerName is not null)
-            _engineer = new() { Id = (int)_engineerId, Name=_engineerName};
+        userInput = Console.ReadLine();
+        int _engId;
+        if (baseTask.Engineer is not null)
+            _engId = baseTask.Engineer.Id;
+        EngineerInTask? _eng = baseTask.Engineer;
+        if (!string.IsNullOrEmpty(userInput))
+        {
+            int _engId_nn;
+            succesTryParse = int.TryParse(userInput, out _engId_nn);
+            if (succesTryParse is true)
+            {
+                _engId = _engId_nn;
+                BO.Engineer checkExistingEng;
+                checkExistingEng = s_bl!.Engineer.Read((int)_engId!)!;
+                _eng = new() { Id = _engId, Name = checkExistingEng.Name };
+            }
+        }
         Console.WriteLine("complexity level:");
-        userInput = Console.ReadLine()!;
+        userInput = Console.ReadLine();
+        EngineerExperience? _complexityLevel = baseTask.ComplexityLevel;
+        EngineerExperience _complexityLevel_nn;
+        if (!string.IsNullOrEmpty(userInput))
+        {
+            succesTryParse = Enum.TryParse(userInput, out _complexityLevel_nn);
+            if (succesTryParse is false)
+                _complexityLevel = baseTask.ComplexityLevel;
+            else
+                _complexityLevel = _complexityLevel_nn;
+        }
         //creating a new entity of task with the details
-        EngineerExperience? _complexityLevel = string.IsNullOrEmpty(userInput) ? baseTask.ComplexityLevel : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), userInput); 
-        BO.Task updateTask = new() { Id=id, Description=_description, Alias=_alias,CreatedAt= _createdAt, Status=_status, Milestone=_milestone, BaselineStartDate = _baselineStart,Start= _start,ScheduledDate= _scheduledDate, ForecastDate= _forecastDate,  Deadline=_deadline,Complete= _complete,Deliverables= _deliverables,Remarks= _remarks,Engineer= _engineer,ComplexityLevel= _complexityLevel };
+        BO.Task updateTask = new() { Id=_id, Description=_description, Alias=_alias,CreatedAt= baseTask.CreatedAt, Status = baseTask.Status, Milestone = baseTask.Milestone, BaselineStartDate = baseTask.BaselineStartDate, Start = _start, ScheduledDate= baseTask.ScheduledDate, ForecastDate= baseTask.ForecastDate,  Deadline=baseTask.Deadline,Complete= _complete,Deliverables= _deliverables,Remarks= _remarks,Engineer= _eng,ComplexityLevel= _complexityLevel };
         s_bl!.Task.Update(updateTask);//updating the tasks list
     }
     /// <summary>
@@ -390,7 +389,7 @@ internal class Program
     /// <exception cref="Exception"></exception>
     static void updateMilestone()
     {
-        string userInput;//a variable that the input that the user enters assign in it
+        string? userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of milestone to update");
         int id = Convert.ToInt32(Console.ReadLine());
         Milestone baseMil = s_bl!.Milestone.Read(id) ?? throw new BlDoesNotExistException("Milestone with this id does not exist");//reading the milestone with the enterd id
@@ -399,13 +398,13 @@ internal class Program
         //getting from the user the details for each field of the milestone for string-type variable, 
         //and than: if it empty string, assign the last value of this field, and if not- assign the user input
         Console.WriteLine("descriptons:");
-        userInput = Console.ReadLine()!;
+        userInput = Console.ReadLine();
         string? _descriptions = string.IsNullOrEmpty(userInput) ? baseMil.Description : userInput;
         Console.WriteLine("alias:");
-        userInput = Console.ReadLine()!;
+        userInput = Console.ReadLine();
         string? _alias = string.IsNullOrEmpty(userInput) ? baseMil.Alias : userInput;
         Console.WriteLine("remarks:");
-        userInput = Console.ReadLine()!;
+        userInput = Console.ReadLine();
         string? _remarks = string.IsNullOrEmpty(userInput) ? baseMil.Remarks : userInput;
         //creating a new entity of milestone with the details
         Milestone updateMil = new(){Id=id, Description= _descriptions,Alias= _alias,Status= baseMil.Status,CreatedAtDate= baseMil.CreatedAtDate,ForecastDate= baseMil.ForecastDate,DeadlineDate= baseMil.DeadlineDate,CompleteDate= baseMil.CompleteDate,CompletionPercentage= baseMil.CompletionPercentage,Remarks= _remarks};
@@ -421,8 +420,12 @@ internal class Program
     static void deleteEngineer()
     {
         Console.WriteLine("Enter engineer's id for deleting:\n");
-        int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
-        s_bl!.Engineer.Delete(id);//call the Delete function
+        bool succesTryParse = false;
+        int _id;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _id);//get the id of the object to delete
+        if (!succesTryParse || _id < 0)
+            throw new BlInvalidInput("Invalid id number.\n");
+        s_bl!.Engineer.Delete(_id);//call the Delete function
     }
     /// <summary>
     ///delete a reguested task
@@ -430,8 +433,12 @@ internal class Program
     static void deleteTask()
     {
         Console.WriteLine("Enter task's id for deleting:\n");
-        int id = Convert.ToInt32(Console.ReadLine());//get the id of the object to delete
-        s_bl!.Task.Delete(id);//call the Delete function
+        bool succesTryParse = false;
+        int _id;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _id);//get the id of the object to delete
+        if (!succesTryParse || _id < 0)
+            throw new BlInvalidInput("Invalid id number.\n");
+        s_bl!.Task.Delete(_id);//call the Delete function
     }
     #endregion
 
