@@ -108,7 +108,7 @@ internal class Program
             _engId = _engId_nn;
 
         EngineerInTask? _engineer = null;
-        Engineer? checkExistingEngineer = null;
+        Engineer? checkExistingEngineer;
         if (_engId is not null) {
             checkExistingEngineer = s_bl!.Engineer.Read((int)_engId!) ?? throw new BlDoesNotExistException($"An object of type Engineer with ID {_engId} does not exist");
             _engineer = new() { Id = (int)_engId, Name = checkExistingEngineer.Name };
@@ -249,7 +249,8 @@ internal class Program
     /// <exception cref="Exception"></exception>
     static void updateEngineers()
     {
-        string userInput;//a variable that the input that the user enters assign in it
+        string? userInput;//a variable that the input that the user enters assign in it
+        bool succesTryParse;
         Console.WriteLine("Enter id of engineer to update");
         int id = Convert.ToInt32(Console.ReadLine());
         Engineer baseEng = s_bl!.Engineer.Read(id) ?? throw new BlDoesNotExistException("Engineer with this id does not exist");//reading the engineer with the enterd id
@@ -258,32 +259,51 @@ internal class Program
         //getting from the user the details for each field of the engineer for string-type variable, 
         //and than: if it empty string, assign the last value of this field, and if not- assign the user input
         Console.WriteLine("name:");
-        userInput = Console.ReadLine()!;
+        userInput = Console.ReadLine();
         string _name = string.IsNullOrEmpty(userInput) ? baseEng.Name : userInput;
 
         Console.WriteLine("email:");
-        userInput = Console.ReadLine()!;
+        userInput = Console.ReadLine();
         string _email = string.IsNullOrEmpty(userInput) ? baseEng.Email : userInput;
 
         Console.WriteLine("level:");
-        userInput = Console.ReadLine()!;
-        EngineerExperience _level = string.IsNullOrEmpty(userInput) ? baseEng.Level : (EngineerExperience)Enum.Parse(typeof(EngineerExperience), userInput);
+        userInput = Console.ReadLine();
+        EngineerExperience _level = baseEng.Level;
+        if(!string.IsNullOrEmpty(userInput))
+        {
+            succesTryParse=Enum.TryParse(userInput, out _level);
+            if (succesTryParse is false)
+                _level = baseEng.Level;
+        }
 
         Console.WriteLine("cost:");
-        userInput = Console.ReadLine()!;
-        double _cost = string.IsNullOrEmpty(userInput) ? baseEng.Cost : Convert.ToDouble(userInput);
+        userInput = Console.ReadLine();
+        double _cost = baseEng.Cost;
+        if (!string.IsNullOrEmpty(userInput))
+        {
+            succesTryParse = double.TryParse(userInput, out _cost);
+            if (succesTryParse is false)
+                _cost = baseEng.Cost;
+        }
 
         Console.WriteLine("task id:");
-        userInput = Console.ReadLine()!;
-        int? _taskId = string.IsNullOrEmpty(userInput) ? (baseEng.Task is not null)? baseEng.Task.Id : null : Convert.ToInt32(userInput);
-
-        Console.WriteLine("task alias:");
-        userInput = Console.ReadLine()!;
-        string? _taskAlias = string.IsNullOrEmpty(userInput) ? (baseEng.Task is not null) ? baseEng.Task.Alias : null : userInput;
-
-        TaskInEngineer? _task = null;
-        if (_taskId is not null && _taskAlias is not null)
-            _task = new() { Id = (int)_taskId, Alias = _taskAlias };
+        userInput = Console.ReadLine();
+        int _taskId;
+        if (baseEng.Task is not null)
+            _taskId = baseEng.Task.Id;
+        TaskInEngineer? _task = baseEng.Task;
+        if (!string.IsNullOrEmpty(userInput))
+        {
+            int _taskId_nn;
+            succesTryParse = int.TryParse(userInput, out _taskId_nn);
+            if (succesTryParse is true)
+            {
+                _taskId = _taskId_nn;
+                BO.Task checkExistingTask;
+                checkExistingTask = s_bl!.Task.Read((int)_taskId!)!;
+                _task = new() { Id = _taskId, Alias = checkExistingTask.Alias };
+            }
+        }
 
         //creating a new entity of engineer with the details
         BO.Engineer updateEng = new() { Id = id, Name = _name, Email = _email, Level = _level, Cost = _cost, Task = _task };
