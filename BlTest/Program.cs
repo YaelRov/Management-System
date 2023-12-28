@@ -8,6 +8,7 @@ namespace BlTest;
 internal class Program
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+
     static void Main(string[] args)
     {
         try
@@ -35,7 +36,7 @@ internal class Program
         bool succesTryParse;
         int _id;
         succesTryParse = int.TryParse(Console.ReadLine(), out _id);
-        if (!succesTryParse || _id > 0)
+        if (!succesTryParse || _id < 0)
             throw new BlInvalidInput("Invalid id number.\n");
 
         string _name = Console.ReadLine()?? throw new BlInvalidInput("Name cannot be empty string.\n");
@@ -49,7 +50,7 @@ internal class Program
 
         double _cost;
         succesTryParse = double.TryParse(Console.ReadLine(), out _cost);
-        if (!succesTryParse || _cost > 0)
+        if (!succesTryParse || _cost < 0)
             throw new BlInvalidInput("Invalid cost number.\n");
         //int? _taskId = Convert.ToInt32(Console.ReadLine()?? null);
         //string? _taskAlias = Console.ReadLine() ?? null;
@@ -67,39 +68,76 @@ internal class Program
     /// <exception cref="Exception"></exception>
     static int createTask()
     {
-        Console.WriteLine("Enter task's details: description, alias, milestone.\n dates of: creating, start, scheduled date, forecast , deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
+        Console.WriteLine("Enter task's details: description, alias. Dates of: start, and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
 
         bool succesTryParse;
         string _description = Console.ReadLine() ?? throw new BlInvalidInput("Description cannot be empty string.\n");//get details
         string _alias = Console.ReadLine() ?? throw new BlInvalidInput("Alias cannot be empty string.\n");
-        DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
 
         BO.Status _status;
         succesTryParse = Enum.TryParse(Console.ReadLine(), out _status);
         if (!succesTryParse)
             throw new BlInvalidInput("Invalid status.\n");
 
-        int? _milestoneId = Convert.ToInt32(Console.ReadLine() ?? null);
-        string? _milestoneAlias = Console.ReadLine() ?? null;
-        MilestoneInTask? _milestone = null;
-        if (_milestoneId is not null && _milestoneAlias is not null)
-            _milestone = new() { Id = (int)_milestoneId, Alias = _milestoneAlias };
-        DateTime? _baselineStartDate = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _start = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _forecastDate = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _deadline = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _complete = Convert.ToDateTime(Console.ReadLine());
-        string? _deliverables = Console.ReadLine();
-        string? _remarks = Console.ReadLine();
-        int? _engId = Convert.ToInt32(Console.ReadLine() ?? null);
-        Engineer checkExistingEngineer = s_bl!.Engineer.Read((int)_engId!) ?? throw new BlDoesNotExistException($"An object of type Engineer with ID {_engId} does not exist");
-        string? _engName= Console.ReadLine() ?? null;
+        int _id;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _id);
+        if (!succesTryParse || _id < 0)
+            throw new BlInvalidInput("Invalid id number.\n");
+
+        DateTime _start_nn;        
+        DateTime? _start;        
+        succesTryParse = DateTime.TryParse(Console.ReadLine(), out _start_nn);
+        _start = _start_nn;
+        if (!succesTryParse)
+            throw new BlInvalidInput("Invalid input.\n");
+
+        DateTime _complete_nn;
+        DateTime? _complete;
+        succesTryParse = DateTime.TryParse(Console.ReadLine(), out _complete_nn);
+        _complete = _complete_nn;
+        if (!succesTryParse)
+            throw new BlInvalidInput("Invalid input.\n");
+
+        string? _deliverables = Console.ReadLine() ?? null;
+        string? _remarks = Console.ReadLine() ?? null;
+
+        int _engId_nn;
+        int? _engId = null;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _engId_nn);
+        if (succesTryParse && _id > 0)
+            _engId = _engId_nn;
+
         EngineerInTask? _engineer = null;
-        if (_engId is not null && _engName is not null)
-            _engineer = new() { Id = (int)_engId, Name = _engName };
-        EngineerExperience _complexityLevel = (EngineerExperience)Enum.Parse(typeof(EngineerExperience), Console.ReadLine()!);
-        BO.Task newTask = new() { Id = -1, Description = _description, Alias = _alias, CreatedAt = _createdAt, Status = _status, Milestone = _milestone, BaselineStartDate = _baselineStartDate, Start = _start, ScheduledDate = _scheduledDate, ForecastDate = _forecastDate, Deadline = _deadline, Complete = _complete, Deliverables = _deliverables, Remarks = _remarks, Engineer = _engineer, ComplexityLevel = _complexityLevel };
+        Engineer? checkExistingEngineer = null;
+        if (_engId is not null) {
+            checkExistingEngineer = s_bl!.Engineer.Read((int)_engId!) ?? throw new BlDoesNotExistException($"An object of type Engineer with ID {_engId} does not exist");
+            _engineer = new() { Id = (int)_engId, Name = checkExistingEngineer.Name };
+            };
+
+        BO.EngineerExperience _complexityLevel_nn;
+        BO.EngineerExperience? _complexityLevel;
+        succesTryParse = Enum.TryParse(Console.ReadLine(), out _complexityLevel_nn);
+        if (!succesTryParse)
+            throw new BlInvalidInput("Invalid complexity level.\n");
+        _complexityLevel = _complexityLevel_nn;
+
+        BO.Task newTask = new() {
+            Id = -1,
+            Description = _description,
+            Alias = _alias,
+            CreatedAt = DateTime.Now,
+            Status = _status,
+            Milestone = null,
+            BaselineStartDate = null,
+            Start = _start,
+            ScheduledDate = null,
+            ForecastDate = null,
+            Deadline = null,
+            Complete = _complete,
+            Deliverables = _deliverables,
+            Remarks = _remarks,
+            Engineer = _engineer,
+            ComplexityLevel = _complexityLevel };
         return s_bl!.Task.Create(newTask);//add to the list
     }
 
@@ -135,8 +173,12 @@ internal class Program
     static Engineer? readEngineer()
     {
         Console.WriteLine("Enter engineer's id for reading:\n");
-        int id = Convert.ToInt32(Console.ReadLine());
-        Engineer? returnedEng = s_bl!.Engineer.Read(id);//call the read function
+        bool succesTryParse;
+        int _id;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _id);
+        if (!succesTryParse || _id < 0)
+            throw new BlInvalidInput("Invalid id number.\n");
+        Engineer? returnedEng = s_bl!.Engineer.Read(_id);//call the read function
         if (returnedEng is null)//if the wanted object does not exist
             throw new BlDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
         return returnedEng;//return the found object
@@ -149,10 +191,14 @@ internal class Program
     static BO.Task? readTask()
     {
         Console.WriteLine("Enter task's id for reading:\n");
-        int id = Convert.ToInt32(Console.ReadLine());
-        BO.Task? returnedTask = s_bl!.Task.Read(id);//call the read function
+        bool succesTryParse;
+        int _id;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _id);
+        if (!succesTryParse || _id < 0)
+            throw new BlInvalidInput("Invalid id number.\n");
+        BO.Task? returnedTask = s_bl!.Task.Read(_id);//call the read function
         if (returnedTask is null)//if the wanted object does not exist
-            throw new BlDoesNotExistException($"An object of type Task with ID {id} does not exist");
+            throw new BlDoesNotExistException($"An object of type Task with ID {_id} does not exist");
         return returnedTask;//return the found object
     }
     /// <summary>
@@ -163,10 +209,14 @@ internal class Program
     static Milestone? readMilestone()
     {
         Console.WriteLine("Enter milestone's id for reading:\n");
-        int id = Convert.ToInt32(Console.ReadLine());
-        Milestone? returnedMil = s_bl!.Milestone.Read(id);//call the read function
+        bool succesTryParse;
+        int _id;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _id);
+        if (!succesTryParse || _id < 0)
+            throw new BlInvalidInput("Invalid id number.\n");
+        Milestone? returnedMil = s_bl!.Milestone.Read(_id);//call the read function
         if (returnedMil is null)//if the wanted object does not exist
-            throw new BlDoesNotExistException($"An object of type Milestone with ID {id} does not exist");
+            throw new BlDoesNotExistException($"An object of type Milestone with ID {_id} does not exist");
         return returnedMil;//return the found object
     }
     #endregion
