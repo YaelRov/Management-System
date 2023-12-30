@@ -74,15 +74,7 @@ internal class Program
         string _description = Console.ReadLine() ?? throw new BlInvalidInput("Description cannot be empty string.\n");//get details
         string _alias = Console.ReadLine() ?? throw new BlInvalidInput("Alias cannot be empty string.\n");
 
-        BO.Status _status;
-        succesTryParse = Enum.TryParse(Console.ReadLine(), out _status);
-        if (!succesTryParse)
-            throw new BlInvalidInput("Invalid status.\n");
 
-        int _id;
-        succesTryParse = int.TryParse(Console.ReadLine(), out _id);
-        if (!succesTryParse || _id < 0)
-            throw new BlInvalidInput("Invalid id number.\n");
 
         DateTime _start_nn;        
         DateTime? _start;        
@@ -101,10 +93,11 @@ internal class Program
         string? _deliverables = Console.ReadLine() ?? null;
         string? _remarks = Console.ReadLine() ?? null;
 
+
         int _engId_nn;
         int? _engId = null;
         succesTryParse = int.TryParse(Console.ReadLine(), out _engId_nn);
-        if (succesTryParse && _id > 0)
+        if (succesTryParse && _engId_nn > 0)
             _engId = _engId_nn;
 
         EngineerInTask? _engineer = null;
@@ -126,7 +119,7 @@ internal class Program
             Description = _description,
             Alias = _alias,
             CreatedAt = DateTime.Now,
-            Status = _status,
+            Status = null,
             Milestone = null,
             BaselineStartDate = null,
             Start = _start,
@@ -180,7 +173,7 @@ internal class Program
             throw new BlInvalidInput("Invalid id number.\n");
         Engineer? returnedEng = s_bl!.Engineer.Read(_id);//call the read function
         if (returnedEng is null)//if the wanted object does not exist
-            throw new BlDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
+            throw new BlDoesNotExistException($"An object of type Engineer with ID {_id} does not exist");
         return returnedEng;//return the found object
     }
     /// <summary>

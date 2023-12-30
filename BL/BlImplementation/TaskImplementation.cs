@@ -50,6 +50,11 @@ internal class TaskImplementation : ITask
         DO.Task? doTask = _dal.Task.Read(id);
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"An object of type Task with ID {id} does not exist");
+        DO.Engineer? eng =null;
+        if (doTask.EngineerId is not null)
+            eng= _dal.Engineer.Read((int)doTask.EngineerId)!;
+        if( doTask.Milestone == true)
+            return null;
         return new BO.Task()
         {
             Id = doTask.Id,
@@ -67,7 +72,7 @@ internal class TaskImplementation : ITask
             Complete = doTask.Complete,
             Deliverables = doTask.Deliverables,
             Remarks = doTask.Remarks,
-            Engineer = doTask.EngineerId is not null ? new BO.EngineerInTask() : null,
+            Engineer = eng is not null ? new BO.EngineerInTask() { Id= eng.Id , Name=eng.Name} : null,
             ComplexityLevel = doTask.ComplexityLevel is not null ? (BO.EngineerExperience)doTask.ComplexityLevel : null
         };
     }
@@ -83,7 +88,8 @@ internal class TaskImplementation : ITask
         List<BO.Task?> boTaskList = new List<BO.Task?>();
         foreach (var task in doTaskList)
         {
-            boTaskList.Add(Read(task!.Id)!);
+            int id = task!.Id;
+            boTaskList.Add(Read(id)!);
         }
         return boTaskList;
     }

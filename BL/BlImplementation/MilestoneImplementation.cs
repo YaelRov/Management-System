@@ -2,6 +2,7 @@
 namespace BlImplementation;
 using BlApi;
 using BO;
+using DalApi;
 using System.Data;
 using System.Runtime.Intrinsics.Arm;
 using System.Xml.Linq;
@@ -139,6 +140,21 @@ internal class MilestoneImplementation : IMilestone
 
     public void CreateProjectsSchedule()
     {
+        DateTime time;
+        Console.WriteLine("enter date of start: \n");
+        bool successStart = DateTime.TryParse(Console.ReadLine()!,out time);
+        if (!successStart)
+            throw new BlInvalidInput("Not valid DateTime Input.\n");
+        else
+            _dal.StartProjectDate = time;
+
+        Console.WriteLine("enter date of end: \n");
+        bool successEnd = DateTime.TryParse(Console.ReadLine()!, out time);
+        if (!successEnd)
+            throw new BlInvalidInput("Not valid DateTime Input.\n");
+        else
+            _dal.EndProjectDate = time;
+
         List<DO.Dependency?> dependencies = _dal.Dependency.ReadAll().ToList();
         List<DO.Dependency> newDepsList = createMilestones(dependencies);
         _dal.Dependency.Reset();
@@ -171,6 +187,8 @@ internal class MilestoneImplementation : IMilestone
     public BO.Milestone? Read(int id)
     {
         DO.Task milestoneFromDo = _dal.Task.Read(id) ?? throw new BlDoesNotExistException($"An object of type Milestone with ID {id} does not exist");
+        if(milestoneFromDo.Milestone==false)
+            return null;
         //calculating the forecast date
         DateTime? forecastDate = null;
         if (milestoneFromDo.Start is not null && milestoneFromDo.RequiredEffortTime is not null)

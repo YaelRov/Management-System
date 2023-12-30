@@ -13,6 +13,10 @@ internal static class DataSource
         internal const int startDependId = 10000;//barcodes start running from 10000
         private static int nextDependId = startDependId;//reset
         internal static int NextDependId { get => nextDependId++; }//return the next code and move on
+        
+        internal static DateTime? startProjectDate=null;
+        internal static DateTime? endProjectDate = null;
+
     }
     #endregion
 

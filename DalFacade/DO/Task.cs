@@ -1,6 +1,8 @@
 ﻿
 //using System.Data.Common;
 
+using System.Reflection.Metadata.Ecma335;
+
 namespace DO;
 /// <summary>
 /// An entity which describes a Task
@@ -38,7 +40,7 @@ int? EngineerId,
 EngineerExperience? ComplexityLevel
 )
 {
-    public int Id { get; }//Id cannot be change so there is no set function
+    public int Id { get { return id; } init { id = value; } }//Id cannot be change so there is no set function
 
     public static int counterTasks = 0;//counter for how many tasks were created
     Task() : this(-1, "", "", false, DateTime.Now, null, null, null, null, null, null, null, null, null) { }//c-tor

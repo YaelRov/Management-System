@@ -14,9 +14,15 @@ sealed internal class DalList : IDal
 
     public IDependency Dependency => new DependencyImplementation();
 
-    public DateTime StartProjectDate { get ; }
-    public DateTime EndProjectDate { get ;  }
-    
+    DateTime? IDal.StartProjectDate {
+        get => DataSource.Config.startProjectDate;
+        set => DataSource.Config.startProjectDate = value;
+    }
+    DateTime? IDal.EndProjectDate {
+        get => DataSource.Config.endProjectDate;
+        set => DataSource.Config.endProjectDate = value;
+    }
+
     public void Reset()
     {
         DataSource.Engineers.Clear();

@@ -24,7 +24,7 @@ public class Task
     {
         string str = $" Id: {Id}, Description: {Description}, Alias: {Alias}, Milestone: {Milestone}, CreatedAt: {CreatedAt}";
         str += Status is not null ? $", Status: {Status}" : "";
-        str += Milestone is not null ? $", Milestone: {Milestone}" : "";
+        str += Milestone is not null ? $", Milestone: id: {Milestone.Id} alias: {Milestone.Alias}" : "";
         str += BaselineStartDate is not null ? $", Baseline Start Date: {BaselineStartDate}" : "";
         str += Start is not null ? $", Start: {Start}" : "";
         str += ScheduledDate is not null ? $", Scheduled Date: {ScheduledDate}" : "";
@@ -33,8 +33,9 @@ public class Task
         str += Complete is not null ? $", Complete: {Complete}" : "";
         str += Deliverables is not null ? $", Deliverables: {Deliverables}" : "";
         str += Remarks is not null ? $", Remarks: {Remarks}" : "";
-        str += Engineer is not null ? $", Engineer: {Engineer}" : "";
+        str += Engineer is not null ? $", Engineer: id: {Engineer.Id} name: {Engineer.Name}": "";
         str += ComplexityLevel is not null ? $", Complexity Level: {ComplexityLevel}" : "";
+        str += "\n";
         return str;
     }
 }
