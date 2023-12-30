@@ -180,7 +180,7 @@ internal class Program
             throw new BlInvalidInput("Invalid id number.\n");
         Engineer? returnedEng = s_bl!.Engineer.Read(_id);//call the read function
         if (returnedEng is null)//if the wanted object does not exist
-            throw new BlDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
+            throw new BlDoesNotExistException($"An object of type Engineer with ID {_id} does not exist");
         return returnedEng;//return the found object
     }
     /// <summary>
