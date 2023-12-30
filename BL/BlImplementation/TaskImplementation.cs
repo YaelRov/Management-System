@@ -13,13 +13,13 @@ internal class TaskImplementation : ITask
                boTask.Alias,
                boTask.Milestone is not null ? true : false,
                boTask.CreatedAt,
-               boTask.ForecastDate-boTask.ScheduledDate,
-               boTask.Start, 
-               boTask.ScheduledDate, 
-               boTask.Deadline, 
-               boTask.Complete, 
-               boTask.Deliverables, 
-               boTask.Remarks, 
+               boTask.ForecastDate - boTask.ScheduledDate,
+               boTask.Start,
+               boTask.ScheduledDate,
+               boTask.Deadline,
+               boTask.Complete,
+               boTask.Deliverables,
+               boTask.Remarks,
                boTask.Engineer is not null ? boTask.Engineer.Id : null,
                boTask.ComplexityLevel is not null ? (DO.EngineerExperience)boTask.ComplexityLevel : null);
         try
@@ -50,6 +50,11 @@ internal class TaskImplementation : ITask
         DO.Task? doTask = _dal.Task.Read(id);
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"An object of type Task with ID {id} does not exist");
+        DO.Engineer? eng = null;
+        if (doTask.EngineerId is not null)
+            eng = _dal.Engineer.Read((int)doTask.EngineerId)!;
+        if (doTask.Milestone == true)
+            return null;
         return new BO.Task()
         {
             Id = doTask.Id,
@@ -57,17 +62,17 @@ internal class TaskImplementation : ITask
             Alias = doTask.Alias,
             Milestone = doTask.Milestone is true ? new BO.MilestoneInTask() : null,
             CreatedAt = doTask.CreatedAt,
-            Status=(BO.Status)(doTask.ScheduledDate is null?0:
-                               doTask.Start is null?1:
-                               doTask.Complete is null?2
-                               :3),
+            Status = (BO.Status)(doTask.ScheduledDate is null ? 0 :
+                           doTask.Start is null ? 1 :
+                           doTask.Complete is null ? 2
+                           : 3),
             Start = doTask.Start,
             ScheduledDate = doTask.ScheduledDate,
             Deadline = doTask.Deadline,
             Complete = doTask.Complete,
             Deliverables = doTask.Deliverables,
             Remarks = doTask.Remarks,
-            Engineer = doTask.EngineerId is not null ? new BO.EngineerInTask() : null,
+            Engineer = eng is not null ? new BO.EngineerInTask() { Id = eng.Id, Name = eng.Name } : null,
             ComplexityLevel = doTask.ComplexityLevel is not null ? (BO.EngineerExperience)doTask.ComplexityLevel : null
         };
     }

@@ -19,6 +19,13 @@ internal class EngineerImplementation : IEngineer
         try
         {
             int idEng = _dal.Engineer.Create(doEngineer);
+            if (boEngineer.Task is not null) {
+                DO.Task? taskOfEng = _dal.Task.Read(boEngineer.Task.Id);
+                if (taskOfEng != null)
+                {
+                    _dal.Task.Update(taskOfEng with { EngineerId = boEngineer.Id });
+                }
+             }
             return idEng;
         }
         catch (DO.DalAlreadyExistsException exception)
@@ -34,6 +41,13 @@ internal class EngineerImplementation : IEngineer
         try
         {
             _dal.Engineer.Delete(id);
+            var taskOfEng = (from task in _dal.Task.ReadAll()
+                    where task.EngineerId == id
+                    select task).First();
+            if (taskOfEng is not null)
+            {
+                _dal.Task.Update(taskOfEng with { EngineerId = null });
+            }
         }
         catch (DO.DalDoesNotExistException exception)
         {
@@ -48,7 +62,7 @@ internal class EngineerImplementation : IEngineer
             throw new BO.BlDoesNotExistException($"An object of type Engineer with ID {id} does not exist");
         var tasks = _dal.Task.ReadAll();
         var engTask = (from task in tasks
-                           where task.EngineerId==id && task.Start is not null&& task.Complete is null
+                           where task.EngineerId==id //&& task.Start is not null&& task.Complete is null
                            select new { task.Id, task.Alias }).FirstOrDefault();
         TaskInEngineer? taskInEngineer= null;
         if (engTask is not null)
@@ -66,7 +80,7 @@ internal class EngineerImplementation : IEngineer
 
     public BO.Engineer? Read(Func<BO.Engineer, bool> filter)
     {
-         return ReadAll(filter).FirstOrDefault();
+         return ReadAll(filter).First();
     }
 
 
@@ -90,6 +104,15 @@ internal class EngineerImplementation : IEngineer
         try
         {
             _dal.Engineer.Update(doEngineer);
+            if (boEngineer.Task is not null)
+            {
+                DO.Task? taskOfEng = _dal.Task.Read(boEngineer.Task.Id);
+                if (taskOfEng != null)
+                {
+                    _dal.Task.Update(taskOfEng with { EngineerId = boEngineer.Id });
+                }
+            }
+
         }
         catch (DO.DalDoesNotExistException exception)
         {

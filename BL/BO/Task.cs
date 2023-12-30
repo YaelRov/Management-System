@@ -35,6 +35,7 @@ public class Task
         str += Remarks is not null ? $", Remarks: {Remarks}" : "";
         str += Engineer is not null ? $", Engineer: {Engineer}" : "";
         str += ComplexityLevel is not null ? $", Complexity Level: {ComplexityLevel}" : "";
+        str += "\n";
         return str;
     }
 }

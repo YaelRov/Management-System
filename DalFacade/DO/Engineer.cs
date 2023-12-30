@@ -20,7 +20,7 @@ public record Engineer
 )
 {
     public static int counterEngineers = 0;//counter for how many engineers were created
-    public int Id { get { return id; } }//Id cannot be change so there is no set function
+    public int Id { get { return id; } init { id = value; } }//Id cannot be change so there is no set function
     Engineer() : this(-1,"","", EngineerExperience.Novice,0) { }//c-tor
 }
 

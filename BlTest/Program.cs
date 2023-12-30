@@ -74,18 +74,8 @@ internal class Program
         string _description = Console.ReadLine() ?? throw new BlInvalidInput("Description cannot be empty string.\n");//get details
         string _alias = Console.ReadLine() ?? throw new BlInvalidInput("Alias cannot be empty string.\n");
 
-        BO.Status _status;
-        succesTryParse = Enum.TryParse(Console.ReadLine(), out _status);
-        if (!succesTryParse)
-            throw new BlInvalidInput("Invalid status.\n");
-
-        int _id;
-        succesTryParse = int.TryParse(Console.ReadLine(), out _id);
-        if (!succesTryParse || _id < 0)
-            throw new BlInvalidInput("Invalid id number.\n");
-
-        DateTime _start_nn;        
-        DateTime? _start;        
+        DateTime _start_nn;
+        DateTime? _start;
         succesTryParse = DateTime.TryParse(Console.ReadLine(), out _start_nn);
         _start = _start_nn;
         if (!succesTryParse)
@@ -101,18 +91,20 @@ internal class Program
         string? _deliverables = Console.ReadLine() ?? null;
         string? _remarks = Console.ReadLine() ?? null;
 
+
         int _engId_nn;
         int? _engId = null;
         succesTryParse = int.TryParse(Console.ReadLine(), out _engId_nn);
-        if (succesTryParse && _id > 0)
+        if (succesTryParse && _engId_nn > 0)
             _engId = _engId_nn;
 
         EngineerInTask? _engineer = null;
         Engineer? checkExistingEngineer;
-        if (_engId is not null) {
+        if (_engId is not null)
+        {
             checkExistingEngineer = s_bl!.Engineer.Read((int)_engId!) ?? throw new BlDoesNotExistException($"An object of type Engineer with ID {_engId} does not exist");
             _engineer = new() { Id = (int)_engId, Name = checkExistingEngineer.Name };
-            };
+        };
 
         BO.EngineerExperience _complexityLevel_nn;
         BO.EngineerExperience? _complexityLevel;
@@ -121,12 +113,13 @@ internal class Program
             throw new BlInvalidInput("Invalid complexity level.\n");
         _complexityLevel = _complexityLevel_nn;
 
-        BO.Task newTask = new() {
+        BO.Task newTask = new()
+        {
             Id = -1,
             Description = _description,
             Alias = _alias,
             CreatedAt = DateTime.Now,
-            Status = _status,
+            Status = null,
             Milestone = null,
             BaselineStartDate = null,
             Start = _start,
@@ -137,7 +130,8 @@ internal class Program
             Deliverables = _deliverables,
             Remarks = _remarks,
             Engineer = _engineer,
-            ComplexityLevel = _complexityLevel };
+            ComplexityLevel = _complexityLevel
+        };
         return s_bl!.Task.Create(newTask);//add to the list
     }
 

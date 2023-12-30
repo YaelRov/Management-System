@@ -14,6 +14,6 @@ public record Dependency
 )
 {
     public static int counterDependencies = 0;//counter for how many dependencies were created
-    public int Id { get { return id; } }//Id cannot be change so there is no set function
+    public int Id { get { return id; }init { id = value; } }//Id cannot be change so there is no set function
     Dependency() :this(0,null,null) { }//c-tor
 }
