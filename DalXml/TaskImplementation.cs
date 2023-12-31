@@ -29,7 +29,7 @@ internal class TaskImplementation : ITask
                                         new XElement("Alias", item.Alias),
                                         new XElement("Milestone", Convert.ToBoolean(item.Milestone)),
                                         new XElement("CreatedAt", Convert.ToDateTime(item.CreatedAt)),
-                                        item.RequiredEffortTime is not null ? new XElement("RequiredEffortTime", new TimeSpan( Convert.ToInt32(item.RequiredEffortTime),0,0,0) ): null,
+                                        item.RequiredEffortTime is not null ? new XElement("RequiredEffortTime", new TimeSpan(Convert.ToInt32(item.RequiredEffortTime), 0, 0, 0)) : null,
                                         item.Start is not null ? new XElement("Start", Convert.ToDateTime(item.Start)) : null,
                                         item.ScheduledDate is not null ? new XElement("ScheduledDate", Convert.ToDateTime(item.ScheduledDate)) : null,
                                         item.Deadline is not null ? new XElement("Deadline", Convert.ToDateTime(item.Deadline)) : null,
@@ -37,7 +37,7 @@ internal class TaskImplementation : ITask
                                         item.Deliverables is not null ? new XElement("Deliverables", item.Deliverables) : null,
                                         item.Remarks is not null ? new XElement("Remarks", item.Remarks) : null,
                                         item.EngineerId is not null ? new XElement("EngineerId", Convert.ToInt32(item.EngineerId)) : null,
-                                        item.ComplexityLevel is not null ? new XElement("ComplexityLevel", (EngineerExperience)item.ComplexityLevel): null
+                                        item.ComplexityLevel is not null ? new XElement("ComplexityLevel", (EngineerExperience)item.ComplexityLevel) : null
                                         );
         xmlTasksFileRoot.Add(newTask);
         XMLTools.SaveListToXMLElement(xmlTasksFileRoot, "tasks");
@@ -76,13 +76,13 @@ internal class TaskImplementation : ITask
             .FirstOrDefault(Task => int.Parse(Task.Element("Id")!.Value).Equals(id));
         if (task is null)
             return null;
-        Task returnedTask = new (
+        Task returnedTask = new(
                                 int.Parse(task.Element("Id")!.Value),
                                 task.Element("Description")!.Value,
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
-                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value),0,0,0) : null,
+                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value), 0, 0, 0) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,

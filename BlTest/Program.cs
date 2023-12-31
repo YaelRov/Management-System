@@ -74,8 +74,6 @@ internal class Program
         string _description = Console.ReadLine() ?? throw new BlInvalidInput("Description cannot be empty string.\n");//get details
         string _alias = Console.ReadLine() ?? throw new BlInvalidInput("Alias cannot be empty string.\n");
 
-
-
         DateTime _start_nn;        
         DateTime? _start;        
         succesTryParse = DateTime.TryParse(Console.ReadLine(), out _start_nn);
