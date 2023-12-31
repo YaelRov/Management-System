@@ -187,7 +187,7 @@ internal class MilestoneImplementation : IMilestone
     public BO.Milestone? Read(int id)
     {
         DO.Task milestoneFromDo = _dal.Task.Read(id) ?? throw new BlDoesNotExistException($"An object of type Milestone with ID {id} does not exist");
-        if(milestoneFromDo.Milestone==false)
+        if (milestoneFromDo.Milestone == false)
             return null;
         //calculating the forecast date
         DateTime? forecastDate = null;
@@ -233,5 +233,11 @@ internal class MilestoneImplementation : IMilestone
         {
             throw new BO.BlDoesNotExistException($"An object of type Task with ID {doMilestone.Id} does not exist", exception);
         }
+    }
+
+    public void setDates(DateTime start, DateTime end)
+    {
+        _dal.StartProjectDate= start;
+        _dal.EndProjectDate= end;
     }
 }

@@ -13,13 +13,13 @@ internal class TaskImplementation : ITask
                boTask.Alias,
                boTask.Milestone is not null ? true : false,
                boTask.CreatedAt,
-               boTask.ForecastDate-boTask.ScheduledDate,
-               boTask.Start, 
-               boTask.ScheduledDate, 
-               boTask.Deadline, 
-               boTask.Complete, 
-               boTask.Deliverables, 
-               boTask.Remarks, 
+               boTask.RequiredEffortTime,
+               boTask.Start,
+               boTask.ScheduledDate,
+               boTask.Deadline,
+               boTask.Complete,
+               boTask.Deliverables,
+               boTask.Remarks,
                boTask.Engineer is not null ? boTask.Engineer.Id : null,
                boTask.ComplexityLevel is not null ? (DO.EngineerExperience)boTask.ComplexityLevel : null);
         try
@@ -50,10 +50,10 @@ internal class TaskImplementation : ITask
         DO.Task? doTask = _dal.Task.Read(id);
         if (doTask == null)
             throw new BO.BlDoesNotExistException($"An object of type Task with ID {id} does not exist");
-        DO.Engineer? eng =null;
+        DO.Engineer? eng = null;
         if (doTask.EngineerId is not null)
-            eng= _dal.Engineer.Read((int)doTask.EngineerId)!;
-        if( doTask.Milestone == true)
+            eng = _dal.Engineer.Read((int)doTask.EngineerId)!;
+        if (doTask.Milestone == true)
             return null;
         return new BO.Task()
         {
@@ -62,17 +62,18 @@ internal class TaskImplementation : ITask
             Alias = doTask.Alias,
             Milestone = doTask.Milestone is true ? new BO.MilestoneInTask() : null,
             CreatedAt = doTask.CreatedAt,
-            Status=(BO.Status)(doTask.ScheduledDate is null?0:
-                               doTask.Start is null?1:
-                               doTask.Complete is null?2
-                               :3),
+            Status = (BO.Status)(doTask.ScheduledDate is null ? 0 :
+                           doTask.Start is null ? 1 :
+                           doTask.Complete is null ? 2
+                           : 3),
+            RequiredEffortTime = doTask.RequiredEffortTime,
             Start = doTask.Start,
             ScheduledDate = doTask.ScheduledDate,
             Deadline = doTask.Deadline,
             Complete = doTask.Complete,
             Deliverables = doTask.Deliverables,
             Remarks = doTask.Remarks,
-            Engineer = eng is not null ? new BO.EngineerInTask() { Id= eng.Id , Name=eng.Name} : null,
+            Engineer = eng is not null ? new BO.EngineerInTask() { Id = eng.Id, Name = eng.Name } : null,
             ComplexityLevel = doTask.ComplexityLevel is not null ? (BO.EngineerExperience)doTask.ComplexityLevel : null
         };
     }
@@ -118,6 +119,31 @@ internal class TaskImplementation : ITask
         catch (DO.DalDoesNotExistException exception)
         {
             throw new BO.BlDoesNotExistException($"An object of type Task with ID {boTask.Id} does not exist", exception);
+        }
+    }
+    public void creatD()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            DO.Task doTask = new DO.Task(0, $"{i}", "cfgv",false, DateTime.Now,null,null,null,null,null,null,null,null,null);
+            _dal.Task.Create(doTask);
+        }
+        DO.Dependency doDependency = new DO.Dependency(0, 1002, 1001);
+        _dal.Dependency.Create(doDependency);
+        DO.Dependency doDependency1 = new DO.Dependency(0, 1002, 1000);
+        _dal.Dependency.Create(doDependency1);
+        DO.Dependency doDependency2 = new DO.Dependency(0, 1003, 1002);
+        _dal.Dependency.Create(doDependency2);
+        DO.Dependency doDependency3 = new DO.Dependency(0, 1004, 1002);
+        _dal.Dependency.Create(doDependency3);
+
+    }
+    public void printd()
+    {
+        var d = _dal.Dependency.ReadAll();
+        foreach (var item in d.ToList())
+        {
+            Console.WriteLine(item);
         }
     }
 }

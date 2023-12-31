@@ -120,7 +120,7 @@ public static class Initialization
             if (index > 2)
             {
                 //creating 3 dependencies for each task with index>2
-                for (int j = index - 3; j < index; j++)
+                for (int j = index - 2; j < index; j++)
                 {
                     Dependency dep = new(-1,task.Id, Tasks[j].Id);//creating a new dependency
                     s_dal!.Dependency.Create(dep);//adding the dependency to the dependencies list
@@ -139,9 +139,9 @@ public static class Initialization
     public static void Do()
     {
         s_dal = Factory.Get ?? throw new NullReferenceException("DAL can not be null!");
-        createEngineers();
-        createTasks();
-        createDependencies();
+        //createEngineers();
+        //createTasks();
+        //createDependencies();
     }
     #endregion
 }

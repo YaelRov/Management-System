@@ -6,6 +6,7 @@ using DO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Intrinsics.Arm;
+using System.Xml;
 using System.Xml.Linq;
 
 /// <summary>
@@ -29,7 +30,8 @@ internal class TaskImplementation : ITask
                                         new XElement("Alias", item.Alias),
                                         new XElement("Milestone", Convert.ToBoolean(item.Milestone)),
                                         new XElement("CreatedAt", Convert.ToDateTime(item.CreatedAt)),
-                                        item.RequiredEffortTime is not null ? new XElement("RequiredEffortTime", new TimeSpan(Convert.ToInt32(item.RequiredEffortTime), 0, 0, 0)) : null,
+                                        item.RequiredEffortTime is not null ? new XElement("RequiredEffortTime",item.RequiredEffortTime) : null,
+                                       // item.RequiredEffortTime is not null ? new XElement("RequiredEffortTime",  TimeSpan.Parse((item.RequiredEffortTime).ToString()!)): null,
                                         item.Start is not null ? new XElement("Start", Convert.ToDateTime(item.Start)) : null,
                                         item.ScheduledDate is not null ? new XElement("ScheduledDate", Convert.ToDateTime(item.ScheduledDate)) : null,
                                         item.Deadline is not null ? new XElement("Deadline", Convert.ToDateTime(item.Deadline)) : null,
@@ -82,7 +84,7 @@ internal class TaskImplementation : ITask
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
-                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value), 0, 0, 0) : null,
+                                task.Element("RequiredEffortTime") is not null ? XmlConvert.ToTimeSpan(task.Element("RequiredEffortTime")!.Value) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,
@@ -109,7 +111,7 @@ internal class TaskImplementation : ITask
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
-                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value), 0, 0, 0) : null,
+                                task.Element("RequiredEffortTime") is not null ? XmlConvert.ToTimeSpan(task.Element("RequiredEffortTime")!.Value) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,
@@ -127,7 +129,7 @@ internal class TaskImplementation : ITask
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
-                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value), 0, 0, 0) : null,
+                                task.Element("RequiredEffortTime") is not null ? XmlConvert.ToTimeSpan(task.Element("RequiredEffortTime")!.Value) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,
@@ -158,7 +160,7 @@ internal class TaskImplementation : ITask
                                 task.Element("Alias")!.Value,
                                 Convert.ToBoolean(task.Element("Milestone")!.Value),
                                 Convert.ToDateTime(task.Element("CreatedAt")!.Value),
-                                task.Element("RequiredEffortTime") is not null ? new TimeSpan(Convert.ToInt32(task.Element("RequiredEffortTime")!.Value), 0, 0, 0) : null,
+                                task.Element("RequiredEffortTime") is not null ? XmlConvert.ToTimeSpan(task.Element("RequiredEffortTime")!.Value) : null,
                                 task.Element("Start") is not null ? Convert.ToDateTime(task.Element("Start")!.Value) : null,
                                 task.Element("ScheduledDate") is not null ? Convert.ToDateTime(task.Element("ScheduledDate")!.Value) : null,
                                 task.Element("Deadline") is not null ? Convert.ToDateTime(task.Element("Deadline")!.Value) : null,

@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Xml.Linq;
 
 namespace Dal;
-
+//הי, יוני. מה שלומך? דש חם ממני
 sealed internal class DalXml : IDal
 {
     public static IDal Instance { get; } = new DalXml();
@@ -17,30 +17,8 @@ sealed internal class DalXml : IDal
 
     public IDependency Dependency => new DependencyImplementation();
 
-    DateTime? IDal.StartProjectDate { 
-        get{
-            XElement root = XMLTools.LoadListFromXMLElement("data-config");
-            return root.Element("Config")!.ToDateTimeNullable("startProjectDate");
-        }
-        set
-        {
-            XElement root = XMLTools.LoadListFromXMLElement("data-config");
-            root.Descendants("startProjectDate").First().SetValue(value ?? throw new DalDoesNotExistException("Date of start project can't be null\n"));
-            XMLTools.SaveListToXMLElement(root, "data-config");
-        }
-    }
-    DateTime? IDal.EndProjectDate { 
-        get
-        {
-            XElement root = XMLTools.LoadListFromXMLElement("data-config");
-            return root.Element("Config")!.ToDateTimeNullable("endProjectDate");
-        }
-        set {
-            XElement root = XMLTools.LoadListFromXMLElement("data-config");
-            root.Descendants("endProjectDate").First().SetValue(value ?? throw new DalDoesNotExistException("Date of end project can't be null\n"));
-            XMLTools.SaveListToXMLElement(root, "data-config");
-        }
-    }
+    public DateTime StartProjectDate { get; set; }
+    public DateTime EndProjectDate { get; set;}
 
     public void Reset()
     {
