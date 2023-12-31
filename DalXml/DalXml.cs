@@ -3,7 +3,7 @@ using DalApi;
 using System.Diagnostics;
 
 namespace Dal;
-
+//הי, יוני. מה שלומך? דש חם ממני
 sealed internal class DalXml : IDal
 {
     public static IDal Instance { get; } = new DalXml();
@@ -14,8 +14,8 @@ sealed internal class DalXml : IDal
 
     public IDependency Dependency => new DependencyImplementation();
 
-    public DateTime StartProjectDate { get; }
-    public DateTime EndProjectDate { get; }
+    public DateTime StartProjectDate { get; set; }
+    public DateTime EndProjectDate { get; set;}
 
     public void Reset()
     {

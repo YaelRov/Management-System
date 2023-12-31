@@ -46,14 +46,14 @@ internal class Program
     /// <exception cref="Exception"></exception>
     static int createTask()
     {
-        Console.WriteLine("Enter task's details: description, alias, milestone, required effort time. \ndates of: creating, start, scheduled date, deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
+        Console.WriteLine("Enter task's details: description, alias, milestone, required effort time. \ndates of: creating, start, deadline and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
         string _description = Console.ReadLine()!;//get details
         string _alias = Console.ReadLine()!;
         bool _milestone = Convert.ToBoolean(Console.ReadLine()!);
         TimeSpan? _requiredEffortTime = new TimeSpan(Convert.ToInt32(Console.ReadLine()),0,0,0);
         DateTime _createdAt = Convert.ToDateTime(Console.ReadLine()!);
         DateTime? _start = Convert.ToDateTime(Console.ReadLine());
-        DateTime? _scheduledDate = Convert.ToDateTime(Console.ReadLine());
+        DateTime? _scheduledDate = _start+_requiredEffortTime;
         DateTime? _deadline = Convert.ToDateTime(Console.ReadLine());
         DateTime? _complete = Convert.ToDateTime(Console.ReadLine());
         string? _deliverables = Console.ReadLine();

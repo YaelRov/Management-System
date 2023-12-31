@@ -14,8 +14,8 @@ sealed internal class DalList : IDal
 
     public IDependency Dependency => new DependencyImplementation();
 
-    public DateTime StartProjectDate { get ; }
-    public DateTime EndProjectDate { get ;  }
+    public DateTime StartProjectDate { get ; set; }
+    public DateTime EndProjectDate { get ; set;  }
     
     public void Reset()
     {

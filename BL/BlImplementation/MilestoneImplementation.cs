@@ -218,4 +218,10 @@ internal class MilestoneImplementation : IMilestone
             throw new BO.BlDoesNotExistException($"An object of type Task with ID {doMilestone.Id} does not exist", exception);
         }
     }
+
+    public void setDates(DateTime start, DateTime end)
+    {
+        _dal.StartProjectDate= start;
+        _dal.EndProjectDate= end;
+    }
 }

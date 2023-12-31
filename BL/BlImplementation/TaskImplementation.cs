@@ -13,7 +13,7 @@ internal class TaskImplementation : ITask
                boTask.Alias,
                boTask.Milestone is not null ? true : false,
                boTask.CreatedAt,
-               boTask.ForecastDate - boTask.ScheduledDate,
+               boTask.RequiredEffortTime,
                boTask.Start,
                boTask.ScheduledDate,
                boTask.Deadline,
@@ -66,6 +66,7 @@ internal class TaskImplementation : ITask
                            doTask.Start is null ? 1 :
                            doTask.Complete is null ? 2
                            : 3),
+            RequiredEffortTime = doTask.RequiredEffortTime,
             Start = doTask.Start,
             ScheduledDate = doTask.ScheduledDate,
             Deadline = doTask.Deadline,
@@ -117,6 +118,31 @@ internal class TaskImplementation : ITask
         catch (DO.DalDoesNotExistException exception)
         {
             throw new BO.BlDoesNotExistException($"An object of type Task with ID {boTask.Id} does not exist", exception);
+        }
+    }
+    public void creatD()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            DO.Task doTask = new DO.Task(0, $"{i}", "cfgv",false, DateTime.Now,null,null,null,null,null,null,null,null,null);
+            _dal.Task.Create(doTask);
+        }
+        DO.Dependency doDependency = new DO.Dependency(0, 1002, 1001);
+        _dal.Dependency.Create(doDependency);
+        DO.Dependency doDependency1 = new DO.Dependency(0, 1002, 1000);
+        _dal.Dependency.Create(doDependency1);
+        DO.Dependency doDependency2 = new DO.Dependency(0, 1003, 1002);
+        _dal.Dependency.Create(doDependency2);
+        DO.Dependency doDependency3 = new DO.Dependency(0, 1004, 1002);
+        _dal.Dependency.Create(doDependency3);
+
+    }
+    public void printd()
+    {
+        var d = _dal.Dependency.ReadAll();
+        foreach (var item in d.ToList())
+        {
+            Console.WriteLine(item);
         }
     }
 }

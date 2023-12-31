@@ -40,4 +40,7 @@ public interface ITask
     /// </summary>
     /// <param name="id">Task Id</param>
     void Delete(int id);
+    //למחוק אחכ
+    public void creatD();
+    public void printd();
 }

@@ -13,6 +13,7 @@ internal class Program
     {
         try
         {
+            //s_bl.Task.creatD();//Tzipi did it
             Console.Write("Would you like to create Initial data? (Y/N)");
             string? ans = Console.ReadLine() ?? throw new FormatException("Wrong input");
             if (ans == "Y")
@@ -39,12 +40,12 @@ internal class Program
         if (!succesTryParse || _id < 0)
             throw new BlInvalidInput("Invalid id number.\n");
 
-        string _name = Console.ReadLine()?? throw new BlInvalidInput("Name cannot be empty string.\n");
-        
-        string _email = Console.ReadLine()?? throw new BlInvalidInput("Email cannot be empty string.\n");
-        
+        string _name = Console.ReadLine() ?? throw new BlInvalidInput("Name cannot be empty string.\n");
+
+        string _email = Console.ReadLine() ?? throw new BlInvalidInput("Email cannot be empty string.\n");
+
         BO.EngineerExperience _level;
-        succesTryParse = Enum.TryParse( Console.ReadLine(), out _level);
+        succesTryParse = Enum.TryParse(Console.ReadLine(), out _level);
         if (!succesTryParse)
             throw new BlInvalidInput("Invalid level.\n");
 
@@ -58,7 +59,7 @@ internal class Program
         //if (_taskId is not null && _taskAlias is not null)
         //    _task = new() { Id = (int)_taskId, Alias = _taskAlias };
         //create new enginner
-        BO.Engineer newEng = new() { Id=_id, Name=_name, Email=_email, Level=_level, Cost=_cost, Task= null };
+        BO.Engineer newEng = new() { Id = _id, Name = _name, Email = _email, Level = _level, Cost = _cost, Task = null };
         return s_bl!.Engineer.Create(newEng);//add to the list
     }
     /// <summary>
@@ -68,7 +69,7 @@ internal class Program
     /// <exception cref="Exception"></exception>
     static int createTask()
     {
-        Console.WriteLine("Enter task's details: description, alias. Dates of: start, and complete.\n deliverables, remarks, engineer's id and complexity level:\n");
+        Console.WriteLine("Enter task's details: description, alias. Dates of: start and complete. requierd days for this task,\n deliverables, remarks, engineer's id and complexity level:\n");
 
         bool succesTryParse;
         string _description = Console.ReadLine() ?? throw new BlInvalidInput("Description cannot be empty string.\n");//get details
@@ -87,6 +88,11 @@ internal class Program
         _complete = _complete_nn;
         if (!succesTryParse)
             throw new BlInvalidInput("Invalid input.\n");
+
+        int _days = 0;
+        succesTryParse = int.TryParse(Console.ReadLine(), out _days);
+        if (!succesTryParse || _days < 0)
+            _days = 0;
 
         string? _deliverables = Console.ReadLine() ?? null;
         string? _remarks = Console.ReadLine() ?? null;
@@ -118,13 +124,12 @@ internal class Program
             Id = -1,
             Description = _description,
             Alias = _alias,
+            RequiredEffortTime = new TimeSpan(_days, 0, 0, 0),
             CreatedAt = DateTime.Now,
             Status = null,
             Milestone = null,
-            BaselineStartDate = null,
             Start = _start,
             ScheduledDate = null,
-            ForecastDate = null,
             Deadline = null,
             Complete = _complete,
             Deliverables = _deliverables,
@@ -263,9 +268,9 @@ internal class Program
         Console.WriteLine("level:");
         userInput = Console.ReadLine();
         EngineerExperience _level = baseEng.Level;
-        if(!string.IsNullOrEmpty(userInput))
+        if (!string.IsNullOrEmpty(userInput))
         {
-            succesTryParse=Enum.TryParse(userInput, out _level);
+            succesTryParse = Enum.TryParse(userInput, out _level);
             if (succesTryParse is false)
                 _level = baseEng.Level;
         }
@@ -336,7 +341,7 @@ internal class Program
         DateTime? _start;
         userInput = Console.ReadLine();
         _start = baseTask.Start;
-        if(!string.IsNullOrEmpty(userInput))
+        if (!string.IsNullOrEmpty(userInput))
         {
             succesTryParse = Enum.TryParse(userInput, out _start_nn);
             if (succesTryParse)
@@ -362,7 +367,7 @@ internal class Program
         Console.WriteLine("remarks:");
         userInput = Console.ReadLine()!;
         string? _remarks = string.IsNullOrEmpty(userInput) ? baseTask.Remarks : userInput;
-       
+
         Console.WriteLine("engineer id:");
         userInput = Console.ReadLine();
         int _engId;
@@ -394,7 +399,7 @@ internal class Program
                 _complexityLevel = _complexityLevel_nn;
         }
         //creating a new entity of task with the details
-        BO.Task updateTask = new() { Id=_id, Description=_description, Alias=_alias,CreatedAt= baseTask.CreatedAt, Status = baseTask.Status, Milestone = baseTask.Milestone, BaselineStartDate = baseTask.BaselineStartDate, Start = _start, ScheduledDate= baseTask.ScheduledDate, ForecastDate= baseTask.ForecastDate,  Deadline=baseTask.Deadline,Complete= _complete,Deliverables= _deliverables,Remarks= _remarks,Engineer= _eng,ComplexityLevel= _complexityLevel };
+        BO.Task updateTask = new() { Id = _id, Description = _description, Alias = _alias, CreatedAt = baseTask.CreatedAt, Status = baseTask.Status, Milestone = baseTask.Milestone, Start = _start, ScheduledDate = baseTask.ScheduledDate, ForecastDate = baseTask.ForecastDate, Deadline = baseTask.Deadline, Complete = _complete, Deliverables = _deliverables, Remarks = _remarks, Engineer = _eng, ComplexityLevel = _complexityLevel };
         s_bl!.Task.Update(updateTask);//updating the tasks list
     }
     /// <summary>
@@ -406,7 +411,7 @@ internal class Program
         string? userInput;//a variable that the input that the user enters assign in it
         Console.WriteLine("Enter id of milestone to update");
         int id = Convert.ToInt32(Console.ReadLine());
-        Milestone baseMil = s_bl!.Milestone.Read(id) ?? throw new BlDoesNotExistException("Milestone with this id does not exist");//reading the milestone with the enterd id
+        Milestone baseMil = s_bl!.Milestone.Read(id) ?? throw new BlDoesNotExistException($"Milestone with id {id} does not exist");//reading the milestone with the enterd id
         Console.WriteLine(baseMil);//printing the details of the milestone
         Console.WriteLine("Enter milestone's details to update. If you don't want to change press enter.\n");
         //getting from the user the details for each field of the milestone for string-type variable, 
@@ -421,7 +426,7 @@ internal class Program
         userInput = Console.ReadLine();
         string? _remarks = string.IsNullOrEmpty(userInput) ? baseMil.Remarks : userInput;
         //creating a new entity of milestone with the details
-        Milestone updateMil = new(){Id=id, Description= _descriptions,Alias= _alias,Status= baseMil.Status,CreatedAtDate= baseMil.CreatedAtDate,ForecastDate= baseMil.ForecastDate,DeadlineDate= baseMil.DeadlineDate,CompleteDate= baseMil.CompleteDate,CompletionPercentage= baseMil.CompletionPercentage,Remarks= _remarks};
+        Milestone updateMil = new() { Id = id, Description = _descriptions, Alias = _alias, Status = baseMil.Status, CreatedAtDate = baseMil.CreatedAtDate, ForecastDate = baseMil.ForecastDate, DeadlineDate = baseMil.DeadlineDate, CompleteDate = baseMil.CompleteDate, CompletionPercentage = baseMil.CompletionPercentage, Remarks = _remarks };
 
         s_bl!.Milestone.Update(updateMil);//updating the dependencies list
     }
@@ -455,6 +460,26 @@ internal class Program
         s_bl!.Task.Delete(_id);//call the Delete function
     }
     #endregion
+
+    static void createProjectSched()
+    {
+        bool succesTryParse = true;
+        Console.WriteLine("enter date of starting project\n");
+        DateTime _start;
+        succesTryParse = DateTime.TryParse(Console.ReadLine(), out _start);
+        if (!succesTryParse)
+            throw new BlInvalidInput("Invalid input.\n");
+
+        Console.WriteLine("enter date of ending project\n");
+        DateTime _end;
+        succesTryParse = DateTime.TryParse(Console.ReadLine(), out _end);
+        if (!succesTryParse || _end < _start)
+            throw new BlInvalidInput("Invalid input.\n");
+        s_bl.Milestone.setDates(_start, _end);
+        s_bl.Milestone.CreateProjectsSchedule();
+        Console.WriteLine("Projects schedule created successfuly");
+        s_bl.Task.printd();
+    }
 
     /// <summary>
     /// the menu of operations on engineers
@@ -558,15 +583,14 @@ internal class Program
                     case 1://exit
                         return;
                     case 2://Create Projects Schedule
-                        s_bl.Milestone.CreateProjectsSchedule();
-                        Console.WriteLine("Projects schedule created successfuly");
+                        createProjectSched();
                         break;
                     case 3://read
                         Console.WriteLine(readMilestone());//print the wanted milestone
                         break;
                     case 4://update
                         updateMilestone();//call the update function
-                        break; 
+                        break;
                     default:
                         break;
                 }
