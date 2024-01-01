@@ -1,9 +1,10 @@
 ﻿
 using DO;
 using System.Numerics;
-
 namespace BO;
-
+/// <summary>
+/// class for details about task in list
+/// </summary>
 public class TaskInList
 {
     public int Id { get; init; }

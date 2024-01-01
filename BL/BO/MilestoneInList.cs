@@ -1,8 +1,8 @@
 ﻿
-using BO;
-
 namespace BO;
-
+/// <summary>
+/// class for details about milestone in list
+/// </summary>
 public class MilestoneInList
 {
     public int Id { get; init; }

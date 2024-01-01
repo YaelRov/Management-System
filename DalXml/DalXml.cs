@@ -6,7 +6,6 @@ using System.Diagnostics;
 using System.Xml.Linq;
 
 namespace Dal;
-//הי, יוני. מה שלומך? דש חם ממני
 sealed internal class DalXml : IDal
 {
     public static IDal Instance { get; } = new DalXml();

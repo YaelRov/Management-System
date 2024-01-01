@@ -17,5 +17,10 @@ public interface IMilestone
     /// </summary>
     /// <param name="item">BO.Milestone NN</param>
     void Update(BO.Milestone item);
+    /// <summary>
+    /// set the dates of start and end to the recieved dates
+    /// </summary>
+    /// <param name="start">DateTime</param>
+    /// <param name="end">DateTime</param>
     void setDates(DateTime start, DateTime end);
 }

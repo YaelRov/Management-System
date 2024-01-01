@@ -478,7 +478,6 @@ internal class Program
         s_bl.Milestone.setDates(_start, _end);
         s_bl.Milestone.CreateProjectsSchedule();
         Console.WriteLine("Projects schedule created successfuly");
-        s_bl.Task.printd();
     }
 
     /// <summary>

@@ -6,7 +6,6 @@ using DalApi;
 using System.Data;
 using System.Runtime.Intrinsics.Arm;
 using System.Xml.Linq;
-
 internal class MilestoneImplementation : IMilestone
 {
     //================
@@ -260,5 +259,18 @@ internal class MilestoneImplementation : IMilestone
     {
         _dal.StartProjectDate= start;
         _dal.EndProjectDate= end;
+
+        XElement? dataConfig = Tools.LoadListFromXMLElement("data-config");
+
+        XElement xmlStart = new XElement("StartProjectDate", start);
+        XElement xmlEnd = new XElement("EndProjectDate", end);
+
+        dataConfig.Descendants("StartProjectDate").Remove();
+        dataConfig.Descendants("EndProjectDate").Remove();
+
+        dataConfig.Add(xmlStart);
+        dataConfig.Add(xmlEnd);
+
+        Tools.SaveListToXMLElement(dataConfig, "data-config");
     }
 }

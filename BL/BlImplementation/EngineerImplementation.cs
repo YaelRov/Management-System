@@ -4,10 +4,19 @@ using BlApi;
 using BO;
 using System;
 
-
+/// <summary>
+/// class for the implementations of engineer methods
+/// </summary>
 internal class EngineerImplementation : IEngineer
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+
+    /// <summary>
+    /// Creates new entity object of Engineer
+    /// </summary>
+    /// <param name="boEngineer">engineer of type BO.Engineer</param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Engineer boEngineer)
     {
         DO.Engineer doEngineer = new DO.Engineer
@@ -35,6 +44,11 @@ internal class EngineerImplementation : IEngineer
 
     }
 
+    /// <summary>
+    /// Deletes an engineer by its Id
+    /// </summary>
+    /// <param name="id">id of engineer, type int</param>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
     public void Delete(int id)
     {
         try
@@ -54,6 +68,12 @@ internal class EngineerImplementation : IEngineer
         }
     }
 
+    /// <summary>
+    /// Reads engineer by its ID 
+    /// </summary>
+    /// <param name="id">engineer id, type int</param>
+    /// <returns></returns>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
     public BO.Engineer? Read(int id)
     {
         DO.Engineer? doEngineer = _dal.Engineer.Read(id);
@@ -77,11 +97,21 @@ internal class EngineerImplementation : IEngineer
         };
     }
 
+    /// <summary>
+    /// Reads engineer according to a condition
+    /// </summary>
+    /// <param name="filter">condition</param>
+    /// <returns></returns>
     public BO.Engineer? Read(Func<BO.Engineer, bool> filter)
     {
          return ReadAll(filter).First();
     }
 
+    /// <summary>
+    /// Reads all engineers
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns></returns>
 
     public IEnumerable<BO.Engineer?> ReadAll(Func<BO.Engineer, bool>? filter = null)
     {
@@ -94,10 +124,14 @@ internal class EngineerImplementation : IEngineer
         return boEngList;
     }
 
+    /// <summary>
+    /// Updates engineer
+    /// </summary>
+    /// <param name="boEngineer"></param>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
 
     public void Update(BO.Engineer boEngineer)
     {
-        //בעדכון של משימה לבדוק אם צריך לעדכן את המהנדס
         DO.Engineer doEngineer = new DO.Engineer
        (boEngineer.Id, boEngineer.Name, boEngineer.Email, (DO.EngineerExperience)boEngineer.Level, boEngineer.Cost);
         try

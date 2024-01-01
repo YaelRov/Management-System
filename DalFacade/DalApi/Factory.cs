@@ -1,7 +1,9 @@
 ﻿namespace DalApi;
 using static DalApi.Config;
 using System.Reflection;
-
+/// <summary>
+/// factory class for using xml or list
+/// </summary>
 public static class Factory
 {
     public static IDal Get

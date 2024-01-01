@@ -1,6 +1,8 @@
 ﻿using DO;
 namespace BO;
-
+/// <summary>
+/// class for task entity
+/// </summary>
 public class Task
 {
     public int Id { get; init; }

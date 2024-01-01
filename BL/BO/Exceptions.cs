@@ -1,6 +1,5 @@
 ﻿
 namespace BO;
-
 [Serializable]
 public class BlDoesNotExistException : Exception
 {
@@ -40,6 +39,10 @@ public class BlXMLFileLoadCreateException : Exception
 [Serializable]
 public class BlNullPropertyException : Exception
 {
+    /// <summary>
+    /// a c-tor of exception that occures when it's a null property
+    /// </summary>
+    /// <param name="message">nullable atring</param>
     public BlNullPropertyException(string? message) : base(message) { }
 }
 
@@ -47,6 +50,10 @@ public class BlNullPropertyException : Exception
 [Serializable]
 public class BlInsufficientTime: Exception
 {
+    /// <summary>
+    /// a c-tor of exception that occures when it's a insufficient time
+    /// </summary>
+    /// <param name="message">nullable atring</param>
     public BlInsufficientTime(string? message) : base(message) { }
 }
 
@@ -54,5 +61,9 @@ public class BlInsufficientTime: Exception
 [Serializable]
 public class BlInvalidInput : Exception
 {
+    /// <summary>
+    /// a c-tor of exception that occures when it's an invalid input
+    /// </summary>
+    /// <param name="message">nullable atring</param>
     public BlInvalidInput(string? message) : base(message) { }
 }
