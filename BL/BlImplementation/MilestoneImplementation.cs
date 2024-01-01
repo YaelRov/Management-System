@@ -9,12 +9,33 @@ using System.Xml.Linq;
 
 internal class MilestoneImplementation : IMilestone
 {
+    //================
+ //    foreach (var tasks in listWithoutDuplicetes)
+ //{
+ //    List<int?> newList = new List<int?>();
+ //   int milestoneId = _dal.Task.Create(new DO.Task(0, "milestone", "M" + runningNameForMilestone, DateTime.Now, TimeSpan.Zero, true));
+ //    foreach (var task in tasks.Value)
+ //    {
+ //        newList.Add(task);
+ //        int depToAdd = _dal.Dependence.Create(new DO.Dependence(0, milestoneId, task));
+ //   listOfNewDependencies.Add(_dal.Dependence.Read(depToAdd)!);
+ //    }
+
+ //    foreach (var task in secondReadDep)
+ //    {
+ //        if (task.Value.SequenceEqual(newList))
+ //            listOfNewDependencies.Add(new DO.Dependence(0, task._Key, milestoneId));
+ //    }
+ //    runningNameForMilestone++;
+ //}
+    //================
 
     private DalApi.IDal _dal = DalApi.Factory.Get;
 
     #region private help methods
     private List<DO.Dependency> createMilestones(List<DO.Dependency?> dependencies)
     {
+        List<DO.Task?> oldTasks = _dal.Task.ReadAll().ToList();
         var groupDependencies = (from dep in dependencies
                                  where dep.DependentTask is not null && dep.DependsOnTask is not null
                                  group dep by dep.DependentTask into gropByDependentTask
@@ -26,15 +47,15 @@ internal class MilestoneImplementation : IMilestone
 
         List<DO.Dependency> newDepsList = new List<DO.Dependency>();
         int i = 1;
-        //List<DO.Task?> tasks = _dal.Task.ReadAll().ToList();
         foreach (var groupOfDepentOnTasks in listAfterDistinct)
         {
-            DO.Task milestone = new DO.Task(-1, "Description", $"M{i}", true, DateTime.Now, new TimeSpan(0), null, null, null, null, null, null, null, null);
+            DO.Task milestone = new DO.Task(-1, "I'm a milstone :)", $"M{i}", true, DateTime.Now, new TimeSpan(0), null, null, null, null, null, null, null, null);
             int idMilestone = _dal.Task.Create(milestone);
 
             foreach (var taskListwithDeps in groupDependencies)
             {
-                if (taskListwithDeps._value == groupOfDepentOnTasks)
+                var t = taskListwithDeps._value.ToList();
+                if (t.SequenceEqual(groupOfDepentOnTasks))
                     newDepsList.Add(new DO.Dependency(-1, taskListwithDeps._key!.Value, idMilestone));
             }
 
@@ -52,7 +73,7 @@ internal class MilestoneImplementation : IMilestone
         int idStartMilstone = _dal.Task.Create(startMilestoneTask);
         newDepsList.Add(new DO.Dependency(-1, idStartMilstone, null));
 
-        List<DO.Task?> oldTasks = _dal.Task.ReadAll().ToList();
+        
         //find tasks that depent on start
         var notDepTasks = (from task in oldTasks
                            where !(from taskDep in groupDependencies
@@ -92,11 +113,11 @@ internal class MilestoneImplementation : IMilestone
                                                 select dep.DependentTask).ToList();
 
         DateTime? deadline = null;
-        foreach (int? task in listOfDepentOnCurrentTask)
+        foreach (int task in listOfDepentOnCurrentTask)
         {
             DO.Task readTask = _dal.Task.Read(taskId)!;
             if (readTask.Deadline is null)
-                readTask = readTask with { Deadline = updateDeadlines((int)task!, endMilestoneId, depList) };
+                readTask = readTask with { Deadline = updateDeadlines(task, endMilestoneId, depList) };
             if (deadline is null || readTask.Deadline - readTask.RequiredEffortTime < deadline)
                 deadline = readTask.Deadline - readTask.RequiredEffortTime;
         }
