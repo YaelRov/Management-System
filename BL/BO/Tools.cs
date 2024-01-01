@@ -5,7 +5,7 @@ namespace BO;
 public static class Tools
 {
     /// <summary>
-    /// A class that implementats IEqualityComparer for List<int?>
+    /// A class that implementats IEqualityComparer to List<int?>
     /// </summary>
     public class DistinctIntList : IEqualityComparer<List<int?>>
     {
