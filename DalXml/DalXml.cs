@@ -22,8 +22,8 @@ sealed internal class DalXml : IDal
 
     public void Reset()
     {
-        XMLTools.ResetFile("engineers");
-        XMLTools.ResetFile("tasks");
-        XMLTools.ResetFile("dependencies");
+        Engineer.Reset();
+        Task.Reset();
+        Dependency.Reset();
     }
 }

@@ -8,5 +8,5 @@ public interface IDal
     IDependency Dependency { get; }
     DateTime StartProjectDate { get; set; }
     DateTime EndProjectDate { get; set; }
-
+    void Reset();
 }

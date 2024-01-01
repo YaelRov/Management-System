@@ -22,7 +22,7 @@ internal class MilestoneImplementation : IMilestone
                                                 select dep.DependsOnTask).Order()
                                  select new { _key = gropByDependentTask.Key, _value = depList });
         var listAfterDistinct = (from dep in groupDependencies
-                                 select dep._value).Distinct();
+                                 select dep._value.ToList()).Distinct(new BO.Tools.DistinctIntList()).ToList();
 
         List<DO.Dependency> newDepsList = new List<DO.Dependency>();
         int i = 1;
@@ -140,20 +140,20 @@ internal class MilestoneImplementation : IMilestone
 
     public void CreateProjectsSchedule()
     {
-        DateTime time;
-        Console.WriteLine("enter date of start: \n");
-        bool successStart = DateTime.TryParse(Console.ReadLine()!,out time);
-        if (!successStart)
-            throw new BlInvalidInput("Not valid DateTime Input.\n");
-        else
-            _dal.StartProjectDate = time;
+        //DateTime time;
+        //Console.WriteLine("enter date of start: \n");
+        //bool successStart = DateTime.TryParse(Console.ReadLine()!,out time);
+        //if (!successStart)
+        //    throw new BlInvalidInput("Not valid DateTime Input.\n");
+        //else
+        //    _dal.StartProjectDate = time;
 
-        Console.WriteLine("enter date of end: \n");
-        bool successEnd = DateTime.TryParse(Console.ReadLine()!, out time);
-        if (!successEnd)
-            throw new BlInvalidInput("Not valid DateTime Input.\n");
-        else
-            _dal.EndProjectDate = time;
+        //Console.WriteLine("enter date of end: \n");
+        //bool successEnd = DateTime.TryParse(Console.ReadLine()!, out time);
+        //if (!successEnd)
+        //    throw new BlInvalidInput("Not valid DateTime Input.\n");
+        //else
+        //    _dal.EndProjectDate = time;
 
         List<DO.Dependency?> dependencies = _dal.Dependency.ReadAll().ToList();
         List<DO.Dependency> newDepsList = createMilestones(dependencies);

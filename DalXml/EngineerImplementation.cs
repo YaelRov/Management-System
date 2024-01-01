@@ -4,6 +4,8 @@ namespace Dal;
 using DalApi;
 using DO;
 using System.Collections.Generic;
+using System.Xml.Linq;
+
 /// <summary>
 /// class Engineer Implementation, by Serializer
 /// </summary>
@@ -101,6 +103,8 @@ internal class EngineerImplementation : IEngineer
     /// </summary>
     public void Reset()
     {
-        XMLTools.ResetFile("engineers");
+        XElement root = XMLTools.LoadListFromXMLElement("engineers");
+        root.Descendants("Engineer").Remove();
+        XMLTools.SaveListToXMLElement(root, "engineers");
     }
 }

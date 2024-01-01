@@ -124,6 +124,8 @@ internal class DependencyImplementation : IDependency
     /// </summary>
     public void Reset()
     {
-        XMLTools.ResetFile("dependencies");
+        XElement root = XMLTools.LoadListFromXMLElement("dependencies");
+        root.Descendants("Dependency").Remove();
+        XMLTools.SaveListToXMLElement(root, "dependencies");
     }
 }

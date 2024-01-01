@@ -195,6 +195,8 @@ internal class TaskImplementation : ITask
     /// </summary>
     public void Reset()
     {
-        XMLTools.ResetFile("tasks");
+        XElement root = XMLTools.LoadListFromXMLElement("tasks");
+        root.Descendants("Task").Remove();
+        XMLTools.SaveListToXMLElement(root, "tasks");
     }
 }

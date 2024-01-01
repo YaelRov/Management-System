@@ -19,9 +19,9 @@ sealed internal class DalList : IDal
     
     public void Reset()
     {
-        DataSource.Engineers.Clear();
-        DataSource.Tasks.Clear();
-        DataSource.Dependencies.Clear();
+        Engineer.Reset();
+        Task.Reset();
+        Dependency.Reset();
     }
 }
 
