@@ -31,7 +31,6 @@ internal class TaskImplementation : ITask
                                         new XElement("Milestone", Convert.ToBoolean(item.Milestone)),
                                         new XElement("CreatedAt", Convert.ToDateTime(item.CreatedAt)),
                                         item.RequiredEffortTime is not null ? new XElement("RequiredEffortTime",item.RequiredEffortTime) : null,
-                                       // item.RequiredEffortTime is not null ? new XElement("RequiredEffortTime",  TimeSpan.Parse((item.RequiredEffortTime).ToString()!)): null,
                                         item.Start is not null ? new XElement("Start", Convert.ToDateTime(item.Start)) : null,
                                         item.ScheduledDate is not null ? new XElement("ScheduledDate", Convert.ToDateTime(item.ScheduledDate)) : null,
                                         item.Deadline is not null ? new XElement("Deadline", Convert.ToDateTime(item.Deadline)) : null,

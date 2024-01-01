@@ -165,7 +165,8 @@ internal class MilestoneImplementation : IMilestone
     public void CreateProjectsSchedule()
     {
         List<DO.Dependency?> dependencies = _dal.Dependency.ReadAll().ToList();
-        List<DO.Dependency> newDepsList = createMilestones(dependencies);//get updated dependencies
+        //List<DO.Dependency> newDepsList = createMilestones(dependencies);//get updated dependencies
+        List<DO.Dependency> newDepsList = dependencies;
         _dal.Dependency.Reset();//clear the old dependencies
         foreach (var dep in newDepsList)
         {
