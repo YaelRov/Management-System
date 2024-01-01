@@ -15,7 +15,7 @@ internal class EngineerImplementation : IEngineer
     /// Creates new entity object of Engineer
     /// </summary>
     /// <param name="boEngineer">engineer of type BO.Engineer</param>
-    /// <returns></returns>
+    /// <returns>the created engineer id</returns>
     /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Engineer boEngineer)
     {
@@ -72,7 +72,7 @@ internal class EngineerImplementation : IEngineer
     /// Reads engineer by its ID 
     /// </summary>
     /// <param name="id">engineer id, type int</param>
-    /// <returns></returns>
+    /// <returns>the engineer entity</returns>
     /// <exception cref="BO.BlDoesNotExistException"></exception>
     public BO.Engineer? Read(int id)
     {
@@ -101,7 +101,7 @@ internal class EngineerImplementation : IEngineer
     /// Reads engineer according to a condition
     /// </summary>
     /// <param name="filter">condition</param>
-    /// <returns></returns>
+    /// <returns>the engineer entity</returns>
     public BO.Engineer? Read(Func<BO.Engineer, bool> filter)
     {
          return ReadAll(filter).First();
@@ -111,7 +111,7 @@ internal class EngineerImplementation : IEngineer
     /// Reads all engineers
     /// </summary>
     /// <param name="filter"></param>
-    /// <returns></returns>
+    /// <returns>IEnumerable<BO.Engineer?></returns>
 
     public IEnumerable<BO.Engineer?> ReadAll(Func<BO.Engineer, bool>? filter = null)
     {

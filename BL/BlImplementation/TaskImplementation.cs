@@ -1,10 +1,18 @@
 ﻿
 namespace BlImplementation;
 using BlApi;
-
+/// <summary>
+/// class for the implementations of task methods
+/// </summary>
 internal class TaskImplementation : ITask
 {
     private DalApi.IDal _dal = DalApi.Factory.Get;
+    /// <summary>
+    /// Creates new entity object of Task
+    /// </summary>
+    /// <param name="boEngineer">task of type BO.Task</param>
+    /// <returns>the created task id</returns>
+    /// <exception cref="BO.BlAlreadyExistsException"></exception>
     public int Create(BO.Task boTask)
     {
         DO.Task doTask = new DO.Task
@@ -33,6 +41,11 @@ internal class TaskImplementation : ITask
         }
     }
 
+    /// <summary>
+    /// Deletes an task by its Id
+    /// </summary>
+    /// <param name="id">id of task, type int</param>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
     public void Delete(int id)
     {
         try
@@ -45,6 +58,13 @@ internal class TaskImplementation : ITask
         }
     }
 
+
+    /// <summary>
+    /// Reads task by its ID 
+    /// </summary>
+    /// <param name="id">task id, type int</param>
+    /// <returns>the task entity</returns>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
     public BO.Task? Read(int id)
     {
         DO.Task? doTask = _dal.Task.Read(id);
@@ -78,11 +98,22 @@ internal class TaskImplementation : ITask
         };
     }
 
+    /// <summary>
+    /// Reads task according to a condition
+    /// </summary>
+    /// <param name="filter">condition</param>
+    /// <returns>the task entity</returns>
     public BO.Task? Read(Func<BO.Task, bool> filter)
     {
         return ReadAll(filter).FirstOrDefault();
     }
 
+
+    /// <summary>
+    /// Reads all tasks
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns>IEnumerable<BO.TaskEngineer?></returns>
     public IEnumerable<BO.Task?> ReadAll(Func<BO.Task, bool>? filter = null)
     {
         var doTaskList = _dal.Task.ReadAll();
@@ -95,6 +126,11 @@ internal class TaskImplementation : ITask
         return boTaskList;
     }
 
+    /// <summary>
+    /// Updates task
+    /// </summary>
+    /// <param name="boTask"></param>
+    /// <exception cref="BO.BlDoesNotExistException"></exception>
     public void Update(BO.Task boTask)
     {
         DO.Task doTask = new DO.Task
