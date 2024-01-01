@@ -464,13 +464,13 @@ internal class Program
     static void createProjectSched()
     {
         bool succesTryParse = true;
-        Console.WriteLine("enter date of starting project\n");
+        Console.WriteLine("enter date of starting project");
         DateTime _start;
         succesTryParse = DateTime.TryParse(Console.ReadLine(), out _start);
         if (!succesTryParse)
             throw new BlInvalidInput("Invalid input.\n");
 
-        Console.WriteLine("enter date of ending project\n");
+        Console.WriteLine("enter date of ending project");
         DateTime _end;
         succesTryParse = DateTime.TryParse(Console.ReadLine(), out _end);
         if (!succesTryParse || _end < _start)
