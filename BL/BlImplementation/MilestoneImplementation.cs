@@ -144,7 +144,7 @@ internal class MilestoneImplementation : IMilestone
         {
             DO.Task readTask = _dal.Task.Read(task)!;
             if (readTask.ScheduledDate is null)//set scheduled date for each task that i depent on it by calling the recursion
-                readTask = readTask with { ScheduledDate = updateDeadlines((int)task!, startMilestoneId, depList) };
+                readTask = readTask with { ScheduledDate = updateScheduledDates((int)task!, startMilestoneId, depList) };
             if (scheduledDate is null || readTask.ScheduledDate + readTask.RequiredEffortTime > scheduledDate)//set my scheduled date
                 scheduledDate = readTask.ScheduledDate + readTask.RequiredEffortTime;
         }
