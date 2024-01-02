@@ -7,7 +7,7 @@
     <Milestone>true</Milestone>
     <CreatedAt>2024-01-02T00:45:58.2761046+02:00</CreatedAt>
     <RequiredEffortTime>PT0S</RequiredEffortTime>
-    <Deadline>2024-11-25T00:00:00</Deadline>
+    <Deadline>2024-11-29T00:00:00</Deadline>
   </Task>
   <Task>
     <Id>3</Id>
@@ -17,12 +17,21 @@
     <CreatedAt>2023-09-16T00:00:00</CreatedAt>
     <RequiredEffortTime>P2D</RequiredEffortTime>
     <Start>2023-10-17T07:00:00</Start>
-    <Deadline>2024-11-23T00:00:00</Deadline>
+    <Deadline>2024-11-29T00:00:00</Deadline>
     <Complete>2023-11-08T13:00:00</Complete>
     <Deliverables>resolved software issues</Deliverables>
     <Remarks>It's easy</Remarks>
     <EngineerId>353952124</EngineerId>
     <ComplexityLevel>AdvancedBeginner</ComplexityLevel>
+  </Task>
+  <Task>
+    <Id>569</Id>
+    <Description>I'm a milstone :)</Description>
+    <Alias>M1</Alias>
+    <Milestone>true</Milestone>
+    <CreatedAt>2024-01-02T00:45:58.2558068+02:00</CreatedAt>
+    <RequiredEffortTime>PT0S</RequiredEffortTime>
+    <Deadline>2024-11-27T00:00:00</Deadline>
   </Task>
   <Task>
     <Id>1</Id>
@@ -32,21 +41,12 @@
     <CreatedAt>2021-02-10T00:00:00</CreatedAt>
     <RequiredEffortTime>P2D</RequiredEffortTime>
     <Start>2021-04-05T22:00:00</Start>
-    <Deadline>2024-11-21T00:00:00</Deadline>
+    <Deadline>2024-11-27T00:00:00</Deadline>
     <Complete>2021-04-24T14:00:00</Complete>
     <Deliverables>code reviews and feedback</Deliverables>
     <Remarks>Do it accurately</Remarks>
     <EngineerId>356054894</EngineerId>
     <ComplexityLevel>Expert</ComplexityLevel>
-  </Task>
-  <Task>
-    <Id>569</Id>
-    <Description>I'm a milstone :)</Description>
-    <Alias>M1</Alias>
-    <Milestone>true</Milestone>
-    <CreatedAt>2024-01-02T00:45:58.2558068+02:00</CreatedAt>
-    <RequiredEffortTime>PT0S</RequiredEffortTime>
-    <Deadline>2024-11-23T00:00:00</Deadline>
   </Task>
   <Task>
     <Id>2</Id>
@@ -56,7 +56,7 @@
     <CreatedAt>2023-12-02T00:00:00</CreatedAt>
     <RequiredEffortTime>P2D</RequiredEffortTime>
     <Start>2024-01-23T18:00:00</Start>
-    <Deadline>2024-11-21T00:00:00</Deadline>
+    <Deadline>2024-11-27T00:00:00</Deadline>
     <Complete>2024-02-03T13:00:00</Complete>
     <Deliverables>maintained and updated systems</Deliverables>
     <Remarks>Do it accurately</Remarks>
@@ -69,7 +69,9 @@
     <Alias>start</Alias>
     <Milestone>true</Milestone>
     <CreatedAt>2024-01-02T00:45:58.3121075+02:00</CreatedAt>
+    <RequiredEffortTime>PT0S</RequiredEffortTime>
     <ScheduledDate>2024-01-01T00:00:00</ScheduledDate>
+    <Deadline>2024-11-25T00:00:00</Deadline>
   </Task>
   <Task>
     <Id>4</Id>
@@ -79,8 +81,7 @@
     <CreatedAt>2023-01-12T00:00:00</CreatedAt>
     <RequiredEffortTime>P2D</RequiredEffortTime>
     <Start>2023-01-22T09:00:00</Start>
-    <ScheduledDate>2023-01-28T20:00:00</ScheduledDate>
-    <Deadline>2024-11-23T00:00:00</Deadline>
+    <Deadline>2024-12-01T00:00:00</Deadline>
     <Complete>2023-02-05T21:00:00</Complete>
     <Deliverables>software planning and estimation</Deliverables>
     <Remarks>It's hard</Remarks>
@@ -95,7 +96,7 @@
     <CreatedAt>2022-10-18T00:00:00</CreatedAt>
     <RequiredEffortTime>P2D</RequiredEffortTime>
     <Start>2022-12-08T22:00:00</Start>
-    <Deadline>2024-11-27T00:00:00</Deadline>
+    <Deadline>2024-12-01T00:00:00</Deadline>
     <Complete>2022-12-22T05:00:00</Complete>
     <Deliverables>implemented new technologies</Deliverables>
     <Remarks>It's hard</Remarks>
@@ -108,6 +109,8 @@
     <Alias>end</Alias>
     <Milestone>true</Milestone>
     <CreatedAt>2024-01-02T00:45:58.3684584+02:00</CreatedAt>
+    <RequiredEffortTime>PT0S</RequiredEffortTime>
+    <ScheduledDate>2024-12-03T00:00:00</ScheduledDate>
     <Deadline>2024-12-01T00:00:00</Deadline>
   </Task>
 </ArrayOfTask>

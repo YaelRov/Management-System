@@ -52,7 +52,7 @@ internal class MilestoneImplementation : IMilestone
         //Start
 
         //create milestone of start
-        DO.Task startMilestoneTask = new DO.Task(-1, "description", "start", true, DateTime.Now, null, null, null, null, null, null, null, null, null);
+        DO.Task startMilestoneTask = new DO.Task(-1, "description", "start", true, DateTime.Now,new TimeSpan(0), null, null, null, null, null, null, null, null);
         int idStartMilstone = _dal.Task.Create(startMilestoneTask);
         newDepsList.Add(new DO.Dependency(-1, idStartMilstone, null));
 
@@ -70,7 +70,7 @@ internal class MilestoneImplementation : IMilestone
 
         //End
         //create end milestone
-        DO.Task endMilestoneTask = new DO.Task(-1, "description", "end", true, DateTime.Now, null, null, null, null, null, null, null, null, null);
+        DO.Task endMilestoneTask = new DO.Task(-1, "description", "end", true, DateTime.Now, new TimeSpan(0), null, null, null, null, null, null, null, null);
         int idEndMilstone = _dal.Task.Create(endMilestoneTask);
         //find tasks that no task depend on them
         var endDepTasks = (from task in oldTasks
@@ -104,10 +104,10 @@ internal class MilestoneImplementation : IMilestone
                                                 where dep.DependsOnTask == taskId
                                                 select dep.DependentTask).ToList();
 
-        DateTime? deadline = null;
+        DateTime? deadline = currentTask.Deadline;
         foreach (int task in listOfDepentOnCurrentTask)
         {
-            DO.Task readTask = _dal.Task.Read(taskId)!;
+            DO.Task readTask = _dal.Task.Read(task)!;
             if (readTask.Deadline is null)//set deadline for each task that depent on me by calling the recursion
                 readTask = readTask with { Deadline = updateDeadlines(task, endMilestoneId, depList) };
             if (deadline is null || readTask.Deadline - readTask.RequiredEffortTime < deadline)//set my deadline
@@ -116,7 +116,6 @@ internal class MilestoneImplementation : IMilestone
         if (deadline > _dal.EndProjectDate)//if there is not enough time for the project
             throw new BO.BlInsufficientTime("There is insufficient time to complete this task\n");
         currentTask = currentTask with { Deadline = deadline };//update the task with the deadline
-
         _dal.Task.Update(currentTask);
         return currentTask.Deadline;//return the deadline for the recursion
     }
@@ -140,21 +139,18 @@ internal class MilestoneImplementation : IMilestone
                                                        where dep.DependentTask == taskId
                                                        select dep.DependsOnTask).ToList();
 
-        DateTime? scheduledDate = null;
-        foreach (int? task in listOfTasksThatCurrentDepsOnThem)
+        DateTime? scheduledDate = currentTask.ScheduledDate;
+        foreach (int task in listOfTasksThatCurrentDepsOnThem)
         {
-            DO.Task readTask = _dal.Task.Read(taskId)!;
+            DO.Task readTask = _dal.Task.Read(task)!;
             if (readTask.ScheduledDate is null)//set scheduled date for each task that i depent on it by calling the recursion
                 readTask = readTask with { ScheduledDate = updateDeadlines((int)task!, startMilestoneId, depList) };
             if (scheduledDate is null || readTask.ScheduledDate + readTask.RequiredEffortTime > scheduledDate)//set my scheduled date
                 scheduledDate = readTask.ScheduledDate + readTask.RequiredEffortTime;
         }
-
         if (scheduledDate < _dal.StartProjectDate)//if there is not enough time for the project
             throw new BO.BlInsufficientTime("There is insufficient time to complete this task\n");
         currentTask = currentTask with { ScheduledDate = scheduledDate };//update the task with the scheduled date
-
-
         _dal.Task.Update(currentTask);
         return currentTask.ScheduledDate;//return the scheduled date for the recursion
     }
