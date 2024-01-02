@@ -10,8 +10,5 @@ public class MilestoneInTask
     public string Alias { get; set; }
 
     public override string ToString() => this.ToStringProperty();
-    string ToStringProperty()
-    {
-        return $"Id: {Id}, Alias:{Alias}";
-    }
+
 }

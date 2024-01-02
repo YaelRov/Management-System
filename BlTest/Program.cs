@@ -4,11 +4,18 @@ using System.Runtime.InteropServices.ObjectiveC;
 using System.Security.Cryptography;
 
 namespace BlTest;
-
+/// <summary>
+/// program
+/// </summary>
 internal class Program
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
 
+    /// <summary>
+    /// main function
+    /// </summary>
+    /// <param name="args"></param>
+    /// <exception cref="FormatException"></exception>
     static void Main(string[] args)
     {
         try
@@ -461,6 +468,10 @@ internal class Program
     }
     #endregion
 
+    /// <summary>
+    /// calls a function to create project scheduled according to the recieved dates
+    /// </summary>
+    /// <exception cref="BlInvalidInput"></exception>
     static void createProjectSched()
     {
         bool succesTryParse = true;

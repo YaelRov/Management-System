@@ -22,23 +22,6 @@ public class Task
     public BO.EngineerInTask? Engineer { get; set; }
     public EngineerExperience? ComplexityLevel { get; set; }
     public override string ToString() => this.ToStringProperty();
-    string ToStringProperty()
-    {
-        string str = $" Id: {Id}, Description: {Description}, Alias: {Alias}, Milestone: {Milestone}, CreatedAt: {CreatedAt}";
-        str += Status is not null ? $", Status: {Status}" : "";
-        str += Milestone is not null ? $", Milestone: {Milestone}" : "";
-        str += Start is not null ? $", Start: {Start}" : "";
-        str += ScheduledDate is not null ? $", Scheduled Date: {ScheduledDate}" : "";
-        str += ForecastDate is not null ? $", Forecast Date: {ForecastDate}" : "";
-        str += Deadline is not null ? $", Deadline: {Deadline}" : "";
-        str += Complete is not null ? $", Complete: {Complete}" : "";
-        str += RequiredEffortTime is not null ? $", Required Effort Time: {RequiredEffortTime}":"";
-        str += Deliverables is not null ? $", Deliverables: {Deliverables}" : "";
-        str += Remarks is not null ? $", Remarks: {Remarks}" : "";
-        str += Engineer is not null ? $", Engineer: id: {Engineer.Id} name: {Engineer.Name}": "";
-        str += ComplexityLevel is not null ? $", Complexity Level: {ComplexityLevel}" : "";
-        str += "\n";
-        return str;
-    }
+
 }
 

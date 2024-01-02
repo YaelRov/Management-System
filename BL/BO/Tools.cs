@@ -2,6 +2,8 @@
 
 using DalApi;
 using DO;
+using System.Reflection;
+using System.Text;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -14,6 +16,12 @@ public static class Tools
     /// </summary>
     public class DistinctIntList : IEqualityComparer<List<int?>>
     {
+        /// <summary>
+        /// checking if two lists are equal
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public bool Equals(List<int?>? x, List<int?>? y)
         {
             if (x is not null && y is not null)
@@ -23,7 +31,11 @@ public static class Tools
             return false;
         }
 
-        //Return sum of elements in list
+        /// <summary>
+        /// calculate sum of elements in list
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns>sum of elements in list</returns>
         public int GetHashCode(List<int?> obj)
         {
             int sum = 0;
@@ -34,9 +46,14 @@ public static class Tools
             return sum;
         }
     }
-
+    #region writing and getting from the xml files
     const string s_xml_dir = @"..\xml\";
-
+    /// <summary>
+    /// Load List From XMLElement
+    /// </summary>
+    /// <param name="entity"></param>
+    /// <returns>XElement</returns>
+    /// <exception cref="DalXMLFileLoadCreateException"></exception>
     public static XElement LoadListFromXMLElement(string entity)
     {
         string filePath = $"{s_xml_dir}{entity}.xml";
@@ -53,7 +70,12 @@ public static class Tools
             throw new DalXMLFileLoadCreateException($"fail to load xml file: {s_xml_dir + filePath}, {ex.Message}");
         }
     }
-
+    /// <summary>
+    /// Save List To XMLElement
+    /// </summary>
+    /// <param name="rootElem">type XElement</param>
+    /// <param name="entity">type string</param>
+    /// <exception cref="DalXMLFileLoadCreateException"></exception>    
     public static void SaveListToXMLElement(XElement rootElem, string entity)
     {
         string filePath = $"{s_xml_dir}{entity}.xml";
@@ -66,5 +88,54 @@ public static class Tools
             throw new DalXMLFileLoadCreateException($"fail to create xml file: {s_xml_dir + filePath}, {ex.Message}");
         }
     }
+    #endregion
 
+    /// <summary>
+    /// To String Property 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="obj"></param>
+    /// <returns>string</returns>
+    public static string ToStringProperty<T>(this T obj)
+    {
+        StringBuilder sb = new StringBuilder();
+        Type objType = obj.GetType();
+        PropertyInfo[] properties = objType.GetProperties();
+
+        foreach (PropertyInfo property in properties)
+        {
+            object? propertyValue = property.GetValue(obj);
+
+            if (propertyValue == null || (propertyValue is IEnumerable<object> collection && !collection.Any()))
+                continue;
+
+            sb.Append($"{property.Name}: ");
+
+            if (typeof(IEnumerable<T>).IsAssignableFrom(property.PropertyType) && property.PropertyType != typeof(string))
+            {
+                IEnumerable<object> collection1 = (IEnumerable<object>)propertyValue;
+                sb.Append("[ ");
+
+                foreach (var item in collection1)
+                {
+                    sb.Append(item.ToString() + ", ");
+                }
+
+                if (sb.Length > 2)
+                {
+                    sb.Length -= 2;
+                }
+
+                sb.Append(" ]");
+            }
+            else
+            {
+                sb.Append(propertyValue.ToString());
+            }
+
+            sb.AppendLine();
+        }
+
+        return sb.ToString();
+    }
 }

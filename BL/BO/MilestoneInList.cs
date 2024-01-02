@@ -11,8 +11,4 @@ public class MilestoneInList
     public Status? Status { get; set; }
     public double? CompletionPercentage { get; set; }
     public override string ToString() => this.ToStringProperty();
-    string ToStringProperty()
-    {
-        return $" Id: {Id}, Description: {Description}, Alias: {Alias}, Status: {Status}, CompletionPercentage: {CompletionPercentage}";
-    }
 }
