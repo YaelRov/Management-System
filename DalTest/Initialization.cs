@@ -143,6 +143,11 @@ public static class Initialization
         //createTasks();
         //createDependencies();
     }
+
+    public static void Reset()
+    {
+        s_dal?.Reset();
+    }
     #endregion
 }
 
