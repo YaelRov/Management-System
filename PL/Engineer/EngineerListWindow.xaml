@@ -22,10 +22,13 @@ Width="auto" ShowGridLines="True">
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <!-- Engineers Filter-->
-            <Label Content="Label" HorizontalAlignment="Stretch" Grid.Column="0" Margin="83,0,0,0" VerticalAlignment="Stretch"/>
-            <ComboBox HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Stretch" />
+            <Label Content="Sort By Level:" HorizontalAlignment="Stretch" Grid.Column="0" Margin="83,0,0,0" VerticalAlignment="Stretch"/>
+            <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExpCollectionKey}}"
+                      SelectedValue="{Binding Experience, Mode=TwoWay}"
+                      SelectionChanged="cbEngineerSelector_SelectionChanged"
+                      HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Stretch" />
         </Grid>
-        <ListView Grid.Row="1">
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding EngineerList}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

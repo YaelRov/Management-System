@@ -146,6 +146,7 @@ public static class Initialization
 
     public static void Reset()
     {
+        s_dal = Factory.Get ?? throw new NullReferenceException("DAL can not be null!");
         s_dal?.Reset();
     }
     #endregion

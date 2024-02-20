@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using DalApi;
 using PL.Engineer;
+using BlApi;
 
 namespace PL;
 
@@ -22,6 +23,7 @@ namespace PL;
 /// </summary>
 public partial class MainWindow : Window
 {
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     public MainWindow()
     {
         InitializeComponent();
@@ -44,7 +46,7 @@ public partial class MainWindow : Window
             case MessageBoxResult.None:
                 break;
             case MessageBoxResult.OK:
-                //לקרוא לפונקציה InitializeDB
+                s_bl.InitializeDB();
                 break;
             case MessageBoxResult.Cancel:
                 break;
@@ -65,7 +67,7 @@ public partial class MainWindow : Window
             case MessageBoxResult.None:
                 break;
             case MessageBoxResult.OK:
-                //לקרוא לפונקציה ResetDB
+                s_bl.ResetDB();
                 break;
             case MessageBoxResult.Cancel:
                 break;
