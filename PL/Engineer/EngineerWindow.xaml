@@ -5,8 +5,50 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Engineer"
         mc:Ignorable="d"
-        Title="EngineerWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="EngineerWindow" Height="450" Width="800"
+        DataContext="{Binding CurrentEngineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+    <Grid ShowGridLines="true">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="1" Content="ID" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+        <Label Grid.Column="1" Content="Name" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
+        <Label Grid.Column="1" Content="Email" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="3" VerticalAlignment="Center"/>
+        <Label Grid.Column="1" Content="Level" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="4" VerticalAlignment="Center"/>
+        <Label Grid.Column="1" Content="Cost" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="5" VerticalAlignment="Center"/>
+        <Label Grid.Column="1" Content="Task" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="6" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="3" HorizontalAlignment="Center" Margin="0,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"
+                                    Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+                <TextBox Grid.Column="3" HorizontalAlignment="Left" Margin="114,25,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+                 Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+        <TextBox Grid.Column="3" HorizontalAlignment="Left" Margin="114,23,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+                 Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+        <!--<ComboBox Grid.Column="3" HorizontalAlignment="Left" Margin="107,0,0,0" Grid.Row="4" VerticalAlignment="Center" Width="120"/>-->
+        <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExpCollectionKey}}"
+           SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
+           SelectionChanged="cbLevelSelector_SelectionChanged" Grid.Column="3" Grid.Row="3" Margin="0,56,0,55" Grid.RowSpan="3" HorizontalAlignment="Left" Width="307" />
+        <TextBox Grid.Column="3" HorizontalAlignment="Left" Margin="112,23,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+                 Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+        <TextBox Grid.Column="3" HorizontalAlignment="Left" Margin="95,15,0,0" Grid.Row="6" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+                 Text="{Binding Task.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+        <Button Grid.Column="2" HorizontalAlignment="Left" Margin="3,9,0,0" Grid.Row="7" VerticalAlignment="Top" Width="50" Height="20"
+                Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
+                Click="btnAddUpdate_Click"/>
+
     </Grid>
 </Window>

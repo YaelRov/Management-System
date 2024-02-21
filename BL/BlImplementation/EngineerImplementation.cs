@@ -117,9 +117,21 @@ internal class EngineerImplementation : IEngineer
     {
         var doEngList = _dal.Engineer.ReadAll();
         List<BO.Engineer?> boEngList = new List<BO.Engineer?>();
-        foreach (var engineer in doEngList)
+        if (filter != null)
         {
-            boEngList.Add(Read(engineer!.Id)!);
+            foreach (var engineer in doEngList)
+            {
+                var eng = Read(engineer!.Id)!;
+                if (filter(eng)) 
+                    boEngList.Add(eng);
+            }
+        }
+        else
+        {
+            foreach (var engineer in doEngList)
+            {
+                boEngList.Add(Read(engineer!.Id)!);
+            }
         }
         return boEngList;
     }
@@ -153,3 +165,5 @@ internal class EngineerImplementation : IEngineer
         }
     }
 }
+
+

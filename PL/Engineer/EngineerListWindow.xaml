@@ -28,13 +28,14 @@ Width="auto" ShowGridLines="True">
                       SelectionChanged="cbEngineerSelector_SelectionChanged"
                       HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Stretch" />
         </Grid>
-        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding EngineerList}">
+        <ListView Margin="5" Grid.Row="1" ItemsSource="{Binding EngineerList}" MouseDoubleClick="ClickOnSingleEng">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Center" Height="50" Width="100"
+                Click="onClickAddEng"/>
     </Grid>
 </Window>

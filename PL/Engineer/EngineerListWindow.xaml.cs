@@ -44,4 +44,15 @@ public partial class EngineerListWindow : Window
         InitializeComponent();
         EngineerList = s_bl?.Engineer.ReadAll()!;
     }
+
+    private void onClickAddEng(object sender, RoutedEventArgs e)
+    {
+        new EngineerWindow().ShowDialog();
+    }
+
+    private void ClickOnSingleEng(object sender, MouseButtonEventArgs e)
+    {
+        BO.Engineer? Eng = (sender as ListView)?.SelectedItem as BO.Engineer;
+        new EngineerWindow(Eng!.Id).ShowDialog();
+    }
 }

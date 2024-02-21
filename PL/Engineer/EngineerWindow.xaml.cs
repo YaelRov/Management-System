@@ -12,16 +12,47 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Engineer
+namespace PL.Engineer;
+
+/// <summary>
+/// Interaction logic for EngineerWindow.xaml
+/// </summary>
+public partial class EngineerWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for EngineerWindow.xaml
-    /// </summary>
-    public partial class EngineerWindow : Window
+    static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    public BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.Novice;
+
+    public BO.Engineer CurrentEngineer
     {
-        public EngineerWindow()
+        get { return (BO.Engineer)GetValue(CurrentEngineerProperty); }
+        set { SetValue(CurrentEngineerProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for CurrentEngineer.
+    public static readonly DependencyProperty CurrentEngineerProperty =
+        DependencyProperty.Register("CurrentEngineer", typeof(BO.Engineer), typeof(EngineerWindow));
+
+
+
+    public EngineerWindow(int id=0)
+    {
+        InitializeComponent();
+        if (id == 0)
         {
-            InitializeComponent();
+            CurrentEngineer = new BO.Engineer();
         }
+        else
+        {
+            CurrentEngineer = s_bl.Engineer.Read(id)!;
+        }
+    }
+    private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+      
+    }
+
+    private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
+    {
+
     }
 }
