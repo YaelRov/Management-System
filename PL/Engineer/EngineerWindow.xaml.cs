@@ -65,6 +65,10 @@ public partial class EngineerWindow : Window
         MessageBoxResult close;
         try
         {
+            if (CurrentEngineer.Id < 10000000) throw new Exception("Invalid id number");
+            if (CurrentEngineer.Name is null || CurrentEngineer.Name == "") throw new Exception("You forgot filling a name");
+            if (CurrentEngineer.Email is null || CurrentEngineer.Email == "") throw new Exception("You forgot filling an email address");
+            if (CurrentEngineer.Cost <= 0) throw new Exception("Invalid cost number. Cost must be greater than 0.");
             //Add engineer
             if (actionType == "Add")
             {
@@ -86,7 +90,6 @@ public partial class EngineerWindow : Window
                 }
             }
         }
-        catch (Exception ex) { MessageBox.Show(ex.ToString()); }
-
+        catch (Exception ex) { MessageBox.Show(ex.Message.ToString()); }
     }
 }

@@ -72,4 +72,36 @@
     <Cost>200</Cost>
     <Id>295757591</Id>
   </Engineer>
+  <Engineer>
+    <id>0</id>
+    <Name>Yoohoo</Name>
+    <Email>yoohoo123</Email>
+    <Level>AdvancedBeginner</Level>
+    <Cost>-12</Cost>
+    <Id>0</Id>
+  </Engineer>
+  <Engineer>
+    <id>111111111</id>
+    <Name>j</Name>
+    <Email />
+    <Level>Novice</Level>
+    <Cost>9</Cost>
+    <Id>111111111</Id>
+  </Engineer>
+  <Engineer>
+    <id>147258369</id>
+    <Name />
+    <Email />
+    <Level>Novice</Level>
+    <Cost>12</Cost>
+    <Id>147258369</Id>
+  </Engineer>
+  <Engineer>
+    <id>741852963</id>
+    <Name>kl</Name>
+    <Email />
+    <Level>Novice</Level>
+    <Cost>99</Cost>
+    <Id>741852963</Id>
+  </Engineer>
 </ArrayOfEngineer>
