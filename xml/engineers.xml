@@ -49,27 +49,35 @@
     <Id>295757591</Id>
   </Engineer>
   <Engineer>
-    <id>987654321</id>
-    <Name>yoni</Name>
-    <Email>yoni@gmail.com</Email>
+    <id>0</id>
+    <Name>Yoohoo</Name>
+    <Email>yoohoo123</Email>
+    <Level>AdvancedBeginner</Level>
+    <Cost>-12</Cost>
+    <Id>0</Id>
+  </Engineer>
+  <Engineer>
+    <id>111111111</id>
+    <Name>j</Name>
+    <Email />
     <Level>Novice</Level>
-    <Cost>800</Cost>
-    <Id>987654321</Id>
+    <Cost>9</Cost>
+    <Id>111111111</Id>
   </Engineer>
   <Engineer>
-    <id>356054894</id>
-    <Name>Yael Rov</Name>
-    <Email>YaelRov@gmail.com</Email>
-    <Level>Expert</Level>
-    <Cost>65</Cost>
-    <Id>356054894</Id>
+    <id>147258369</id>
+    <Name />
+    <Email />
+    <Level>Novice</Level>
+    <Cost>12</Cost>
+    <Id>147258369</Id>
   </Engineer>
   <Engineer>
-    <id>112233665</id>
-    <Name>yy</Name>
-    <Email>yoyoyoyo</Email>
-    <Level>Competent</Level>
-    <Cost>50</Cost>
-    <Id>112233665</Id>
+    <id>741852963</id>
+    <Name>kl</Name>
+    <Email />
+    <Level>Novice</Level>
+    <Cost>99</Cost>
+    <Id>741852963</Id>
   </Engineer>
 </ArrayOfEngineer>
