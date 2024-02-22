@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="EngineerWindow" Height="450" Width="800"
         DataContext="{Binding CurrentEngineer, RelativeSource={RelativeSource Self}, Mode=TwoWay}">
+    <Window.Background>
+        <ImageBrush ImageSource="../Images/background.jpg"/>
+    </Window.Background>
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -23,16 +26,16 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="7*"/>
             <ColumnDefinition Width="5*"/>
-            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!--labels for the engineer's fields-->
-        <Label Grid.Column="1" Content="ID" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
-        <Label Grid.Column="1" Content="Name" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
-        <Label Grid.Column="1" Content="Email" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="3" VerticalAlignment="Center"/>
-        <Label Grid.Column="1" Content="Level" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="4" VerticalAlignment="Center"/>
-        <Label Grid.Column="1" Content="Cost" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="5" VerticalAlignment="Center"/>
-        <Label Grid.Column="1" Content="Task" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="6" VerticalAlignment="Center"/>
+        <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Content="ID" Grid.Row="1" />
+        <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Name" Grid.Row="2" />
+        <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Email" Grid.Row="3" />
+        <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Level" Grid.Row="4" />
+        <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Cost" Grid.Row="5" />
+        <Label Grid.Column="1" Style="{StaticResource LabelStyle}" Content="Task" Grid.Row="6" />
         <!--if the id is 0 do it enable and and vice versa-->
         <TextBox Grid.Column="3" Style="{StaticResource TextBoxStyle}" Grid.Row="1"
                                     Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource NegatingIntConverterKey}}"/>
@@ -43,7 +46,7 @@
                  Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
         <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExpCollectionKey}}" 
            SelectedValue="{Binding Level, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"
-          Grid.Column="3" Grid.Row="3" Margin="0,56,0,55" Grid.RowSpan="3" HorizontalAlignment="Left" Width="307" />
+          Grid.Column="3" Grid.Row="3" Margin="0,56,0,55" Grid.RowSpan="3" HorizontalAlignment="Stretch" MaxHeight="50"/>
         <TextBox Grid.Column="3" Style="{StaticResource TextBoxStyle}" Grid.Row="5" 
                  Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
         <TextBox Grid.Column="3" Style="{StaticResource TextBoxStyle}" Grid.Row="6" 
@@ -51,6 +54,6 @@
         <!--if the id is 0 add and if it's a number update-->
         <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
                 Click="btnAddUpdate_Click"
-                Grid.Column="1" Grid.Row="7" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="3" Width="300"/>
+                Grid.Column="2" Grid.Row="7" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="2" Width="300"/>
     </Grid>
 </Window>
