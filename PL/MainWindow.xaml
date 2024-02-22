@@ -6,10 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <!--<Window.Background>
-        <ImageBrush ImageSource="Images/background.jpg" Stretch="Fill" />
-    </Window.Background>-->
     <Grid>
+        <Image Source="D:\Projects\dotNet5784_2620_9215\PL\Images\background.jpg" Stretch="Fill"/>
         <Button Content="List View" HorizontalAlignment="Left" Margin="567,116,0,0" VerticalAlignment="Top" Click="ListViewButton_Click" RenderTransformOrigin="7.777,0.461"/>
         <Button Content="Initialized DB" HorizontalAlignment="Left" Margin="544,177,0,0" VerticalAlignment="Top" Click="InitializedDBButton_Click"/>
         <Button Content="Reset DB" HorizontalAlignment="Left" Margin="566,249,0,0" VerticalAlignment="Top" Click="ResetDBButton_Click"/>

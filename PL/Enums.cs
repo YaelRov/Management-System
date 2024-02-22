@@ -7,6 +7,13 @@ using System.Threading.Tasks;
 
 namespace PL;
 
+internal class FilterByEngineerExpCollection : IEnumerable
+{
+    static readonly IEnumerable<BO.FilterByEngineerExperience> e_enums =
+    (Enum.GetValues(typeof(BO.FilterByEngineerExperience)) as IEnumerable<BO.FilterByEngineerExperience>)!;
+    public IEnumerator GetEnumerator() => e_enums.GetEnumerator();
+}
+
 internal class EngineerExpCollection : IEnumerable
 {
     static readonly IEnumerable<BO.EngineerExperience> e_enums =

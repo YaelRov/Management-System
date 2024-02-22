@@ -11,22 +11,6 @@
     <Deadline>2024-11-25T00:00:00</Deadline>
   </Task>
   <Task>
-    <Id>1</Id>
-    <Description>Conduct code reviews and provide feedback.</Description>
-    <Alias>Code Reviews</Alias>
-    <Milestone>false</Milestone>
-    <CreatedAt>2021-02-10T00:00:00</CreatedAt>
-    <RequiredEffortTime>P2D</RequiredEffortTime>
-    <Start>2021-04-05T22:00:00</Start>
-    <ScheduledDate>2024-01-01T00:00:00</ScheduledDate>
-    <Deadline>2024-11-27T00:00:00</Deadline>
-    <Complete>2021-04-24T14:00:00</Complete>
-    <Deliverables>code reviews and feedback</Deliverables>
-    <Remarks>Do it accurately</Remarks>
-    <EngineerId>356054894</EngineerId>
-    <ComplexityLevel>Expert</ComplexityLevel>
-  </Task>
-  <Task>
     <Id>2</Id>
     <Description>Maintain and update existing software systems.</Description>
     <Alias>Software Maintenance</Alias>
@@ -119,5 +103,21 @@
     <RequiredEffortTime>PT0S</RequiredEffortTime>
     <ScheduledDate>2024-01-07T00:00:00</ScheduledDate>
     <Deadline>2024-12-01T00:00:00</Deadline>
+  </Task>
+  <Task>
+    <Id>1</Id>
+    <Description>Conduct code reviews and provide feedback.</Description>
+    <Alias>Code Reviews</Alias>
+    <Milestone>false</Milestone>
+    <CreatedAt>2021-02-10T00:00:00</CreatedAt>
+    <RequiredEffortTime>P2D</RequiredEffortTime>
+    <Start>2021-04-05T22:00:00</Start>
+    <ScheduledDate>2024-01-01T00:00:00</ScheduledDate>
+    <Deadline>2024-11-27T00:00:00</Deadline>
+    <Complete>2021-04-24T14:00:00</Complete>
+    <Deliverables>code reviews and feedback</Deliverables>
+    <Remarks>Do it accurately</Remarks>
+    <EngineerId>356054894</EngineerId>
+    <ComplexityLevel>Expert</ComplexityLevel>
   </Task>
 </ArrayOfTask>

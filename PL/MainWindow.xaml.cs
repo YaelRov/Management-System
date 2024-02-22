@@ -31,7 +31,7 @@ public partial class MainWindow : Window
 
     private void ListViewButton_Click(object sender, RoutedEventArgs e)
     {
-        new EngineerListWindow().Show();
+        new EngineerListWindow(new EngineerWindow()).Show();
     }
 
     private void InitializedDBButton_Click(object sender, RoutedEventArgs e)

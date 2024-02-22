@@ -32,9 +32,9 @@
         <Label Grid.Column="1" Content="Level" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="4" VerticalAlignment="Center"/>
         <Label Grid.Column="1" Content="Cost" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="5" VerticalAlignment="Center"/>
         <Label Grid.Column="1" Content="Task" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="6" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="3" HorizontalAlignment="Center" Margin="0,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"
-                                    Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
-                <TextBox Grid.Column="3" HorizontalAlignment="Left" Margin="114,25,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
+        <TextBox Grid.Column="3" HorizontalAlignment="Center" Margin="0,24,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top"
+                                    Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource NegatingIntConverterKey}}"/>
+        <TextBox Grid.Column="3" HorizontalAlignment="Left" Margin="114,25,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
                  Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
         <TextBox Grid.Column="3" HorizontalAlignment="Left" Margin="114,23,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"
                  Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>

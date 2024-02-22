@@ -22,8 +22,7 @@ namespace PL.Engineer;
 public partial class EngineerListWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
-    public BO.EngineerExperience Experience { get; set; } = BO.EngineerExperience.All;
-
+    public BO.FilterByEngineerExperience Experience { get; set; } = BO.FilterByEngineerExperience.All;
     public IEnumerable<BO.Engineer?> EngineerList
     {
         get { return (IEnumerable<BO.Engineer>)GetValue(EngineerListProperty); }
@@ -36,12 +35,13 @@ public partial class EngineerListWindow : Window
     
     private void cbEngineerSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        EngineerList = (Experience == BO.EngineerExperience.All) ?
-        s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => item.Level == Experience)!;
+        EngineerList = (Experience == BO.FilterByEngineerExperience.All) ?
+        s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => (int)item.Level == (int)Experience)!;
     }
-    public EngineerListWindow()
+    public EngineerListWindow(EngineerWindow engWin)
     {
         InitializeComponent();
+        EngineerWindow.reloadList += this.reloadList!;
         EngineerList = s_bl?.Engineer.ReadAll()!;
     }
 
@@ -54,5 +54,10 @@ public partial class EngineerListWindow : Window
     {
         BO.Engineer? Eng = (sender as ListView)?.SelectedItem as BO.Engineer;
         new EngineerWindow(Eng!.Id).ShowDialog();
+    }
+
+    private void reloadList(object sender, EventArgs e)
+    {
+        EngineerList = s_bl?.Engineer.ReadAll()!;
     }
 }

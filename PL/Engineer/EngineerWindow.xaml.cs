@@ -21,6 +21,7 @@ public partial class EngineerWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
     public BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.Novice;
+    public static event EventHandler reloadList;
 
     public BO.Engineer CurrentEngineer
     {
@@ -34,7 +35,7 @@ public partial class EngineerWindow : Window
 
 
 
-    public EngineerWindow(int id=0)
+    public EngineerWindow(int id = 0)
     {
         InitializeComponent();
         if (id == 0)
@@ -48,11 +49,37 @@ public partial class EngineerWindow : Window
     }
     private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      
+
     }
 
     private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
     {
+        string actionType = ((Button)sender).Content.ToString()!;
+        MessageBoxResult close;
+        try
+        {
+            //Add engineer
+            if (actionType == "Add")
+            {
+                s_bl.Engineer.Create(CurrentEngineer);
+                close = MessageBox.Show($"{CurrentEngineer.Name} was added successfully");
+            }
+            //Update engineer
+            else
+            {
+                s_bl.Engineer.Update(CurrentEngineer);
+                close = MessageBox.Show($"{CurrentEngineer.Name} was updated successfully");
+            }
+            if (close == MessageBoxResult.OK || close == MessageBoxResult.None)
+            {
+                this.Close();
+                if(reloadList is not null)
+                {
+                    reloadList(this, EventArgs.Empty);
+                }
+            }
+        }
+        catch (Exception ex) { MessageBox.Show(ex.ToString()); }
 
     }
 }

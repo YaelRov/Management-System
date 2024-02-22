@@ -4,8 +4,10 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <local:FilterByEngineerExpCollection x:Key="FilterByEngineerExpCollectionKey"/>
         <local:EngineerExpCollection x:Key="EngineerExpCollectionKey"/>
         <local:ConvertIdToContent x:Key="ConverIdToContentKey"/>
+        <local:NegatingIntConverter x:Key="NegatingIntConverterKey"/>
     </Application.Resources>
 </Application>
 

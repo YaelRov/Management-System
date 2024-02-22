@@ -23,7 +23,7 @@ Width="auto" ShowGridLines="True">
             </Grid.ColumnDefinitions>
             <!-- Engineers Filter-->
             <Label Content="Sort By Level:" HorizontalAlignment="Stretch" Grid.Column="0" Margin="83,0,0,0" VerticalAlignment="Stretch"/>
-            <ComboBox ItemsSource="{Binding Source={StaticResource EngineerExpCollectionKey}}"
+            <ComboBox ItemsSource="{Binding Source={StaticResource FilterByEngineerExpCollectionKey}}"
                       SelectedValue="{Binding Experience, Mode=TwoWay}"
                       SelectionChanged="cbEngineerSelector_SelectionChanged"
                       HorizontalAlignment="Stretch" Grid.Column="1" VerticalAlignment="Stretch" />
