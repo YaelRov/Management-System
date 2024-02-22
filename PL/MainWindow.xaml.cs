@@ -24,16 +24,29 @@ namespace PL;
 public partial class MainWindow : Window
 {
     static readonly BlApi.IBl s_bl = BlApi.Factory.Get();
+    /// <summary>
+    /// start running
+    /// </summary>
     public MainWindow()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// view all the engineers
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ListViewButton_Click(object sender, RoutedEventArgs e)
     {
         new EngineerListWindow().Show();
     }
 
+    /// <summary>
+    /// initialize the database
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void InitializedDBButton_Click(object sender, RoutedEventArgs e)
     {
         MessageBoxResult mbConfirmInit = MessageBox.Show("To initialize the DB?",
@@ -55,6 +68,11 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>
+    /// reset the database
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void ResetDBButton_Click(object sender, RoutedEventArgs e)
     {
         MessageBoxResult mbConfirmReset = MessageBox.Show("To reset the DB?",
