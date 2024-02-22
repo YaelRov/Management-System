@@ -4,7 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
+
 
 namespace PL;
 class ConvertIdToContent : IValueConverter
@@ -30,3 +32,5 @@ public class NegatingIntConverter : IValueConverter
         return (int)value != 0;
     }
 }
+
+

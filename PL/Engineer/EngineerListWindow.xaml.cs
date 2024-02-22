@@ -38,7 +38,7 @@ public partial class EngineerListWindow : Window
         EngineerList = (Experience == BO.FilterByEngineerExperience.All) ?
         s_bl?.Engineer.ReadAll()! : s_bl?.Engineer.ReadAll(item => (int)item.Level == (int)Experience)!;
     }
-    public EngineerListWindow(EngineerWindow engWin)
+    public EngineerListWindow()
     {
         InitializeComponent();
         EngineerWindow.reloadList += this.reloadList!;

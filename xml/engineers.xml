@@ -1,36 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfEngineer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Engineer>
-    <id>356054894</id>
-    <Name>Yael Rov</Name>
-    <Email>YaelRov@gmail.com</Email>
-    <Level>Competent</Level>
-    <Cost>65</Cost>
-    <Id>356054894</Id>
-  </Engineer>
-  <Engineer>
-    <id>123456788</id>
-    <Name>yoni</Name>
-    <Email>yy</Email>
-    <Level>Novice</Level>
-    <Cost>200</Cost>
-    <Id>123456788</Id>
-  </Engineer>
-  <Engineer>
     <id>987654321</id>
     <Name>yoni</Name>
     <Email>yoni@gmail.com</Email>
     <Level>Novice</Level>
     <Cost>800</Cost>
     <Id>987654321</Id>
-  </Engineer>
-  <Engineer>
-    <id>295757591</id>
-    <Name>Yoni</Name>
-    <Email>HaChamudit</Email>
-    <Level>Novice</Level>
-    <Cost>200</Cost>
-    <Id>295757591</Id>
   </Engineer>
   <Engineer>
     <id>112233456</id>
@@ -57,11 +33,43 @@
     <Id>112233665</Id>
   </Engineer>
   <Engineer>
+    <id>356054894</id>
+    <Name>Yael Rov</Name>
+    <Email>YaelRov@gmail.com</Email>
+    <Level>Novice</Level>
+    <Cost>65</Cost>
+    <Id>356054894</Id>
+  </Engineer>
+  <Engineer>
+    <id>123456788</id>
+    <Name>yoni</Name>
+    <Email>yy</Email>
+    <Level>Novice</Level>
+    <Cost>200</Cost>
+    <Id>123456788</Id>
+  </Engineer>
+  <Engineer>
     <id>321342085</id>
     <Name>Avraham Silver</Name>
     <Email>AvrahamSilver@gmail.com</Email>
-    <Level>Competent</Level>
+    <Level>AdvancedBeginner</Level>
     <Cost>100</Cost>
     <Id>321342085</Id>
+  </Engineer>
+  <Engineer>
+    <id>222222222</id>
+    <Name>ruti</Name>
+    <Email>tt</Email>
+    <Level>Novice</Level>
+    <Cost>80</Cost>
+    <Id>222222222</Id>
+  </Engineer>
+  <Engineer>
+    <id>295757591</id>
+    <Name>Yoni</Name>
+    <Email>HaChamudit</Email>
+    <Level>Expert</Level>
+    <Cost>200</Cost>
+    <Id>295757591</Id>
   </Engineer>
 </ArrayOfEngineer>

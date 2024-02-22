@@ -6,10 +6,28 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Image Source="D:\Projects\dotNet5784_2620_9215\PL\Images\background.jpg" Stretch="Fill"/>
-        <Button Content="List View" HorizontalAlignment="Left" Margin="567,116,0,0" VerticalAlignment="Top" Click="ListViewButton_Click" RenderTransformOrigin="7.777,0.461"/>
-        <Button Content="Initialized DB" HorizontalAlignment="Left" Margin="544,177,0,0" VerticalAlignment="Top" Click="InitializedDBButton_Click"/>
-        <Button Content="Reset DB" HorizontalAlignment="Left" Margin="566,249,0,0" VerticalAlignment="Top" Click="ResetDBButton_Click"/>
+    <!--<Window.Background>
+        <ImageBrush ImageSource="/PL;component/Images/background.jpg"/>
+    </Window.Background>-->
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--<Image Source="/Images/background.jpg" Stretch="Fill" Grid.ColumnSpan="3" Grid.RowSpan="7"/>-->
+        <Button Content="List View"  Click="ListViewButton_Click" Grid.Column="1" Grid.Row="1" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="Initialized DB" Click="InitializedDBButton_Click" Grid.Column="1" Grid.Row="3" Style="{StaticResource ButtonStyle}"/>
+        <Button Content="Reset DB"  Click="ResetDBButton_Click" Grid.Column="1" Grid.Row="5" Style="{StaticResource ButtonStyle}"/>
     </Grid>
 </Window>

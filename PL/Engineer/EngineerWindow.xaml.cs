@@ -47,10 +47,6 @@ public partial class EngineerWindow : Window
             CurrentEngineer = s_bl.Engineer.Read(id)!;
         }
     }
-    private void cbLevelSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
 
     private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
     {
