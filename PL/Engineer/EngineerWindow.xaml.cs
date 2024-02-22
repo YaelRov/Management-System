@@ -23,6 +23,9 @@ public partial class EngineerWindow : Window
     public BO.EngineerExperience Level { get; set; } = BO.EngineerExperience.Novice;
     public static event EventHandler reloadList;
 
+    /// <summary>
+    /// current engineer property
+    /// </summary>
     public BO.Engineer CurrentEngineer
     {
         get { return (BO.Engineer)GetValue(CurrentEngineerProperty); }
@@ -34,7 +37,10 @@ public partial class EngineerWindow : Window
         DependencyProperty.Register("CurrentEngineer", typeof(BO.Engineer), typeof(EngineerWindow));
 
 
-
+    /// <summary>
+    /// open an empty window for new engineer and with details for existing one
+    /// </summary>
+    /// <param name="id"></param>
     public EngineerWindow(int id = 0)
     {
         InitializeComponent();
@@ -48,6 +54,11 @@ public partial class EngineerWindow : Window
         }
     }
 
+    /// <summary>
+    /// button for finish adding and updating
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnAddUpdate_Click(object sender, RoutedEventArgs e)
     {
         string actionType = ((Button)sender).Content.ToString()!;

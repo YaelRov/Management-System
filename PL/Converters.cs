@@ -9,6 +9,10 @@ using System.Windows.Data;
 
 
 namespace PL;
+
+/// <summary>
+/// if the id is '0' - open an add window, if it's any another number open an update window
+/// </summary>
 class ConvertIdToContent : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -21,6 +25,9 @@ class ConvertIdToContent : IValueConverter
     }
 }
 
+/// <summary>
+/// if the value (id) is a number return false (for the enable)
+/// </summary>
 public class NegatingIntConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

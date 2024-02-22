@@ -26,14 +26,17 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <!--labels for the engineer's fields-->
         <Label Grid.Column="1" Content="ID" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
         <Label Grid.Column="1" Content="Name" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="2" VerticalAlignment="Center"/>
         <Label Grid.Column="1" Content="Email" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="3" VerticalAlignment="Center"/>
         <Label Grid.Column="1" Content="Level" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="4" VerticalAlignment="Center"/>
         <Label Grid.Column="1" Content="Cost" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="5" VerticalAlignment="Center"/>
         <Label Grid.Column="1" Content="Task" HorizontalAlignment="Left" Margin="128,0,0,0" Grid.Row="6" VerticalAlignment="Center"/>
+        <!--if the id is 0 do it enable and and vice versa-->
         <TextBox Grid.Column="3" Style="{StaticResource TextBoxStyle}" Grid.Row="1"
                                     Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" IsEnabled="{Binding Id, Mode=OneTime, Converter={StaticResource NegatingIntConverterKey}}"/>
+        <!--if the id is 0 fill empty fields and if it's a number fill the last content-->
         <TextBox Grid.Column="3" Style="{StaticResource TextBoxStyle}" Grid.Row="2" 
                  Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
         <TextBox Grid.Column="3" Style="{StaticResource TextBoxStyle}" Grid.Row="3"
@@ -45,6 +48,7 @@
                  Text="{Binding Cost, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
         <TextBox Grid.Column="3" Style="{StaticResource TextBoxStyle}" Grid.Row="6" 
                  Text="{Binding Task.Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"/>
+        <!--if the id is 0 add and if it's a number update-->
         <Button Content="{Binding Id, Mode=OneTime, Converter={StaticResource ConverIdToContentKey}}"
                 Click="btnAddUpdate_Click"
                 Grid.Column="1" Grid.Row="7" Style="{StaticResource ButtonStyle}" Grid.ColumnSpan="3" Width="300"/>

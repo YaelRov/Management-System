@@ -26,6 +26,7 @@
         </Grid.ColumnDefinitions>
 
         <!--<Image Source="/Images/background.jpg" Stretch="Fill" Grid.ColumnSpan="3" Grid.RowSpan="7"/>-->
+        <!--3 buttons for the main manu-->
         <Button Content="List View"  Click="ListViewButton_Click" Grid.Column="1" Grid.Row="1" Style="{StaticResource ButtonStyle}"/>
         <Button Content="Initialized DB" Click="InitializedDBButton_Click" Grid.Column="1" Grid.Row="3" Style="{StaticResource ButtonStyle}"/>
         <Button Content="Reset DB"  Click="ResetDBButton_Click" Grid.Column="1" Grid.Row="5" Style="{StaticResource ButtonStyle}"/>
