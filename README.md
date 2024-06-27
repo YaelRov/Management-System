@@ -14,8 +14,6 @@ This project is a multi-tier architecture application developed in C# using the 
 8. [Presentation Layer](#presentation-layer)
 9. [Data Entities](#data-entities)
 10. [Logical Entities](#logical-entities)
-11. [Contributing](#contributing)
-12. [License](#license)
 
 ## Architecture
 The application follows a multi-tier architecture:
