@@ -51,7 +51,7 @@ The application follows a multi-tier architecture:
 - Git
 
 ## Installation
-1. Clone the repository:
+1. Clone the repository
 2. Open the solution file in Visual Studio
 3. Restore NuGet packages
 4. Build the solution
