@@ -218,3 +218,7 @@ The presentation layer is built using WPF and includes:
 - TaskInList (for dependency lists and task list screen)
 - MilestoneInList (for milestone list screen)
 
+## Contributors
+
+- Yael Rov ([@YaelRov](https://github.com/YaelRov))
+- Yoni Stern ([@Yoni4517](https://github.com/Yoni4517))
