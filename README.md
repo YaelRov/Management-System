@@ -62,6 +62,9 @@ To use the Project Management System:
 1. Launch the application.
 2. Log in as either a Project Manager or an Engineer.
 
+![Project Management System Interface](PL/Images/screenshot.png)
+*Screenshot: Main interface of the Project Management System*
+
 For Project Managers:
 - Create a new project by setting start and end dates.
 - Add engineers to the project team.
